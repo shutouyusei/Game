@@ -6,7 +6,16 @@
 #include "Struct/ItemData.h"
 #include "Struct/UseableData.h"
 
+#include "lua.hpp"
+#include <direct.h> // _getcwd
+
+#include "lualib.h"
+
+#include "lauxlib.h"
+
 UItemComponent::UItemComponent() {}
+
+UItemComponent::~UItemComponent() {}
 
 UItemDataBase *UItemComponent::GetItemDataBase() {
   UItemDataBase *itemDataBase =
@@ -41,26 +50,29 @@ void UItemComponent::RemoveItem(const int id, const int num) {
 
 // UseItem
 void UItemComponent::UseItem(const int id) {
+  lua_State *L = luaL_newstate();
+  luaL_openlibs(L);
   UItemDataBase *itemDataBase = GetItemDataBase();
   const FItemData *item = itemDataBase->FetchItemData(id);
   if (item == nullptr) {
     UE_LOG(LogTemp, Error, TEXT("[Use]Item is null"));
+    lua_close(L);
     return;
   }
   if (item->type != EItemDataType::Useable) {
     UE_LOG(LogTemp, Error, TEXT("[Use]Item is not Useable"));
+    lua_close(L);
     return;
   }
-  const FUseableData *useable = itemDataBase->FetchUseableData(item->id);
-  UItem *itemInstance = CreateItem(useable->item);
-  itemInstance->Use();
+  // const FUseableData *useable = itemDataBase->FetchUseableData(item->id);
+  luaL_loadfile(L, "D:/UEDocument/MaK/Source/Lua/Item/item.lua");
+  int result = 0;
+  if (lua_pcall(L, 0, 0, 0)) {
+    UE_LOG(LogTemp, Error, TEXT("[Use]lua_pcall error"));
+    lua_close(L);
+    return;
+  }
 }
 void UItemComponent::UseAbilityBook(const int id) {
   // TODO: Use
-}
-
-UItem *UItemComponent::CreateItem(TSubclassOf<UItem> itemclass) {
-  UItem *item = NewObject<UItem>(this, itemclass);
-  item->SetOwner(owner);
-  return item;
 }
