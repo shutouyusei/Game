@@ -9,12 +9,14 @@
 class UItemDataBase;
 class AMaKCharacter;
 class UItem;
+struct lua_State;
 
 UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
 class MAK_API UItemComponent : public UActorComponent {
   GENERATED_BODY()
 public:
   UItemComponent();
+  ~UItemComponent();
   void SetOwner(AMaKCharacter *character) { this->owner = character; }
   TArray<FHave> GetHaveItems() { return haveItems; }
   void AddItem(const int id, const int num);

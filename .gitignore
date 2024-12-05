@@ -5,6 +5,8 @@
 /DeriverdDataCache
 /Intermediate
 /Saved
+/Package
+/Build
 /.cache
 *.vsconfig
 *.sln
