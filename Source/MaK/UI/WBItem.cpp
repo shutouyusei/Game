@@ -1,8 +1,8 @@
 #include "WBItem.h"
 #include "../Character/MaKCharacter.h"
+#include "../Data/Have.h"
 #include "../Data/Item/ItemComponent.h"
 #include "../Data/Item/ItemDataBase.h"
-#include "../Data/Have.h"
 #include "../Data/Item/Struct/ItemStruct.h"
 #include "../GameInstance/MyGameInstance.h"
 
@@ -25,20 +25,20 @@ void UWBItem::UseItem(const int id) {
   itemComponent->UseItem(id);
 }
 
-void UWBItem::ShowItem(FHave item){
-  const FItemData *fitemData = itemDataBase->fetchItemData(item->id);
-  swtich(item->type){
-    case EItemDataType::Useable :{
-      break;
-    }
-    case EItemDataType::Material:{
-      break;
-    }
-    case EItemDataType::AbilityBook:{
-      break;
-    }
-    case EItemDataType::Important:{
-      break;
-    }
+void UWBItem::ShowItem(FHave *item) {
+  const FItemData *fitemData = itemDataBase->FetchItemData(item->id);
+  switch (fitemData->type) {
+  case EItemDataType::Useable: {
+    break;
+  }
+  case EItemDataType::Material: {
+    break;
+  }
+  case EItemDataType::AbilityBook: {
+    break;
+  }
+  case EItemDataType::Important: {
+    break;
+  }
   }
 }

@@ -19,10 +19,11 @@ public:
   // use
   UFUNCTION(BlueprintCallable)
   void UseItem(const int id);
-  
-  //UI
-  void ShowItem(FHave item);
+
+  // UI
+  void ShowItem(FHave *item);
+
 private:
   AMaKCharacter *character;
-  UItemDataBase *ItemDataBase;
+  UItemDataBase *itemDataBase;
 };

@@ -1,1 +1,1 @@
-print("a")
+return 3

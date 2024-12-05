@@ -81,9 +81,9 @@ IMPLEMENT_SIMPLE_AUTOMATION_TEST(FItemComponentTest, "ItemDataBase.AddHaveItem",
                                      EAutomationTestFlags::EngineFilter)
 bool FItemComponentTest::RunTest(const FString &Parameters) {
   UItemComponent *itemComponent = NewObject<UItemComponent>();
-  itemComponent->AddItem(1, 1);
-  itemComponent->AddItem(1, 1);
-  itemComponent->AddItem(2, 1);
+  itemComponent->IncreaseItem(1, 1);
+  itemComponent->IncreaseItem(1, 1);
+  itemComponent->IncreaseItem(2, 1);
   FHave haveItem0 = itemComponent->GetHaveItems()[0];
   FHave haveItem1 = itemComponent->GetHaveItems()[1];
   if (haveItem0.id != 1 || haveItem0.num != 2) {
@@ -92,8 +92,8 @@ bool FItemComponentTest::RunTest(const FString &Parameters) {
   if (haveItem1.id != 2 || haveItem1.num != 1) {
     return false;
   }
-  itemComponent->RemoveItem(1, 1);
-  itemComponent->RemoveItem(2, 1);
+  itemComponent->DecreaseItem(1, 1);
+  itemComponent->DecreaseItem(2, 1);
   haveItem0 = itemComponent->GetHaveItems()[0];
   if (haveItem0.id != 1 || haveItem0.num != 1) {
     return false;

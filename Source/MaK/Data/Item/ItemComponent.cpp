@@ -7,13 +7,6 @@
 #include "Struct/ItemData.h"
 #include "Struct/UseableData.h"
 
-#include "lua.hpp"
-#include <direct.h> // _getcwd
-
-#include "lualib.h"
-
-#include "lauxlib.h"
-
 UItemComponent::UItemComponent() {}
 
 UItemComponent::~UItemComponent() {}
@@ -25,7 +18,7 @@ UItemDataBase *UItemComponent::GetItemDataBase() {
 }
 
 void UItemComponent::CreateItemObject(AMaKCharacter *character) {
-  iteminstance = new Item(character);
+  itemInstance = new Item(character);
 }
 
 void UItemComponent::IncreaseItem(const int id, const int num) {
@@ -37,7 +30,7 @@ void UItemComponent::IncreaseItem(const int id, const int num) {
   }
   AddItem(id, num);
 }
-void UITemComponent::AddItem(const int id, const int num) {
+void UItemComponent::AddItem(const int id, const int num) {
   haveItems.Add(FHave(id, num));
 }
 
@@ -71,7 +64,9 @@ void UItemComponent::UseItem(const int id) {
     return;
   }
   const FUseableData *useable = itemDataBase->FetchUseableData(item->id);
-  itemInstance->Use(useable->itemPath);
+  // itemInstance->Use(useable->itemPath);
+  FString path = TEXT("item");
+  itemInstance->Use(path);
 }
 void UItemComponent::UseAbilityBook(const int id) {
   // TODO: Use

@@ -5,7 +5,8 @@
 class AMaKCharacter;
 struct lua_State;
 
-UCLASS(Blueprintable)
+#define LUA_PATH "D:/UEDocument/MaK/Source/Lua/Item/"
+
 class Item {
 public:
   Item(AMaKCharacter *ch);
@@ -17,5 +18,4 @@ private:
 
 private:
   AMaKCharacter *owner;
-  lua_State *L;
 };
