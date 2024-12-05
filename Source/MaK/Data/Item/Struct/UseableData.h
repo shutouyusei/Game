@@ -11,7 +11,7 @@ struct FUseableData : public FTableRowBase {
   GENERATED_USTRUCT_BODY()
 public:
   UPROPERTY(EditAnywhere, BlueprintReadWrite)
-  int id;
+  FString itemPath;
   UPROPERTY(EditAnywhere, BlueprintReadWrite)
-  TSubclassOf<UItem> item;
+  FName name;
 };
