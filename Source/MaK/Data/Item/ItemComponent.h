@@ -8,7 +8,7 @@
 
 class UItemDataBase;
 class AMaKCharacter;
-class UItem;
+class Item;
 
 UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
 class MAK_API UItemComponent : public UActorComponent {
@@ -16,6 +16,7 @@ class MAK_API UItemComponent : public UActorComponent {
 public:
   UItemComponent();
   void SetOwner(AMaKCharacter *character) { this->owner = character; }
+  void CreateItemObject(AMaKCharacter *character);
   TArray<FHave> GetHaveItems() { return haveItems; }
   void AddItem(const int id, const int num);
   void RemoveItem(const int id, const int num);
@@ -24,10 +25,10 @@ public:
 
 private:
   UItemDataBase *GetItemDataBase();
-  UItem *CreateItem(TSubclassOf<UItem> itemclass);
 
 public:
 private:
   TArray<FHave> haveItems;
   TObjectPtr<AMaKCharacter> owner;
+  Item *itemInstance;
 };

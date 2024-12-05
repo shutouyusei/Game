@@ -1,6 +1,7 @@
 #include "ItemComponent.h"
 #include "../../Character/MaKCharacter.h"
 #include "../../GameInstance/MyGameInstance.h"
+#include "Item.h"
 #include "ItemDataBase.h"
 #include "Struct/AbilityBookData.h"
 #include "Struct/ItemData.h"
@@ -12,6 +13,10 @@ UItemDataBase *UItemComponent::GetItemDataBase() {
   UItemDataBase *itemDataBase =
       UMyGameInstance::GetInstance()->GetItemDataBase();
   return itemDataBase;
+}
+
+void UItemComponent::CreateItemObject(AMaKCharacter *character) {
+  iteminstance = new Item(character);
 }
 
 void UItemComponent::AddItem(const int id, const int num) {
@@ -52,15 +57,8 @@ void UItemComponent::UseItem(const int id) {
     return;
   }
   const FUseableData *useable = itemDataBase->FetchUseableData(item->id);
-  UItem *itemInstance = CreateItem(useable->item);
-  itemInstance->Use();
+  itemInstance->Use(useable->itemPath);
 }
 void UItemComponent::UseAbilityBook(const int id) {
   // TODO: Use
-}
-
-UItem *UItemComponent::CreateItem(TSubclassOf<UItem> itemclass) {
-  UItem *item = NewObject<UItem>(this, itemclass);
-  item->SetOwner(owner);
-  return item;
 }
