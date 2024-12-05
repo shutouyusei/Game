@@ -1,7 +1,5 @@
 #include "Item.h"
 #include "../../Character/MaKCharacter.h"
-#include <iostream>
-#include <string.h>
 
 #include "lua.hpp"
 
@@ -11,15 +9,18 @@
 
 Item::Item(AMaKCharacter *ch) {
   owner = ch;
-  // 関数を登録
 }
+
+Item::~Item() { }
 
 void Item::Use(const FString lua_path) {
   lua_State *L = luaL_newstate();
+  UE_LOG(LogTemp, Warning, TEXT(LUA_PATH));
+  UE_LOG(LogTemp, Warning, TEXT("%s"), *lua_path);
+  UE_LOG(LogTemp, Warning, TEXT(".lua") );
   luaL_openlibs(L);
-  std::string path = TCHAR_TO_ANSI(*lua_path);
-  std::string itemPath = LUA_PATH + path + ".lua";
-  luaL_loadfile(L, "D:/UEDocument/MaK/Source/Lua/Item/item.lua");
+  std::string itemPath = LuaPath(lua_path);
+  luaL_loadfile(L,itemPath.c_str());
   // 関数呼び出し
   lua_pcall(L, 0, 1, 0);
   int n = lua_tointeger(L, -1);
@@ -28,11 +29,15 @@ void Item::Use(const FString lua_path) {
   lua_close(L);
 }
 
+std::string Item::LuaPath(const FString lua_path) {
+  std::string path = std::string(TCHAR_TO_UTF8(*lua_path));
+  return LUA_PATH + path + ".lua";
+} 
 /**
  * Use function
  */
 
-int Item::Heal(lua_State *lua) {
+int Item::Heal(lua_State *L) {
   UE_LOG(LogTemp, Warning, TEXT("[Lua]Heal"));
   return 1;
 }

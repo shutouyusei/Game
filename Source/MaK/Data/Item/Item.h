@@ -1,6 +1,8 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include <iostream>
+#include <string.h>
 
 class AMaKCharacter;
 struct lua_State;
@@ -10,9 +12,12 @@ struct lua_State;
 class Item {
 public:
   Item(AMaKCharacter *ch);
+  ~Item();
   void Use(const FString lua_path);
 
 private:
+  // 　アイテムパスの管理
+  std::string LuaPath(const FString lua_path);
   // アイテムの使用の関数
   int Heal(lua_State *lua);
 
