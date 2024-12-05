@@ -9,6 +9,8 @@ Item::Item(AMaKCharacter *ch) {
   owner = ch;
   L = lua_newstate();
   luaL_openlibs(L);
+  // 関数を登録
+  lua_register(L, "Heal", this->Heal);
 }
 
 void Item::Use(const FString lua_path) {
@@ -19,4 +21,13 @@ void Item::Use(const FString lua_path) {
   if (lua_pcall(L, 0, 0, 0) == 0) {
     UE_LOG(LogTemp, Error, TEXT("[Use]Lua is Error"));
   }
+}
+
+/**
+ * Use function
+ */
+
+int Item::Heal(lua_State *lua) {
+  UE_LOG(LogTemp, Warning, TEXT("[Lua]Heal"));
+  return 1;
 }

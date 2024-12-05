@@ -19,30 +19,35 @@ void UItemComponent::CreateItemObject(AMaKCharacter *character) {
   iteminstance = new Item(character);
 }
 
-void UItemComponent::AddItem(const int id, const int num) {
+void UItemComponent::IncreaseItem(const int id, const int num) {
   for (FHave &item : haveItems) {
     if (item.id == id) {
       item.num += num;
       return;
     }
   }
+  AddItem(id, num);
+}
+void UITemComponent::AddItem(const int id, const int num) {
   haveItems.Add(FHave(id, num));
 }
 
-void UItemComponent::RemoveItem(const int id, const int num) {
+void UItemComponent::DecreaseItem(const int id, const int num) {
   int index = 0;
   for (FHave &item : haveItems) {
-    if (item.id == id) {
-      if (item.num <= num) {
-        haveItems.RemoveAt(index);
-      } else {
-        item.num -= num;
-      }
-      return;
+    if (item.id != id) {
+      index++;
+      continue;
     }
-    index++;
+    if (item.num <= num) {
+      RemoveItem(id);
+    } else {
+      item.num -= num;
+    }
+    return;
   }
 }
+void UItemComponent::RemoveItem(const int id) { haveItems.RemoveAt(id); }
 
 // UseItem
 void UItemComponent::UseItem(const int id) {
