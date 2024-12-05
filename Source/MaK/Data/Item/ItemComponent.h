@@ -16,6 +16,7 @@ class MAK_API UItemComponent : public UActorComponent {
 public:
   // setup
   UItemComponent();
+  ~UItemComponent();
   void SetOwner(AMaKCharacter *character) { this->owner = character; }
   void CreateItemObject(AMaKCharacter *character);
   TArray<FHave> GetHaveItems() { return haveItems; }

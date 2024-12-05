@@ -2,6 +2,7 @@
 
 #include "MaKGameMode.h"
 #include "../Character/MaKCharacter.h"
+#include "Blueprint/WidgetBlueprintLibrary.h"
 #include "Kismet/GameplayStatics.h"
 #include "UObject/ConstructorHelpers.h"
 
@@ -25,21 +26,22 @@ void AMaKGameMode::BeginPlay() {
 
   // UI
   SetItemUI();
-  if (wbItem != nullptr) {
-    UE_LOG(LogTemp, Warning, TEXT("wbItem is not null"));
-    wbItem->AddToViewport();
-  }
 }
 
 void AMaKGameMode::SetItemUI() {
-  if (wbItemClass == nullptr) {
-    UE_LOG(LogTemp, Warning, TEXT("wbItemClass is null"));
-    return;
+  FString path = TEXT(ITEM_UI_PATH);
+  TSubclassOf<UUserWidget> widgetClass =
+      TSoftClassPtr<UUserWidget>(FSoftObjectPath(*path)).LoadSynchronous();
+  APlayerController *playerController =
+      UGameplayStatics::GetPlayerController(GetWorld(), 0);
+  if (widgetClass && playerController) {
+    UUserWidget *wbItemInstance = UWidgetBlueprintLibrary::Create(
+        GetWorld(), widgetClass, playerController);
+    UWBItem *wbItem = Cast<UWBItem>(wbItemInstance);
+    if (wbItem) {
+      wbItem->SetCharacter(character);
+    }
+
+    wbItemInstance->AddToViewport(0);
   }
-  UWBItem *wbItemInstance = CreateWidget<UWBItem>(GetWorld(), wbItemClass);
-  if(wbItemInstance == nullptr) {
-    UE_LOG(LogTemp, Warning, TEXT("wbItemInstance is null"));
-    return;
-  }
-  wbItemInstance->SetCharacter(character);
 }

@@ -7,7 +7,16 @@
 #include "Struct/ItemData.h"
 #include "Struct/UseableData.h"
 
+#include "lua.hpp"
+#include <direct.h> // _getcwd
+
+#include "lualib.h"
+
+#include "lauxlib.h"
+
 UItemComponent::UItemComponent() {}
+
+UItemComponent::~UItemComponent() {}
 
 UItemDataBase *UItemComponent::GetItemDataBase() {
   UItemDataBase *itemDataBase =

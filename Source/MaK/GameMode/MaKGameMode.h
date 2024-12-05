@@ -8,6 +8,8 @@
 
 #include "MaKGameMode.generated.h"
 
+#define ITEM_UI_PATH "/Game/UI/WBItem.WBItem_C"
+
 class AMakCharacter;
 
 UCLASS(minimalapi)
@@ -25,10 +27,6 @@ protected:
 private:
 public:
   // UI
- //  TODO: パスで設定してやった方がよさげ〇
-  UPROPERTY(EditAnywhere, Category = "UI")
-  TSubclassOf<UWBItem> wbItemClass;
-  UWBItem *wbItem;
 
 protected:
   AMaKCharacter *character;
