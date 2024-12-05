@@ -1,20 +1,17 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "UObject/Object.h"
-
-#include "Item.generated.h"
 
 class AMaKCharacter;
+struct lua_State;
 
 UCLASS(Blueprintable)
-class UItem : public UObject {
-  GENERATED_BODY()
+class Item {
 public:
-  UItem();
-  void SetOwner(AMaKCharacter *character) { this->owner = character; };
-  virtual void Use();
+  Item(AMaKCharacter *ch);
+  void Use(const FString lua_path);
 
 private:
   AMaKCharacter *owner;
+  lua_State *L;
 };
