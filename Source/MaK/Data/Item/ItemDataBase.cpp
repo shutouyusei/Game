@@ -3,11 +3,12 @@
 #include "Engine/DataTable.h"
 #include "Engine/StreamableManager.h"
 #include "Kismet/GameplayStatics.h"
-#include "Struct/AbilityBookData.h"
-#include "Struct/ImportantData.h"
-#include "Struct/ItemData.h"
-#include "Struct/MaterialData.h"
-#include "Struct/UseableData.h"
+
+#define ABILITY_PATH "/Game/Data/Item/DT_AbilityBookData.DT_AbilityBookData"
+#define IMPORTANT_PATH "/Game/Data/Item/DT_ImportantData.DT_ImportantData"
+#define ITEM_PATH "/Game/Data/Item/DT_ItemData.DT_ItemData"
+#define MATERIAL_PATH "/Game/Data/Item/DT_MaterialData.DT_MaterialData"
+#define USEABLE_PATH "/Game/Data/Item/DT_UseableData.DT_UseableData"
 
 UItemDataBase::UItemDataBase() {
   UE_LOG(LogTemp, Warning, TEXT("UItemDataBase_Init"));
@@ -23,6 +24,19 @@ void UItemDataBase::BeginPlay(UMyGameInstance *game) {
       paths,
       FStreamableDelegate::CreateUObject(this, &UItemDataBase::LoadData));
 }
+
+// Fetch Data from PrimaryID
+
+const FItemInstanceData *UItemDataBase::FetchItem(const int primaryID) {
+  const FItemData *item = FetchItemData(primaryID);
+  if (item == nullptr) {
+    UE_LOG(LogTemp, Warning, TEXT("[ItemDataBase]FetchItemData is null"));
+    return nullptr;
+  }
+  return FetchItemInstanceData(item->id, item->type);
+}
+
+// private
 void UItemDataBase::LoadPath() {
   paths.Add(FSoftObjectPath(ABILITY_PATH));
   paths.Add(FSoftObjectPath(IMPORTANT_PATH));
@@ -30,6 +44,7 @@ void UItemDataBase::LoadPath() {
   paths.Add(FSoftObjectPath(MATERIAL_PATH));
   paths.Add(FSoftObjectPath(USEABLE_PATH));
 }
+
 void UItemDataBase::LoadData() {
   LoadAbilityBookData();
   LoadImportantData();
@@ -39,10 +54,11 @@ void UItemDataBase::LoadData() {
   UE_LOG(LogTemp, Warning, TEXT("[ItemDataBase]LoadData"));
   streamableHandle.Reset();
 }
+
 void UItemDataBase::LoadAbilityBookData() {
   TSoftObjectPtr<UDataTable> abilityDataPtr;
   abilityDataPtr = TSoftObjectPtr<UDataTable>(paths[0]).Get();
-  abilityData = abilityDataPtr.Get();
+  abilityBookData = abilityDataPtr.Get();
 }
 
 void UItemDataBase::LoadImportantData() {
@@ -56,6 +72,7 @@ void UItemDataBase::LoadItemData() {
   itemDataPtr = TSoftObjectPtr<UDataTable>(paths[2]).Get();
   itemData = itemDataPtr.Get();
 }
+
 void UItemDataBase::LoadMaterialData() {
   TSoftObjectPtr<UDataTable> materialDataPtr;
   materialDataPtr = TSoftObjectPtr<UDataTable>(paths[3]).Get();
@@ -66,30 +83,6 @@ void UItemDataBase::LoadUseableData() {
   TSoftObjectPtr<UDataTable> useableDataPtr;
   useableDataPtr = TSoftObjectPtr<UDataTable>(paths[4]).Get();
   useableData = useableDataPtr.Get();
-}
-
-// Fetch Data from PrimaryID
-const FAbilityBookData *
-UItemDataBase::FetchAbilityBookData(const int primaryID) {
-  if (abilityData == nullptr) {
-    UE_LOG(LogTemp, Warning, TEXT("[ItemDataBase]abilityData is null"));
-    abilityData =
-        LoadObject<UDataTable>(NULL, TEXT(ABILITY_PATH), NULL, LOAD_None, NULL);
-  }
-  const FAbilityBookData *abilityBook = abilityData->FindRow<FAbilityBookData>(
-      FName(*FString::FromInt(primaryID)), "");
-  return abilityBook;
-}
-
-const FImportantData *UItemDataBase::FetchImportantData(const int primaryID) {
-  if (importantData == nullptr) {
-    UE_LOG(LogTemp, Warning, TEXT("[ItemDataBase]importantData is null"));
-    importantData = LoadObject<UDataTable>(NULL, TEXT(IMPORTANT_PATH), NULL,
-                                           LOAD_None, NULL);
-  }
-  const FImportantData *important = importantData->FindRow<FImportantData>(
-      FName(*FString::FromInt(primaryID)), "");
-  return important;
 }
 
 const FItemData *UItemDataBase::FetchItemData(const int primaryID) {
@@ -103,24 +96,67 @@ const FItemData *UItemDataBase::FetchItemData(const int primaryID) {
   return item;
 }
 
-const FMaterialData *UItemDataBase::FetchMaterialData(const int primaryID) {
+const FItemInstanceData *
+UItemDataBase::FetchItemInstanceData(const int primaryID,
+                                     const EItemDataType type) {
+  switch (type) {
+  case EItemDataType::AbilityBook:
+    return FetchAbilityBookData(primaryID);
+  case EItemDataType::Important:
+    return FetchImportantData(primaryID);
+  case EItemDataType::Material:
+    return FetchMaterialData(primaryID);
+  case EItemDataType::Useable:
+    return FetchUseableData(primaryID);
+  default:
+    return nullptr;
+  }
+}
+
+const FItemInstanceData *
+UItemDataBase::FetchAbilityBookData(const int primaryID) {
+  if (abilityBookData == nullptr) {
+    UE_LOG(LogTemp, Warning, TEXT("[ItemDataBase]abilityBookData is null"));
+    abilityBookData =
+        LoadObject<UDataTable>(NULL, TEXT(ABILITY_PATH), NULL, LOAD_None, NULL);
+  }
+  const FItemInstanceData *ability =
+      abilityBookData->FindRow<FItemInstanceData>(
+          FName(*FString::FromInt(primaryID)), "");
+  return ability;
+}
+
+const FItemInstanceData *
+UItemDataBase::FetchImportantData(const int primaryID) {
+  if (importantData == nullptr) {
+    UE_LOG(LogTemp, Warning, TEXT("[ItemDataBase]importantData is null"));
+    importantData = LoadObject<UDataTable>(NULL, TEXT(IMPORTANT_PATH), NULL,
+                                           LOAD_None, NULL);
+  }
+  const FItemInstanceData *important =
+      importantData->FindRow<FItemInstanceData>(
+          FName(*FString::FromInt(primaryID)), "");
+  return important;
+}
+
+const FItemInstanceData *UItemDataBase::FetchMaterialData(const int primaryID) {
   if (materialData == nullptr) {
     UE_LOG(LogTemp, Warning, TEXT("[ItemDataBase]materialData is null"));
     materialData = LoadObject<UDataTable>(NULL, TEXT(MATERIAL_PATH), NULL,
                                           LOAD_None, NULL);
   }
-  const FMaterialData *material = materialData->FindRow<FMaterialData>(
+  const FItemInstanceData *material = materialData->FindRow<FItemInstanceData>(
       FName(*FString::FromInt(primaryID)), "");
   return material;
 }
 
-const FUseableData *UItemDataBase::FetchUseableData(const int primaryID) {
+const FItemInstanceData *UItemDataBase::FetchUseableData(const int primaryID) {
   if (useableData == nullptr) {
     UE_LOG(LogTemp, Warning, TEXT("[ItemDataBase]useableData is null"));
     useableData =
         LoadObject<UDataTable>(NULL, TEXT(USEABLE_PATH), NULL, LOAD_None, NULL);
   }
-  const FUseableData *useable = useableData->FindRow<FUseableData>(
+  const FItemInstanceData *useable = useableData->FindRow<FItemInstanceData>(
       FName(*FString::FromInt(primaryID)), "");
   return useable;
 }

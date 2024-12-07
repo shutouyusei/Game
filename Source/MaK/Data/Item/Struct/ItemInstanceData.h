@@ -3,12 +3,14 @@
 #include "CoreMinimal.h"
 #include "Engine/DataTable.h"
 
-#include "ImportantData.generated.h"
+#include "ItemInstanceData.generated.h"
 
 USTRUCT(BlueprintType)
-struct FImportantData : public FTableRowBase {
+struct FItemInstanceData : public FTableRowBase {
   GENERATED_USTRUCT_BODY()
 public:
+  UPROPERTY(EditAnywhere, BlueprintReadWrite)
+  FString itemPath;
   UPROPERTY(EditAnywhere, BlueprintReadWrite)
   FName name;
 };

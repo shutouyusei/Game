@@ -1,8 +1,6 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include <iostream>
-#include <string.h>
 
 class AMaKCharacter;
 struct lua_State;

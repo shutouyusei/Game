@@ -17,24 +17,24 @@ public:
   // setup
   UItemComponent();
   ~UItemComponent();
-  void SetOwner(AMaKCharacter *character) { this->owner = character; }
-  void CreateItemObject(AMaKCharacter *character);
+  void BeginPlay() override;
+  void SetUpItemComponent(AMaKCharacter *character);
   TArray<FHave> GetHaveItems() { return haveItems; }
   // use
   void IncreaseItem(const int id, const int num);
-  void AddItem(const int id, const int num);
   void DecreaseItem(const int id, const int num);
-  void RemoveItem(const int id);
 
   void UseItem(const int id);
-  void UseAbilityBook(const int id);
 
 private:
+  void AddItem(const int id, const int num);
+  void RemoveItem(const int id);
   UItemDataBase *GetItemDataBase();
 
 public:
 private:
+  UItemDataBase *itemDataBase;
   TArray<FHave> haveItems;
   TObjectPtr<AMaKCharacter> owner;
-  Item *itemInstance;
+  Item *useableItem;
 };

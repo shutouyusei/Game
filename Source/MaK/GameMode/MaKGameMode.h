@@ -8,8 +8,6 @@
 
 #include "MaKGameMode.generated.h"
 
-#define ITEM_UI_PATH "/Game/UI/WBItem.WBItem_C"
-
 class AMakCharacter;
 
 UCLASS(minimalapi)

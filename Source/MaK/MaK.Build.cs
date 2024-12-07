@@ -13,10 +13,10 @@ public class MaK : ModuleRules
 
     PrivateDependencyModuleNames.AddRange(new string[] {  });
     
-    PublicIncludePaths.Add(Path.Combine(ModuleDirectory, "Lua","include"));
+    PublicIncludePaths.Add(Path.Combine(ModuleDirectory,"..", "Lua","include"));
     if(Target.Platform == UnrealTargetPlatform.Win64)
     {
-      PublicAdditionalLibraries.Add(Path.Combine(ModuleDirectory,"Lua", "lib", "lua54.lib"));
+      PublicAdditionalLibraries.Add(Path.Combine(ModuleDirectory, "..","Lua", "lib", "lua54.lib"));
     }
     var luaDLLPath = ModuleDirectory + "../../Binaries/Win64/lua54.dll";
     PublicDelayLoadDLLs.Add("lua54.dll");

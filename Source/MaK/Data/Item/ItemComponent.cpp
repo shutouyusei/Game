@@ -3,23 +3,17 @@
 #include "../../GameInstance/MyGameInstance.h"
 #include "Item.h"
 #include "ItemDataBase.h"
-#include "Struct/AbilityBookData.h"
-#include "Struct/ItemData.h"
-#include "Struct/UseableData.h"
 
 UItemComponent::UItemComponent() {}
 
 UItemComponent::~UItemComponent() {}
 
-UItemDataBase *UItemComponent::GetItemDataBase() {
-  UItemDataBase *itemDataBase =
-      UMyGameInstance::GetInstance()->GetItemDataBase();
-  return itemDataBase;
+void UItemComponent::SetUpItemComponent(AMaKCharacter *character) {
+  owner = character;
+  useableItem = new Item(character);
 }
 
-void UItemComponent::CreateItemObject(AMaKCharacter *character) {
-  itemInstance = new Item(character);
-}
+void UItemComponent::BeginPlay() { GetItemDataBase(); }
 
 void UItemComponent::IncreaseItem(const int id, const int num) {
   for (FHave &item : haveItems) {
@@ -29,9 +23,6 @@ void UItemComponent::IncreaseItem(const int id, const int num) {
     }
   }
   AddItem(id, num);
-}
-void UItemComponent::AddItem(const int id, const int num) {
-  haveItems.Add(FHave(id, num));
 }
 
 void UItemComponent::DecreaseItem(const int id, const int num) {
@@ -49,25 +40,22 @@ void UItemComponent::DecreaseItem(const int id, const int num) {
     return;
   }
 }
-void UItemComponent::RemoveItem(const int id) { haveItems.RemoveAt(id); }
 
 // UseItem
 void UItemComponent::UseItem(const int id) {
-  UItemDataBase *itemDataBase = GetItemDataBase();
-  const FItemData *item = itemDataBase->FetchItemData(id);
-  if (item == nullptr) {
-    UE_LOG(LogTemp, Error, TEXT("[Use]Item is null"));
-    return;
-  }
-  if (item->type != EItemDataType::Useable) {
-    UE_LOG(LogTemp, Error, TEXT("[Use]Item is not Useable"));
-    return;
-  }
-  const FUseableData *useable = itemDataBase->FetchUseableData(item->id);
+  const FItemInstanceData *itemInstance = itemDataBase->FetchItem(id);
   // itemInstance->Use(useable->itemPath);
-  FString path = TEXT("item");
-  itemInstance->Use(path);
+  useableItem->Use(itemInstance->itemPath);
 }
-void UItemComponent::UseAbilityBook(const int id) {
-  // TODO: Use
+
+// private
+UItemDataBase *UItemComponent::GetItemDataBase() {
+  itemDataBase = UMyGameInstance::GetInstance()->GetItemDataBase();
+  return itemDataBase;
 }
+
+void UItemComponent::AddItem(const int id, const int num) {
+  haveItems.Add(FHave(id, num));
+}
+
+void UItemComponent::RemoveItem(const int id) { haveItems.RemoveAt(id); }

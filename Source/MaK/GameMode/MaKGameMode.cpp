@@ -28,6 +28,8 @@ void AMaKGameMode::BeginPlay() {
   SetItemUI();
 }
 
+#define ITEM_UI_PATH "/Game/UI/WBItem.WBItem_C"
+
 void AMaKGameMode::SetItemUI() {
   FString path = TEXT(ITEM_UI_PATH);
   TSubclassOf<UUserWidget> widgetClass =

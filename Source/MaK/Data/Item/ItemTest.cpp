@@ -4,11 +4,8 @@
 #include "ItemComponent.h"
 #include "ItemDataBase.h"
 #include "Kismet/GameplayStatics.h"
-#include "Struct/AbilityBookData.h"
-#include "Struct/ImportantData.h"
 #include "Struct/ItemData.h"
-#include "Struct/MaterialData.h"
-#include "Struct/UseableData.h"
+#include "Struct/ItemInstanceData.h"
 
 #define ABILITY_PATH "/Game/Data/Item/DT_AbilityBookData.DT_AbilityBookData"
 #define IMPORTANT_PATH "/Game/Data/Item/DT_ImportantData.DT_ImportantData"
@@ -28,48 +25,9 @@ bool FItemDataBaseTest::RunTest(const FString &Parameters) {
   for (const FName rowName : rowNames) {
     const FString rowNameStr = rowName.ToString();
     const int primaryID = FCString::Atoi(*rowNameStr);
-    const FItemData *item = itemDataBase->FetchItemData(primaryID);
+    const FItemInstanceData *item = itemDataBase->FetchItem(primaryID);
     if (item == nullptr) {
-      UE_LOG(LogTemp, Error, TEXT("%s is null"), *rowNameStr);
       result = false;
-      break;
-    }
-    EItemDataType type = item->type;
-    switch (type) {
-    case EItemDataType::Useable: {
-      const FUseableData *useable = itemDataBase->FetchUseableData(item->id);
-      if (useable == nullptr) {
-        UE_LOG(LogTemp, Error, TEXT("%s is null"), *rowNameStr);
-        result = false;
-      }
-      break;
-    }
-    case EItemDataType::Material: {
-      const FMaterialData *material = itemDataBase->FetchMaterialData(item->id);
-      if (material == nullptr) {
-        UE_LOG(LogTemp, Error, TEXT("%s is null"), *rowNameStr);
-        result = false;
-      }
-      break;
-    }
-    case EItemDataType::AbilityBook: {
-      const FAbilityBookData *abilityBook =
-          itemDataBase->FetchAbilityBookData(item->id);
-      if (abilityBook == nullptr) {
-        UE_LOG(LogTemp, Error, TEXT("%s is null"), *rowNameStr);
-        result = false;
-      }
-      break;
-    }
-    case EItemDataType::Important: {
-      const FImportantData *important =
-          itemDataBase->FetchImportantData(item->id);
-      if (important == nullptr) {
-        UE_LOG(LogTemp, Error, TEXT("%s is null"), *rowNameStr);
-        result = false;
-      }
-      break;
-    }
     }
   }
 

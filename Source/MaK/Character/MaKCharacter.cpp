@@ -65,7 +65,7 @@ AMaKCharacter::AMaKCharacter() {
 
   // ItemComponent
   ItemComponent = CreateDefaultSubobject<UItemComponent>(TEXT("ItemComponent"));
-  ItemComponent->SetOwner(this);
+  ItemComponent->SetUpItemComponent(this);
   // EquipmentComponent
   EquipmentComponent =
       CreateDefaultSubobject<UEquipmentComponent>(TEXT("EquipmentComponent"));
