@@ -4,8 +4,6 @@
 #include "ItemComponent.h"
 #include "ItemDataBase.h"
 #include "Kismet/GameplayStatics.h"
-#include "Struct/ItemData.h"
-#include "Struct/ItemInstanceData.h"
 
 #define ABILITY_PATH "/Game/Data/Item/DT_AbilityBookData.DT_AbilityBookData"
 #define IMPORTANT_PATH "/Game/Data/Item/DT_ImportantData.DT_ImportantData"
@@ -32,32 +30,4 @@ bool FItemDataBaseTest::RunTest(const FString &Parameters) {
   }
 
   return result;
-}
-// Manage HaveItem
-IMPLEMENT_SIMPLE_AUTOMATION_TEST(FItemComponentTest, "ItemDataBase.AddHaveItem",
-                                 EAutomationTestFlags::EditorContext |
-                                     EAutomationTestFlags::EngineFilter)
-bool FItemComponentTest::RunTest(const FString &Parameters) {
-  UItemComponent *itemComponent = NewObject<UItemComponent>();
-  itemComponent->IncreaseItem(1, 1);
-  itemComponent->IncreaseItem(1, 1);
-  itemComponent->IncreaseItem(2, 1);
-  FHave haveItem0 = itemComponent->GetHaveItems()[0];
-  FHave haveItem1 = itemComponent->GetHaveItems()[1];
-  if (haveItem0.id != 1 || haveItem0.num != 2) {
-    return false;
-  }
-  if (haveItem1.id != 2 || haveItem1.num != 1) {
-    return false;
-  }
-  itemComponent->DecreaseItem(1, 1);
-  itemComponent->DecreaseItem(2, 1);
-  haveItem0 = itemComponent->GetHaveItems()[0];
-  if (haveItem0.id != 1 || haveItem0.num != 1) {
-    return false;
-  }
-  if (itemComponent->GetHaveItems().Num() != 1) {
-    return false;
-  }
-  return true;
 }

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../Have.h"
+// #include "../Have.h"
 #include "Components/ActorComponent.h"
 #include "CoreMinimal.h"
 #include "EquipmentComponent.generated.h"
@@ -14,15 +14,15 @@ class MAK_API UEquipmentComponent : public UActorComponent {
 public:
   UEquipmentComponent();
   void SetOwner(AMaKCharacter *character) { this->owner = character; }
-  TArray<FHave> GetHaveEquipments() { return haveEquipments; }
-  void AddEquipment(const int id, const int num);
-  void RemoveEquipment(const int id, const int num);
+  // TArray<FHave> GetHaveEquipments() { return haveEquipments; }
+  // void AddEquipment(const int id, const int num);
+  // void RemoveEquipment(const int id, const int num);
 
 private:
   UEquipmentDataBase *GetEquipmentDataBase();
 
 public:
 private:
-  TArray<FHave> haveEquipments;
+  // TArray<FHave> haveEquipments;
   TObjectPtr<AMaKCharacter> owner;
 };

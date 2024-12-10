@@ -1,1 +1,1 @@
-return 3
+item.Heal()

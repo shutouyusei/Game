@@ -21,7 +21,7 @@ public:
   void UseItem(const int id);
 
   // UI
-  void ShowItem(FHave *item);
+  void ShowItem(FHave item);
 
 private:
   AMaKCharacter *character;

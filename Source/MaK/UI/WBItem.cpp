@@ -1,11 +1,7 @@
 #include "WBItem.h"
 #include "../Character/MaKCharacter.h"
-#include "../Data/Have.h"
 #include "../Data/Item/ItemComponent.h"
-
 #include "../Data/Item/ItemDataBase.h"
-#include "../Data/Item/Struct/ItemData.h"
-#include "../Data/Item/Struct/ItemInstanceData.h"
 #include "../GameInstance/MyGameInstance.h"
 
 void UWBItem::BeginPlay(AMaKCharacter *ch) {
@@ -26,5 +22,3 @@ void UWBItem::UseItem(const int id) {
   }
   itemComponent->UseItem(id);
 }
-
-void UWBItem::ShowItem(FHave *item) {}

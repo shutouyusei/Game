@@ -1,6 +1,6 @@
 #pragma once
 #include "CoreMinimal.h"
-#include "Struct/ItemData.h"
+#include "Struct/ItemClassificationData.h"
 #include "Struct/ItemInstanceData.h"
 #include "UObject/Object.h"
 #include "UObject/SoftObjectPath.h"
@@ -19,6 +19,8 @@ public:
   ~UItemDataBase();
   void BeginPlay(UMyGameInstance *game);
   // find data
+  // NOTE:この関数しか使わない
+  // ItemIdからItemInstanceDataを取得する
   const FItemInstanceData *FetchItem(const int primaryID);
 
 private:
@@ -26,12 +28,15 @@ private:
   void LoadData();
   void LoadAbilityBookData();
   void LoadImportantData();
-  void LoadItemData();
+  void LoadItemClassificationData();
   void LoadMaterialData();
   void LoadUseableData();
-  const FItemInstanceData *FetchItemInstanceData(const int primaryID,
-                                                 const EItemDataType type);
-  const FItemData *FetchItemData(const int primaryID);
+
+  const FItemInstanceData *
+  FetchItemInstanceData(const int primaryID,
+                        const EItemClassificationDataType type);
+  const FItemClassificationData *
+  FetchItemClassificationData(const int primaryID);
   const FItemInstanceData *FetchAbilityBookData(const int primaryID);
   const FItemInstanceData *FetchImportantData(const int primaryID);
   const FItemInstanceData *FetchMaterialData(const int primaryID);
@@ -50,5 +55,4 @@ private:
   TObjectPtr<UDataTable> itemData;
   TObjectPtr<UDataTable> materialData;
   TObjectPtr<UDataTable> useableData;
-
 };

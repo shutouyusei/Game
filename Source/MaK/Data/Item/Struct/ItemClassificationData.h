@@ -3,10 +3,10 @@
 #include "CoreMinimal.h"
 #include "Engine/DataTable.h"
 
-#include "ItemData.generated.h"
+#include "ItemClassificationData.generated.h"
 
 UENUM(BlueprintType)
-enum class EItemDataType : uint8 {
+enum class EItemClassificationDataType : uint8 {
   Useable,
   Material,
   AbilityBook,
@@ -14,11 +14,11 @@ enum class EItemDataType : uint8 {
 };
 
 USTRUCT(BlueprintType)
-struct FItemData : public FTableRowBase {
+struct FItemClassificationData : public FTableRowBase {
   GENERATED_USTRUCT_BODY()
 public:
   UPROPERTY(EditAnywhere, BlueprintReadWrite)
   int id;
   UPROPERTY(EditAnywhere, BlueprintReadWrite)
-  EItemDataType type;
+  EItemClassificationDataType type;
 };

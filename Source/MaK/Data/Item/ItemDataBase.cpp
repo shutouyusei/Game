@@ -3,12 +3,33 @@
 #include "Engine/DataTable.h"
 #include "Engine/StreamableManager.h"
 #include "Kismet/GameplayStatics.h"
+#include "Struct/ItemClassificationData.h"
+#include "Struct/ItemInstanceData.h"
 
 #define ABILITY_PATH "/Game/Data/Item/DT_AbilityBookData.DT_AbilityBookData"
 #define IMPORTANT_PATH "/Game/Data/Item/DT_ImportantData.DT_ImportantData"
 #define ITEM_PATH "/Game/Data/Item/DT_ItemData.DT_ItemData"
 #define MATERIAL_PATH "/Game/Data/Item/DT_MaterialData.DT_MaterialData"
 #define USEABLE_PATH "/Game/Data/Item/DT_UseableData.DT_UseableData"
+
+// Fetch Data from PrimaryID
+
+// NOTE:この関数しか使わない
+const FItemInstanceData *UItemDataBase::FetchItem(const int primaryID) {
+  const FItemClassificationData *item = FetchItemClassificationData(primaryID);
+  if (item == nullptr) {
+    UE_LOG(LogTemp, Warning, TEXT("[ItemDataBase]FetchItemData is null"));
+    return nullptr;
+  }
+  const FItemInstanceData *item_instance =
+      FetchItemInstanceData(item->id, item->type);
+  return item_instance;
+}
+
+////
+////
+///
+///
 
 UItemDataBase::UItemDataBase() {
   UE_LOG(LogTemp, Warning, TEXT("UItemDataBase_Init"));
@@ -24,18 +45,6 @@ void UItemDataBase::BeginPlay(UMyGameInstance *game) {
       paths,
       FStreamableDelegate::CreateUObject(this, &UItemDataBase::LoadData));
 }
-
-// Fetch Data from PrimaryID
-
-const FItemInstanceData *UItemDataBase::FetchItem(const int primaryID) {
-  const FItemData *item = FetchItemData(primaryID);
-  if (item == nullptr) {
-    UE_LOG(LogTemp, Warning, TEXT("[ItemDataBase]FetchItemData is null"));
-    return nullptr;
-  }
-  return FetchItemInstanceData(item->id, item->type);
-}
-
 // private
 void UItemDataBase::LoadPath() {
   paths.Add(FSoftObjectPath(ABILITY_PATH));
@@ -48,7 +57,7 @@ void UItemDataBase::LoadPath() {
 void UItemDataBase::LoadData() {
   LoadAbilityBookData();
   LoadImportantData();
-  LoadItemData();
+  LoadItemClassificationData();
   LoadMaterialData();
   LoadUseableData();
   UE_LOG(LogTemp, Warning, TEXT("[ItemDataBase]LoadData"));
@@ -67,7 +76,7 @@ void UItemDataBase::LoadImportantData() {
   importantData = importantDataPtr.Get();
 }
 
-void UItemDataBase::LoadItemData() {
+void UItemDataBase::LoadItemClassificationData() {
   TSoftObjectPtr<UDataTable> itemDataPtr;
   itemDataPtr = TSoftObjectPtr<UDataTable>(paths[2]).Get();
   itemData = itemDataPtr.Get();
@@ -85,29 +94,41 @@ void UItemDataBase::LoadUseableData() {
   useableData = useableDataPtr.Get();
 }
 
-const FItemData *UItemDataBase::FetchItemData(const int primaryID) {
+const FItemClassificationData *
+UItemDataBase::FetchItemClassificationData(const int primaryID) {
   if (itemData == nullptr) {
-    UE_LOG(LogTemp, Warning, TEXT("[ItemDataBase]itemData is null"));
+    UE_LOG(LogTemp, Warning,
+           TEXT("[ItemDataBase]itemClassificationData is null"));
     itemData =
         LoadObject<UDataTable>(NULL, TEXT(ITEM_PATH), NULL, LOAD_None, NULL);
   }
-  const FItemData *item =
-      itemData->FindRow<FItemData>(FName(*FString::FromInt(primaryID)), "");
+  const FItemClassificationData *item =
+      itemData->FindRow<FItemClassificationData>(
+          FName(*FString::FromInt(primaryID)), "");
   return item;
 }
 
 const FItemInstanceData *
 UItemDataBase::FetchItemInstanceData(const int primaryID,
-                                     const EItemDataType type) {
+                                     const EItemClassificationDataType type) {
   switch (type) {
-  case EItemDataType::AbilityBook:
-    return FetchAbilityBookData(primaryID);
-  case EItemDataType::Important:
-    return FetchImportantData(primaryID);
-  case EItemDataType::Material:
-    return FetchMaterialData(primaryID);
-  case EItemDataType::Useable:
-    return FetchUseableData(primaryID);
+  case EItemClassificationDataType::AbilityBook: {
+    const FItemInstanceData *item_instance_data =
+        FetchAbilityBookData(primaryID);
+    return item_instance_data;
+  }
+  case EItemClassificationDataType::Important: {
+    const FItemInstanceData *item_instance_data = FetchImportantData(primaryID);
+    return item_instance_data;
+  }
+  case EItemClassificationDataType::Material: {
+    const FItemInstanceData *item_instance_data = FetchMaterialData(primaryID);
+    return item_instance_data;
+  }
+  case EItemClassificationDataType::Useable: {
+    const FItemInstanceData *item_instance_data = FetchUseableData(primaryID);
+    return item_instance_data;
+  }
   default:
     return nullptr;
   }
