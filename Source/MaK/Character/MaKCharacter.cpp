@@ -4,6 +4,7 @@
 #include "../Data/Equipment/EquipmentComponent.h"
 #include "../Data/Item/ItemComponent.h"
 #include "../GameInstance/MyGameInstance.h"
+#include "../Stats/StatsComponent.h"
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Engine/LocalPlayer.h"
@@ -66,10 +67,15 @@ AMaKCharacter::AMaKCharacter() {
   // ItemComponent
   ItemComponent = CreateDefaultSubobject<UItemComponent>(TEXT("ItemComponent"));
   ItemComponent->SetUpItemComponent(this);
+
   // EquipmentComponent
   EquipmentComponent =
       CreateDefaultSubobject<UEquipmentComponent>(TEXT("EquipmentComponent"));
   EquipmentComponent->SetOwner(this);
+
+  // StatsComponent
+  StatsComponent =
+      CreateDefaultSubobject<UStatsComponent>(TEXT("StatsComponent"));
 }
 
 //////////////////////////////////////////////////////////////////////////

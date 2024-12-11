@@ -14,3 +14,34 @@ void UStatsComponent::BeginPlay() {
 
   // ...
 }
+
+// Set Stats
+void UStatsComponent::ChangeMaxStats(const FCharacterStats &stats) {
+  MaxStats = stats;
+  if (CurrentHP > MaxStats.HP) {
+    CurrentHP = MaxStats.HP;
+  }
+  if (CurrentMP > MaxStats.MP) {
+    CurrentMP = MaxStats.MP;
+  }
+}
+
+void UStatsComponent::ChangeCurrentHP(const float stats) {
+  if (CurrentHP + stats >= MaxStats.HP) {
+    CurrentHP = MaxStats.HP;
+  } else {
+    CurrentHP += stats;
+  }
+}
+
+void UStatsComponent::ChangeCurrentMP(const float stats) {
+  if (CurrentMP + stats >= MaxStats.MP) {
+    CurrentMP = MaxStats.MP;
+  } else {
+    CurrentMP += stats;
+  }
+}
+// Get Stats
+float UStatsComponent::GetCurrentHP() { return CurrentHP; }
+float UStatsComponent::GetCurrentMP() { return CurrentMP; }
+FCharacterStats UStatsComponent::GetMaxStats() { return MaxStats; }

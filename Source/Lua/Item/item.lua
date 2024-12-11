@@ -1,2 +1,1 @@
-heal = 2.5
-item.Heal()
+item.Heal(3.5)

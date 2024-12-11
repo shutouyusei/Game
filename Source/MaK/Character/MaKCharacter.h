@@ -11,6 +11,7 @@ class USpringArmComponent;
 class UCameraComponent;
 class UEquipmentComponent;
 class UInputMappingContext;
+class UStatsComponent;
 class UInputAction;
 class UItemComponent;
 struct FInputActionValue;
@@ -35,6 +36,11 @@ class AMaKCharacter : public ACharacter {
   UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Equipment,
             meta = (AllowPrivateAccess = "true"))
   UEquipmentComponent *EquipmentComponent;
+
+  /** StatesComponent */
+  UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Stats,
+            meta = (AllowPrivateAccess = "true"))
+  UStatsComponent *StatsComponent;
   /** Follow camera */
   UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera,
             meta = (AllowPrivateAccess = "true"))
@@ -63,6 +69,7 @@ class AMaKCharacter : public ACharacter {
 public:
   AMaKCharacter();
   UItemComponent *GetItemComponent() const { return ItemComponent; };
+  UStatsComponent *GetStatsComponent() const { return StatsComponent; };
   UEquipmentComponent *GetEquipmentComponent() const {
     return EquipmentComponent;
   };

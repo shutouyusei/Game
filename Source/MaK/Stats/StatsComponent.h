@@ -15,18 +15,23 @@ protected:
 public:
   // Sets default values for this component's properties
   UStatsComponent();
-
-  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Stats")
-  FCharacterStats BaseStats;
-
-  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Stats")
-  FCharacterStats MaxStats;
-
-  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Stats")
-  FCharacterStats CurrentStats;
+  // Set Stats
+  void ChangeMaxStats(const FCharacterStats &stats);
+  void ChangeCurrentHP(const float stats);
+  void ChangeCurrentMP(const float stats);
+  // Get Stats
+  FCharacterStats GetMaxStats();
+  float GetCurrentHP();
+  float GetCurrentMP();
 
 protected:
   virtual void BeginPlay() override;
 
+private:
+  float CurrentHP;
+  float CurrentMP;
+  FCharacterStats MaxStats;
+
 public:
+private:
 };

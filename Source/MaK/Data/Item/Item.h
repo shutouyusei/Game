@@ -14,14 +14,14 @@ class Item {
 public:
   Item(AMaKCharacter *ch);
   ~Item();
-  void Use(const FString lua_path);
+  void Use(const FString luaPath);
 
 
 private:
   // 　アイテムパスの管理
-  std::string LuaPath(const FString item_name);
+  std::string LuaPath(const FString itemName);
   // 関数の設定
-  void SetFunctions(LuaHandler *lua_handler);
+  void SetFunctions(LuaHandler *luaHandler);
   // アイテムの使用の関数
   // NOTE:λ式を返す
   luaFunction Heal();
