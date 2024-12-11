@@ -9,8 +9,8 @@ public:
   ~LuaHandler();
 
   bool executeLua();
-  void setFunctionForLua(const char *function_name, lua_CFunction function);
-  void setFunctionsForLua(const char *library_name, const luaL_Reg *mylib, const int size);
+  void setFunctionsForLua(const char *library_name, const luaL_Reg *mylib,
+                          const int size);
 
 private:
   lua_State *lua_state_ = luaL_newstate();

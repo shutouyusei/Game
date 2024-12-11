@@ -11,7 +11,6 @@ bool LuaHandler::executeLua() {
   if (lua_pcall(lua_state_, 0, 0, 0) == 0) {
     // success
     // WARNING:　実際にオブジェクトを自身で削除できるか不明
-    delete this;
     return true;
   }
   return false;
