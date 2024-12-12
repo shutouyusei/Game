@@ -1,1 +1,3 @@
-item.Heal(3.5)
+function main(object)
+	item.Heal(1)
+end

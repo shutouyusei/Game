@@ -15,15 +15,21 @@ class MAK_API UMyGameInstance : public UGameInstance {
 public:
 private:
   FStreamableManager streamableManager;
+  // database
   TObjectPtr<UItemDataBase> itemDataBase;
   TObjectPtr<UEquipmentDataBase> equipmentDataBase;
+
 public:
   void Init() override;
   void Shutdown() override;
+  //
   FStreamableManager *GetStreamableManager() { return &streamableManager; };
+  //databaase
   UItemDataBase *GetItemDataBase() { return itemDataBase; };
-  UEquipmentDataBase *GetEquipmentDataBase() { return equipmentDataBase;};
+  UEquipmentDataBase *GetEquipmentDataBase() { return equipmentDataBase; };
+  //NOTE:静的関数 どこからでも呼び出せるインスタンスの取得
   static UMyGameInstance *GetInstance();
+
 private:
   void SetDataBase();
 };

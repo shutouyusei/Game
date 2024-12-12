@@ -17,7 +17,7 @@ void Item::Use(const FString itemName) {
   // LuaHandlerに関数を登録
   SetFunctions(luaHandler);
   // Luaを実行
-  if (!(luaHandler->ExecuteLua())) {
+  if (!(luaHandler->ExecuteLua(owner_))) {
     // fail
     UE_LOG(LogTemp, Warning, TEXT("[Item]Lua Error"));
     UE_LOG(LogTemp, Warning, TEXT("[Item]itemName: %s"), *itemName);
@@ -47,6 +47,11 @@ luaFunction Item::Heal() {
   // FIXME:関数の中にメンバー変数渡せないから泣く
   return [](lua_State *L) -> int {
     float var1 = luaL_checknumber(L, 1);
+    lua_getglobal(L, "object");
+    const void * object = lua_topointer(L, -1);
+    AMaKCharacter *character = (AMaKCharacter*)object;
+    StatsHandler *statsHandler = character->GetStatsComponent()->GetStatsHandler();
+    statsHandler->test();
     UE_LOG(LogTemp, Warning, TEXT("[Item]Heal: %f"), var1);
     return 1;
   };

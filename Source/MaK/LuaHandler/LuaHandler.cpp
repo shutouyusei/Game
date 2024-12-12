@@ -2,15 +2,16 @@
 
 LuaHandler::LuaHandler(const char *luaPath) {
   luaL_openlibs(luaState_);
-  luaL_loadfile(luaState_, luaPath);
+  luaL_dofile(luaState_, luaPath);
 };
 
 LuaHandler::~LuaHandler() { lua_close(luaState_); };
 
-bool LuaHandler::ExecuteLua() {
-  if (lua_pcall(luaState_, 0, 0, 0) == 0) {
+bool LuaHandler::ExecuteLua(void *object) {
+  lua_getglobal(luaState_, "main");
+  lua_pushlightuserdata(luaState_, object);
+  if (lua_pcall(luaState_, 1, 0, 0) == 0) {
     // success
-    // WARNING:　実際にオブジェクトを自身で削除できるか不明
     return true;
   }
   return false;
