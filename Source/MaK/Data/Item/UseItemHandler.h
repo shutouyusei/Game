@@ -7,15 +7,11 @@ class LuaHandler;
 struct lua_State;
 struct luaL_Reg;
 
-//NOTE:lua用の関数ポインタ
-typedef int (*luaFunction)(lua_State *L);
-
-class Item {
+class UseItemHandler {
 public:
-  Item(AMaKCharacter *ch);
-  ~Item();
-  void Use(const FString luaPath);
-
+  UseItemHandler(AMaKCharacter *ch);
+  ~UseItemHandler();
+  bool Use(const FString luaPath);
 
 private:
   // 　アイテムパスの管理
@@ -23,9 +19,10 @@ private:
   // 関数の設定
   void SetFunctions(LuaHandler *luaHandler);
   // アイテムの使用の関数
-  // NOTE:λ式を返す
-  luaFunction Heal();
+  static int Test(lua_State *L);
 
 private:
-  AMaKCharacter *owner_;
+  // NOTE:owner_の初期化はSetUpItemComponentで行う
+  // luaでの関数実行に静的メンバが必要
+  static AMaKCharacter *owner_;
 };

@@ -18,14 +18,14 @@ class Belongings {
 public:
   // Set
   // setはアイテムの増減のみで許される
-  void increaseBelongings(int id, int num);
-  void decreaseBelongings(int id, int num);
+  void IncreaseBelongings(int id, int num);
+  void DecreaseBelongings(int id, int num);
   // Get
-  const FBelonging getBelonging(int id) const;
+  const TArray<FBelonging> GetBelongingInstances(){ return belongings; }
 
 private:
-  void addBelongings(int id, int num);
-  void removeBelongings(int index);
+  void AddBelongings(int id, int num);
+  void RemoveBelongings(int index);
 
 private:
   TArray<FBelonging> belongings;

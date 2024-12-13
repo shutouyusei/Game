@@ -1,6 +1,7 @@
 // Copyright Epic Games, Inc. All Rights Reserved.
 
 #include "MaKGameMode.h"
+#include "../UI/UIManager.h"
 #include "../Character/MaKCharacter.h"
 #include "Blueprint/WidgetBlueprintLibrary.h"
 #include "Kismet/GameplayStatics.h"
@@ -18,32 +19,14 @@ AMaKGameMode::AMaKGameMode() {
 void AMaKGameMode::BeginPlay() {
   Super::BeginPlay();
   // Character
-  character =
+  character_ =
       Cast<AMaKCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
-  if (character == nullptr) {
+  if (character_ == nullptr) {
     UE_LOG(LogTemp, Warning, TEXT("Character is null"));
   }
 
+  uiManager_ = new UIManager(character_);
   // UI
-  SetItemUI();
+  uiManager_->SetItemUI();
 }
 
-#define ITEM_UI_PATH "/Game/UI/WBItem.WBItem_C"
-
-void AMaKGameMode::SetItemUI() {
-  FString path = TEXT(ITEM_UI_PATH);
-  TSubclassOf<UUserWidget> widgetClass =
-      TSoftClassPtr<UUserWidget>(FSoftObjectPath(*path)).LoadSynchronous();
-  APlayerController *playerController =
-      UGameplayStatics::GetPlayerController(GetWorld(), 0);
-  if (widgetClass && playerController) {
-    UUserWidget *wbItemInstance = UWidgetBlueprintLibrary::Create(
-        GetWorld(), widgetClass, playerController);
-    UWBItem *wbItem = Cast<UWBItem>(wbItemInstance);
-    if (wbItem) {
-      wbItem->SetCharacter(character);
-    }
-
-    wbItemInstance->AddToViewport(0);
-  }
-}

@@ -7,10 +7,9 @@ LuaHandler::LuaHandler(const char *luaPath) {
 
 LuaHandler::~LuaHandler() { lua_close(luaState_); };
 
-bool LuaHandler::ExecuteLua(void *object) {
+bool LuaHandler::ExecuteLua() {
   lua_getglobal(luaState_, "main");
-  lua_pushlightuserdata(luaState_, object);
-  if (lua_pcall(luaState_, 1, 0, 0) == 0) {
+  if (lua_pcall(luaState_, 0, 0, 0) == 0) {
     // success
     return true;
   }

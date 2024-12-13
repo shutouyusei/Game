@@ -8,7 +8,7 @@ public:
   LuaHandler(const char *luaPath);
   ~LuaHandler();
 
-  bool ExecuteLua(void *object);
+  bool ExecuteLua();
   void SetFunctionsForLua(const char *libraryName, const luaL_Reg *mylib,
                           const int size);
 

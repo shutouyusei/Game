@@ -1,13 +1,13 @@
 #pragma once
 
+#include "../Belonging.h"
 #include "Components/ActorComponent.h"
 #include "CoreMinimal.h"
 #include "ItemComponent.generated.h"
 
 class UItemDataBase;
-class Belongings;
 class AMaKCharacter;
-class Item;
+class UseItemHandler;
 struct FBelonging;
 
 UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
@@ -16,18 +16,21 @@ class MAK_API UItemComponent : public UActorComponent {
 public:
   // setup
   UItemComponent();
-  ~UItemComponent();
-  void BeginPlay() override;
   void SetUpItemComponent(AMaKCharacter *character);
+  ~UItemComponent();
+  // BeginPlay
+  void BeginPlay() override;
+  // setupbelongings
+  void SetUpBelongings();
+  // get belongings
+  Belongings *GetBelongings() { return belongings_; }
   // Use
   void UseItem(const int id);
 
 private:
-public:
-  Belongings *belongings_;
-
 private:
+  Belongings *belongings_;
   UItemDataBase *itemDataBase_;
   TObjectPtr<AMaKCharacter> owner_;
-  Item *useableItem_;
+  UseItemHandler *useItemHandler_;
 };
