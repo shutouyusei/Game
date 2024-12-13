@@ -3,7 +3,7 @@
 #include "../Data/Equipment/EquipmentDataBase.h"
 #include "../Data/Item/ItemDataBase.h"
 #include "Engine/Engine.h"
-
+//TODO: データベース等々静的にできる
 void UMyGameInstance::Init() {
   UE_LOG(LogTemp, Warning, TEXT("UMyGameInstance"));
   SetDataBase();

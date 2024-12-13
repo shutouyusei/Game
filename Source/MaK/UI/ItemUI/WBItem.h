@@ -2,19 +2,13 @@
 
 #include "Blueprint/UserWidget.h"
 #include "CoreMinimal.h"
+#include "WBItemSlot.h"
 
 #include "WBItem.generated.h"
 
 class AMaKCharacter;
 class UItemDataBase;
 struct FItemInstanceData;
-struct FBelonging;
-
-struct ItemSlot {
-  int id;
-  int num;
-  const FItemInstanceData *itemInstanceData;
-};
 
 UCLASS()
 class UWBItem : public UUserWidget {
@@ -22,18 +16,15 @@ class UWBItem : public UUserWidget {
 public:
   // setup
   void SetUpWBItem(AMaKCharacter *ch);
-  // use
-  UFUNCTION(BlueprintCallable)
-  void UseItem(const int id);
 
   // UI
-  void ShowUI();
+  void SetItemSlots();
+
+  void AddItemSlot(FBelonging &belonging);
+  void RemoveItemSlot();
 
 private:
-  ItemSlot SetItemSlot(const FBelonging &belonging);
-
 private:
-  AMaKCharacter *character_;
   UItemDataBase *itemDataBase_;
-  TArray<ItemSlot> itemSlots_;
+  TArray<UWBItemSlot*> itemSlotWidgets_;
 };

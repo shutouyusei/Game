@@ -21,12 +21,11 @@ public:
   void IncreaseBelongings(int id, int num);
   void DecreaseBelongings(int id, int num);
   // Get
-  const TArray<FBelonging> GetBelongingInstances(){ return belongings; }
 
+  TArray<FBelonging> belongings;
 private:
   void AddBelongings(int id, int num);
   void RemoveBelongings(int index);
 
 private:
-  TArray<FBelonging> belongings;
 };

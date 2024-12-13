@@ -1,6 +1,7 @@
 #include "UIManager.h"
 #include "../Character/MaKCharacter.h"
-#include "../UI/WBItem.h"
+#include "../UI/ItemUI/WBItem.h"
+#include "../UI/ItemUI/WBItemSlot.h"
 #include "Blueprint/WidgetBlueprintLibrary.h"
 #include "Kismet/GameplayStatics.h"
 #include "UObject/ConstructorHelpers.h"
@@ -14,17 +15,24 @@ void UIManager::SetItemUI() {
   wbItemInstance->AddToViewport(0);
 }
 
+//明示的宣言
+template UWBItemSlot *UIManager::CreateUI<UWBItemSlot>(const FString &path);
+
 template <typename T> T *UIManager::CreateUI(const FString &path) {
+  AMaKCharacter *character = AMaKCharacter::character_;
+
   TSubclassOf<UUserWidget> widgetClass =
       TSoftClassPtr<UUserWidget>(FSoftObjectPath(*path)).LoadSynchronous();
   APlayerController *playerController =
-      UGameplayStatics::GetPlayerController(character_, 0);
+      UGameplayStatics::GetPlayerController(character, 0);
   if (widgetClass && playerController) {
     UUserWidget *widgetInstance = UWidgetBlueprintLibrary::Create(
-        character_, widgetClass, playerController);
+        character, widgetClass, playerController);
 
     T *widget = Cast<T>(widgetInstance);
     return widget;
+  } else {
+    UE_LOG(LogTemp, Warning, TEXT("Failed to create UI"));
+    return nullptr;
   }
-  return nullptr;
 }
