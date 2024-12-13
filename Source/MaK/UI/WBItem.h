@@ -7,13 +7,13 @@
 
 class AMaKCharacter;
 class UItemDataBase;
-class ItemInstanceData;
+struct FItemInstanceData;
 struct FBelonging;
 
 struct ItemSlot {
   int id;
   int num;
-  ItemInstanceData *itemInstanceData;
+  const FItemInstanceData *itemInstanceData;
 };
 
 UCLASS()

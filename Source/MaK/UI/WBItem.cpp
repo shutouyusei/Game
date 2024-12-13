@@ -28,26 +28,30 @@ void UWBItem::ShowUI() {
       belongings->GetBelongingInstances();
   TArray<ItemSlot> tmpItemSlots;
   for (const FBelonging &belonging : belongingInstances) {
-  tmpItemSlots.Add(SetItemSlot(belonging));
+    tmpItemSlots.Add(SetItemSlot(belonging));
   }
   itemSlots_.Empty();
   itemSlots_ = tmpItemSlots;
 }
 
 ItemSlot UWBItem::SetItemSlot(const FBelonging &belonging) {
-  //FIXME:構造体をconstしないといけない
-  //const変数をh痛の変数に代入できない
-  //構造体の初期化について調べる
-  ItemSlot itemSlot;
   for (const ItemSlot &i : itemSlots_) {
     if (i.id == belonging.id) {
-      itemSlot = i;
-      itemSlot.num = belonging.num;
+      ItemSlot itemSlot = {
+          i.id,
+          belonging.num,
+          i.itemInstanceData,
+      };
       return itemSlot;
     }
   }
-  itemSlot.id = belonging.id;
-  itemSlot.num = belonging.num;
+  const FItemInstanceData *itemInstance =
+      itemDataBase_->FetchItem(belonging.id);
+  ItemSlot itemSlot = {
+      belonging.id,
+      belonging.num,
+      itemInstance,
+  };
   // データベースにアクセス
-  itemSlot.itemInstanceData = itemDataBase_->FetchItem(belonging.id); return itemSlot;
+  return itemSlot;
 }
