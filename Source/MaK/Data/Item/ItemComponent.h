@@ -1,11 +1,10 @@
 #pragma once
 
 #include "../Belonging.h"
+#include "ItemDataBase.h"
 #include "CoreMinimal.h"
 
-class UItemDataBase;
 class ItemUseHandler;
-struct Belonging;
 
 class ItemComponent {
 public:
@@ -18,6 +17,8 @@ public:
   UserBelongings *GetUserBelongings() { return userBelongings_; }
   // Use
   void UseItem(const int id);
+  //discard
+  void DiscardItem(const int id, const int num);
 
 private:
 private:

@@ -1,7 +1,6 @@
 #include "WBItem.h"
 #include "../../Character/MaKCharacter.h"
 #include "../../Data/Item/ItemComponent.h"
-#include "../../Data/Item/ItemDataBase.h"
 #include "../../GameInstance/MyGameInstance.h"
 #include "../UIManager.h"
 #include "WBItemSlot.h"

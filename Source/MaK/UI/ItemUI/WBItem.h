@@ -6,9 +6,7 @@
 
 #include "WBItem.generated.h"
 
-class UItemDataBase;
 struct Belonging;
-struct FItemInstanceData;
 
 UCLASS()
 class UWBItem : public UUserWidget {

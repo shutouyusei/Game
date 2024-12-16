@@ -1,6 +1,5 @@
 #include "ItemComponent.h"
 #include "../../GameInstance/MyGameInstance.h"
-#include "ItemDataBase.h"
 #include "Use/ItemUseHandler.h"
 
 ItemComponent::ItemComponent() {
