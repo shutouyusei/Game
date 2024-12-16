@@ -1,9 +1,10 @@
 #include "MyGameInstance.h"
-#include "Kismet/GameplayStatics.h"
+#include "../Character/MaKCharacter.h"
 #include "../Data/Equipment/EquipmentDataBase.h"
 #include "../Data/Item/ItemDataBase.h"
 #include "Engine/Engine.h"
-//TODO: データベース等々静的にできる
+#include "Kismet/GameplayStatics.h"
+// TODO: データベース等々静的にできる
 void UMyGameInstance::Init() {
   UE_LOG(LogTemp, Warning, TEXT("UMyGameInstance"));
   SetDataBase();
@@ -27,3 +28,11 @@ UMyGameInstance *UMyGameInstance::GetInstance() {
   return instance;
 }
 
+AMaKCharacter *UMyGameInstance::playerCharacter = nullptr;
+
+void UMyGameInstance::SetPlayerCharacter() {
+  if (playerCharacter == nullptr) {
+    playerCharacter = Cast<AMaKCharacter>(
+        UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
+  }
+}

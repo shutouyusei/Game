@@ -8,11 +8,14 @@
 
 class UItemDataBase;
 class UEquipmentDataBase;
+class AMaKCharacter;
 
 UCLASS()
 class MAK_API UMyGameInstance : public UGameInstance {
   GENERATED_BODY()
 public:
+  static AMaKCharacter *playerCharacter;
+
 private:
   FStreamableManager streamableManager;
   // database
@@ -24,12 +27,13 @@ public:
   void Shutdown() override;
   //
   FStreamableManager *GetStreamableManager() { return &streamableManager; };
-  //databaase
+  // databaase
   UItemDataBase *GetItemDataBase() { return itemDataBase; };
   UEquipmentDataBase *GetEquipmentDataBase() { return equipmentDataBase; };
-  //NOTE:静的関数 どこからでも呼び出せるインスタンスの取得
+  // NOTE:静的関数 どこからでも呼び出せるインスタンスの取得
   static UMyGameInstance *GetInstance();
 
 private:
   void SetDataBase();
+  void SetPlayerCharacter();
 };
