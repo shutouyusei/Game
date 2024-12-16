@@ -1,7 +1,6 @@
 // Copyright Epic Games, Inc. All Rights Reserved.
 
 #include "MaKGameMode.h"
-#include "../Data/Item/ItemComponent.h"
 #include "../GameInstance/MyGameInstance.h"
 #include "../UI/UIManager.h"
 #include "Blueprint/WidgetBlueprintLibrary.h"
@@ -22,5 +21,4 @@ void AMaKGameMode::BeginPlay() {
   // UI
   uiManager_ = new UIManager();
   // item component
-  itemComponent_ = new ItemComponent();
 }

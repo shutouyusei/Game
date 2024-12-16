@@ -6,14 +6,12 @@
 #include "WBItemSlot.h"
 
 void UWBItem::SetItemSlots() {
-  // AMaKCharacter *character =
-  //     UMyGameInstance::GetInstance()->GetPlayerCharacter();
-  // UserBelongings *belongings =
-  // character->GetItemComponent()->GetBelongings(); Get belonging
-  // instances(所持アイテム) create item slot widget
-  // for (Belonging &belonging : belongings->userBelongings_) {
-  //   AddItemSlot(belonging);
-  // }
+  ItemComponent *itemComponent =
+      UMyGameInstance::GetInstance()->GetItemComponent();
+  UserBelongings *belongings = itemComponent->GetUserBelongings();
+  for (Belonging &belonging : belongings->userBelongings_) {
+    AddItemSlot(belonging);
+  }
 }
 // TODO:Create BP WBItem and check if it is working
 

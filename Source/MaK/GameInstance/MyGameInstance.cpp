@@ -1,7 +1,7 @@
 #include "MyGameInstance.h"
 #include "../Character/MaKCharacter.h"
 #include "../Data/Equipment/EquipmentDataBase.h"
-#include "../Data/Item/ItemDataBase.h"
+#include "../Data/Item/ItemComponent.h"
 #include "Engine/Engine.h"
 #include "Kismet/GameplayStatics.h"
 
@@ -13,6 +13,7 @@ void UMyGameInstance::Init() {
   instance_ = this;
   SetDataBase();
   SetPlayerCharacter();
+  SetItemComponent();
 }
 
 void UMyGameInstance::Shutdown() {}
@@ -28,6 +29,10 @@ void UMyGameInstance::SetPlayerCharacter() {
     playerCharacter_ = Cast<AMaKCharacter>(
         UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
   }
+}
+void UMyGameInstance::SetItemComponent() {
+  itemComponent_ = new ItemComponent();
+  // TODO:セーブデータから所持品読み込み
 }
 
 UMyGameInstance *UMyGameInstance::GetInstance() {

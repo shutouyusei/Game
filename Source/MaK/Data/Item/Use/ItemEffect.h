@@ -1,4 +1,6 @@
+#pragma once
 #include "CoreMinimal.h"
+
 struct lua_State;
 
 class ItemEffect {

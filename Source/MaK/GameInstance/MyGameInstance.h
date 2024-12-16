@@ -6,6 +6,7 @@
 
 #include "MyGameInstance.generated.h"
 
+class ItemComponent;
 class UItemDataBase;
 class UEquipmentDataBase;
 class AMaKCharacter;
@@ -23,6 +24,8 @@ public:
   UEquipmentDataBase *GetEquipmentDataBase() { return equipmentDataBase_; };
   // player character
   AMaKCharacter *GetPlayerCharacter() { return playerCharacter_; };
+  // itemcomponent
+  ItemComponent *GetItemComponent() { return itemComponent_; };
 
   // NOTE:静的関数 どこからでも呼び出せるインスタンスの取得
   static UMyGameInstance *GetInstance();
@@ -30,6 +33,7 @@ public:
 private:
   void SetDataBase();
   void SetPlayerCharacter();
+  void SetItemComponent();
 
 public:
 private:
@@ -39,6 +43,8 @@ private:
   TObjectPtr<UEquipmentDataBase> equipmentDataBase_;
   // player character
   AMaKCharacter *playerCharacter_;
+  // itemcomponent
+  ItemComponent *itemComponent_;
   // static instance
   static UMyGameInstance *instance_;
 };
