@@ -6,10 +6,10 @@ class LuaHandler;
 struct lua_State;
 struct luaL_Reg;
 
-class UseItemHandler {
+class ItemUseHandler {
 public:
-  UseItemHandler();
-  ~UseItemHandler();
+  ItemUseHandler();
+  ~ItemUseHandler();
   bool Use(const FString luaPath);
 
 private:

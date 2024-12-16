@@ -7,17 +7,18 @@
 #include "WBItemSlot.h"
 
 void UWBItem::SetItemSlots() {
-  AMaKCharacter *character =
-      UMyGameInstance::GetInstance()->GetPlayerCharacter();
-  Belongings *belongings = character->GetItemComponent()->GetBelongings();
-  // Get belonging instances(所持アイテム)
-  // create item slot widget
-  for (FBelonging &belonging : belongings->belongings) {
-    AddItemSlot(belonging);
-  }
+  // AMaKCharacter *character =
+  //     UMyGameInstance::GetInstance()->GetPlayerCharacter();
+  // UserBelongings *belongings =
+  // character->GetItemComponent()->GetBelongings(); Get belonging
+  // instances(所持アイテム) create item slot widget
+  // for (Belonging &belonging : belongings->userBelongings_) {
+  //   AddItemSlot(belonging);
+  // }
 }
+// TODO:Create BP WBItem and check if it is working
 
-void UWBItem::AddItemSlot(FBelonging &belonging) {
+void UWBItem::AddItemSlot(Belonging &belonging) {
   // NOTE:blueprint path
   // Set data to item slot widget
   const FString WBItemSlotPath = TEXT("a");

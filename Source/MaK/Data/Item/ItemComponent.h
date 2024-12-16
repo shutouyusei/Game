@@ -1,36 +1,26 @@
 #pragma once
 
 #include "../Belonging.h"
-#include "Components/ActorComponent.h"
 #include "CoreMinimal.h"
-#include "ItemComponent.generated.h"
 
 class UItemDataBase;
-class AMaKCharacter;
-class UseItemHandler;
-struct FBelonging;
+class ItemUseHandler;
+struct Belonging;
 
-UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
-class MAK_API UItemComponent : public UActorComponent {
-  GENERATED_BODY()
+class ItemComponent {
 public:
   // setup
-  UItemComponent();
-  void SetUpItemComponent(AMaKCharacter *character);
-  ~UItemComponent();
-  // BeginPlay
-  void BeginPlay() override;
+  ItemComponent();
+  ~ItemComponent();
   // setupbelongings
   void SetUpBelongings();
   // get belongings
-  Belongings *GetBelongings() { return belongings_; }
+  UserBelongings *GetUserBelongings() { return userBelongings_; }
   // Use
   void UseItem(const int id);
 
 private:
 private:
-  Belongings *belongings_;
-  UItemDataBase *itemDataBase_;
-  TObjectPtr<AMaKCharacter> owner_;
-  UseItemHandler *useItemHandler_;
+  UserBelongings *userBelongings_;
+  ItemUseHandler *useItemHandler_;
 };

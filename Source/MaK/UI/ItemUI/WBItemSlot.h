@@ -4,9 +4,9 @@
 #include "CoreMinimal.h"
 #include "WBItemSlot.generated.h"
 
-struct FBelonging;
 struct FItemInstanceData;
-class UItemComponent;
+class ItemComponent;
+struct Belonging;
 
 UCLASS()
 class UWBItemSlot : public UUserWidget {
@@ -15,12 +15,12 @@ public:
   UFUNCTION(BlueprintCallable)
   void UseItem();
 
-  void SetItemDetails(FBelonging &belongingData,
+  void SetItemDetails(Belonging &belongingData,
                       const FItemInstanceData *itemInstanceData);
 
   void SetItemSlotData(int id, int num, FItemInstanceData itemInstanceData);
 
 private:
-  FBelonging *belonging_;
-  UItemComponent *itemComponent_;
+  Belonging *belonging_;
+  ItemComponent *itemComponent_;
 };

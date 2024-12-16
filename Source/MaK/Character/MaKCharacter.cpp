@@ -2,7 +2,6 @@
 
 #include "MaKCharacter.h"
 #include "../Data/Equipment/EquipmentComponent.h"
-#include "../Data/Item/ItemComponent.h"
 #include "../GameInstance/MyGameInstance.h"
 #include "../Stats/StatsComponent.h"
 #include "Camera/CameraComponent.h"
@@ -63,10 +62,6 @@ AMaKCharacter::AMaKCharacter() {
   // Note: The skeletal mesh and anim blueprint references on the Mesh component
   // (inherited from Character) are set in the derived blueprint asset named
   // ThirdPersonCharacter (to avoid direct content references in C++)
-
-  // ItemComponent
-  ItemComponent = CreateDefaultSubobject<UItemComponent>(TEXT("ItemComponent"));
-  ItemComponent->SetUpItemComponent(this);
 
   // EquipmentComponent
   EquipmentComponent =

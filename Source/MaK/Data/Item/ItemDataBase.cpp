@@ -4,13 +4,6 @@
 #include "Engine/StreamableManager.h"
 #include "Kismet/GameplayStatics.h"
 #include "Struct/ItemClassificationData.h"
-#include "Struct/ItemInstanceData.h"
-
-#define ABILITY_PATH "/Game/Data/Item/DT_AbilityBookData.DT_AbilityBookData"
-#define IMPORTANT_PATH "/Game/Data/Item/DT_ImportantData.DT_ImportantData"
-#define ITEM_PATH "/Game/Data/Item/DT_ItemData.DT_ItemData"
-#define MATERIAL_PATH "/Game/Data/Item/DT_MaterialData.DT_MaterialData"
-#define USEABLE_PATH "/Game/Data/Item/DT_UseableData.DT_UseableData"
 
 // Fetch Data from PrimaryID
 
@@ -46,6 +39,12 @@ void UItemDataBase::BeginPlay(UMyGameInstance *game) {
       FStreamableDelegate::CreateUObject(this, &UItemDataBase::LoadData));
 }
 // private
+#define ABILITY_PATH "/Game/Data/Item/DT_AbilityBookData.DT_AbilityBookData"
+#define IMPORTANT_PATH "/Game/Data/Item/DT_ImportantData.DT_ImportantData"
+#define ITEM_PATH "/Game/Data/Item/DT_ItemData.DT_ItemData"
+#define MATERIAL_PATH "/Game/Data/Item/DT_MaterialData.DT_MaterialData"
+#define USEABLE_PATH "/Game/Data/Item/DT_UseableData.DT_UseableData"
+
 void UItemDataBase::LoadPath() {
   paths.Add(FSoftObjectPath(ABILITY_PATH));
   paths.Add(FSoftObjectPath(IMPORTANT_PATH));
@@ -55,43 +54,19 @@ void UItemDataBase::LoadPath() {
 }
 
 void UItemDataBase::LoadData() {
-  LoadAbilityBookData();
-  LoadImportantData();
-  LoadItemClassificationData();
-  LoadMaterialData();
-  LoadUseableData();
+  abilityBookData = LoadDataTable(paths[0]);
+  importantData = LoadDataTable(paths[1]);
+  itemData = LoadDataTable(paths[2]);
+  materialData = LoadDataTable(paths[3]);
+  useableData = LoadDataTable(paths[4]);
   UE_LOG(LogTemp, Warning, TEXT("[ItemDataBase]LoadData"));
   streamableHandle.Reset();
 }
 
-void UItemDataBase::LoadAbilityBookData() {
-  TSoftObjectPtr<UDataTable> abilityDataPtr;
-  abilityDataPtr = TSoftObjectPtr<UDataTable>(paths[0]).Get();
-  abilityBookData = abilityDataPtr.Get();
-}
-
-void UItemDataBase::LoadImportantData() {
-  TSoftObjectPtr<UDataTable> importantDataPtr;
-  importantDataPtr = TSoftObjectPtr<UDataTable>(paths[1]).Get();
-  importantData = importantDataPtr.Get();
-}
-
-void UItemDataBase::LoadItemClassificationData() {
-  TSoftObjectPtr<UDataTable> itemDataPtr;
-  itemDataPtr = TSoftObjectPtr<UDataTable>(paths[2]).Get();
-  itemData = itemDataPtr.Get();
-}
-
-void UItemDataBase::LoadMaterialData() {
-  TSoftObjectPtr<UDataTable> materialDataPtr;
-  materialDataPtr = TSoftObjectPtr<UDataTable>(paths[3]).Get();
-  materialData = materialDataPtr.Get();
-}
-
-void UItemDataBase::LoadUseableData() {
-  TSoftObjectPtr<UDataTable> useableDataPtr;
-  useableDataPtr = TSoftObjectPtr<UDataTable>(paths[4]).Get();
-  useableData = useableDataPtr.Get();
+UDataTable *UItemDataBase::LoadDataTable(FSoftObjectPath path) {
+  TSoftObjectPtr<UDataTable> dataPtr;
+  dataPtr = TSoftObjectPtr<UDataTable>(path).Get();
+  return dataPtr.Get();
 }
 
 const FItemClassificationData *

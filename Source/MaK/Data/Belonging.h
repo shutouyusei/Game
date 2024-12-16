@@ -2,19 +2,12 @@
 
 #include "CoreMinimal.h"
 
-#include "Belonging.generated.h"
-
-USTRUCT(BlueprintType)
-struct FBelonging {
-  GENERATED_USTRUCT_BODY()
-public:
-  UPROPERTY(EditAnywhere, BlueprintReadWrite)
+struct Belonging {
   int id;
-  UPROPERTY(EditAnywhere, BlueprintReadWrite)
   int num;
 };
 
-class Belongings {
+class UserBelongings {
 public:
   // Set
   // setはアイテムの増減のみで許される
@@ -22,7 +15,8 @@ public:
   void DecreaseBelongings(int id, int num);
   // Get
 
-  TArray<FBelonging> belongings;
+  TArray<Belonging> userBelongings_;
+
 private:
   void AddBelongings(int id, int num);
   void RemoveBelongings(int index);

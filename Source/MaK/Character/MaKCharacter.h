@@ -13,7 +13,6 @@ class UEquipmentComponent;
 class UInputMappingContext;
 class UStatsComponent;
 class UInputAction;
-class UItemComponent;
 struct FInputActionValue;
 
 DECLARE_LOG_CATEGORY_EXTERN(LogTemplateCharacter, Log, All);
@@ -27,11 +26,6 @@ private:
   UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera,
             meta = (AllowPrivateAccess = "true"))
   USpringArmComponent *CameraBoom;
-
-  /** ItemComponent */
-  UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Item,
-            meta = (AllowPrivateAccess = "true"))
-  UItemComponent *ItemComponent;
 
   /** EquipmentComponent */
   UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Equipment,
@@ -70,7 +64,6 @@ private:
 public:
   AMaKCharacter();
   ~AMaKCharacter();
-  UItemComponent *GetItemComponent() const { return ItemComponent; };
   UStatsComponent *GetStatsComponent() const { return StatsComponent; };
   UEquipmentComponent *GetEquipmentComponent() const {
     return EquipmentComponent;

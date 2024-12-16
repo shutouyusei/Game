@@ -10,6 +10,7 @@
 class UDataTable;
 class UMyGameInstance;
 struct FStreamableHandle;
+struct FItemClassificationData;
 
 UCLASS()
 class UItemDataBase : public UObject {
@@ -26,11 +27,7 @@ public:
 private:
   void LoadPath();
   void LoadData();
-  void LoadAbilityBookData();
-  void LoadImportantData();
-  void LoadItemClassificationData();
-  void LoadMaterialData();
-  void LoadUseableData();
+  UDataTable *LoadDataTable(FSoftObjectPath path);
 
   const FItemInstanceData *
   FetchItemInstanceData(const int primaryID,

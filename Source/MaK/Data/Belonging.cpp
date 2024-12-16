@@ -1,7 +1,7 @@
 #include "Belonging.h"
 
-void Belongings::IncreaseBelongings(int id, int num) {
-  for (FBelonging &belonging : belongings) {
+void UserBelongings::IncreaseBelongings(int id, int num) {
+  for (Belonging &belonging : userBelongings_) {
     if (id == belonging.id) {
       belonging.num += num;
       return;
@@ -10,9 +10,9 @@ void Belongings::IncreaseBelongings(int id, int num) {
   AddBelongings(id, num);
 }
 
-void Belongings::DecreaseBelongings(int id, int num) {
+void UserBelongings::DecreaseBelongings(int id, int num) {
   int index = 0;
-  for (FBelonging &belonging : belongings) {
+  for (Belonging &belonging : userBelongings_) {
     if (id == belonging.id) {
       if (num < belonging.num) {
         belonging.num -= num;
@@ -26,8 +26,10 @@ void Belongings::DecreaseBelongings(int id, int num) {
   UE_LOG(LogTemp, Warning, TEXT("[Belongings]DecreaseBelongings: fail"));
 }
 
-void Belongings::AddBelongings(int id, int num) {
-  belongings.Add(FBelonging(id, num));
+void UserBelongings::AddBelongings(int id, int num) {
+  userBelongings_.Add(Belonging(id, num));
 }
 
-void Belongings::RemoveBelongings(int index) { belongings.RemoveAt(index); }
+void UserBelongings::RemoveBelongings(int index) {
+  userBelongings_.RemoveAt(index);
+}

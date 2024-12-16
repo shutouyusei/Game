@@ -7,6 +7,7 @@
 #include "WBItem.generated.h"
 
 class UItemDataBase;
+struct Belonging;
 struct FItemInstanceData;
 
 UCLASS()
@@ -16,10 +17,11 @@ public:
   // UI
   void SetItemSlots();
 
-  void AddItemSlot(FBelonging &belonging);
+  void AddItemSlot(Belonging &belonging);
   void RemoveItemSlot();
 
 private:
+public:
 private:
   TArray<UWBItemSlot *> itemSlotWidgets_;
 };

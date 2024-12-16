@@ -3,7 +3,7 @@
 #include "../../Data/Item/ItemComponent.h"
 #include "../../GameInstance/MyGameInstance.h"
 
-void UWBItemSlot::SetItemDetails(FBelonging &belongingData,
+void UWBItemSlot::SetItemDetails(Belonging &belongingData,
                                  const FItemInstanceData *itemInstanceData) {
   // set method
   belonging_ = &belongingData;
@@ -11,7 +11,7 @@ void UWBItemSlot::SetItemDetails(FBelonging &belongingData,
   // get item component from player character
   AMaKCharacter *character =
       UMyGameInstance::GetInstance()->GetPlayerCharacter();
-  itemComponent_ = character->GetItemComponent();
+  // itemComponent_ = character->GetItemComponent();
 }
 
 void UWBItemSlot::UseItem() { itemComponent_->UseItem(belonging_->id); }

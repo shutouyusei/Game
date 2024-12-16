@@ -8,7 +8,6 @@
 // init static variable
 UMyGameInstance *UMyGameInstance::instance_ = nullptr;
 
-// TODO: データベース等々静的にできる
 void UMyGameInstance::Init() {
   UE_LOG(LogTemp, Warning, TEXT("UMyGameInstance"));
   instance_ = this;
