@@ -17,7 +17,6 @@
 
 DEFINE_LOG_CATEGORY(LogTemplateCharacter);
 
-AMaKCharacter *AMaKCharacter::character_ = nullptr;
 //////////////////////////////////////////////////////////////////////////
 // AMaKCharacter
 AMaKCharacter::AMaKCharacter() {
@@ -77,11 +76,9 @@ AMaKCharacter::AMaKCharacter() {
   // StatsComponent
   StatsComponent =
       CreateDefaultSubobject<UStatsComponent>(TEXT("StatsComponent"));
-  // WARNING: 静的関数で必ず動くかわからない
-  AMaKCharacter::character_ = this;
 }
 
-AMaKCharacter::~AMaKCharacter() { AMaKCharacter::character_ = nullptr; }
+AMaKCharacter::~AMaKCharacter() {}
 
 //////////////////////////////////////////////////////////////////////////
 // Input

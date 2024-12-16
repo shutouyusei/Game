@@ -4,35 +4,33 @@
 #include "../Data/Item/ItemDataBase.h"
 #include "Engine/Engine.h"
 #include "Kismet/GameplayStatics.h"
+
+// init static variable
+UMyGameInstance *UMyGameInstance::instance_ = nullptr;
+
 // TODO: データベース等々静的にできる
 void UMyGameInstance::Init() {
   UE_LOG(LogTemp, Warning, TEXT("UMyGameInstance"));
+  instance_ = this;
   SetDataBase();
-}
-void UMyGameInstance::SetDataBase() {
-  itemDataBase = NewObject<UItemDataBase>();
-  itemDataBase->BeginPlay(this);
-  equipmentDataBase = NewObject<UEquipmentDataBase>();
-  equipmentDataBase->BeginPlay(this);
+  SetPlayerCharacter();
 }
 
 void UMyGameInstance::Shutdown() {}
 
-UMyGameInstance *UMyGameInstance::GetInstance() {
-  UMyGameInstance *instance = nullptr;
-  if (GEngine) {
-    FWorldContext *context =
-        GEngine->GetWorldContextFromGameViewport(GEngine->GameViewport);
-    instance = Cast<UMyGameInstance>(context->OwningGameInstance);
-  }
-  return instance;
+void UMyGameInstance::SetDataBase() {
+  itemDataBase_ = NewObject<UItemDataBase>();
+  itemDataBase_->BeginPlay(this);
+  equipmentDataBase_ = NewObject<UEquipmentDataBase>();
+  equipmentDataBase_->BeginPlay(this);
 }
-
-AMaKCharacter *UMyGameInstance::playerCharacter = nullptr;
-
 void UMyGameInstance::SetPlayerCharacter() {
-  if (playerCharacter == nullptr) {
-    playerCharacter = Cast<AMaKCharacter>(
+  if (playerCharacter_ == nullptr) {
+    playerCharacter_ = Cast<AMaKCharacter>(
         UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
   }
+}
+
+UMyGameInstance *UMyGameInstance::GetInstance() {
+  return UMyGameInstance::instance_;
 }

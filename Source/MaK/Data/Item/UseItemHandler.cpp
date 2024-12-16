@@ -1,9 +1,10 @@
 #include "UseItemHandler.h"
 #include "../../Character/MaKCharacter.h"
+#include "../../GameInstance/MyGameInstance.h"
 #include "../../LuaHandler/LuaHandler.h"
 #include "../../Stats/StatsComponent.h"
 
-UseItemHandler::UseItemHandler(AMaKCharacter *ch) { owner_ = ch; }
+UseItemHandler::UseItemHandler() {}
 
 UseItemHandler::~UseItemHandler() {}
 
@@ -40,12 +41,12 @@ void UseItemHandler::SetFunctions(LuaHandler *luaHandler) {
   luaHandler->SetFunctionsForLua("UseItemHandler", functions, size);
 }
 
-AMaKCharacter *UseItemHandler::owner_ = nullptr;
-
 // static functions
 int UseItemHandler::Test(lua_State *L) {
   float var1 = luaL_checknumber(L, 1);
-  UseItemHandler::owner_->GetStatsComponent()->GetStatsHandler()->test();
+  AMaKCharacter *character =
+      UMyGameInstance::GetInstance()->GetPlayerCharacter();
+  character->GetStatsComponent()->GetStatsHandler()->test();
   UE_LOG(LogTemp, Warning, TEXT("[UseItemHandler]Heal: %f"), var1);
   return 1;
 }

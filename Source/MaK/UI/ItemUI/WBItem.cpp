@@ -6,12 +6,13 @@
 #include "../UIManager.h"
 #include "WBItemSlot.h"
 
-void UWBItem::SetUpWBItem(AMaKCharacter *ch) {
+void UWBItem::SetUpWBItem() {
   itemDataBase_ = UMyGameInstance::GetInstance()->GetItemDataBase();
 }
 
 void UWBItem::SetItemSlots() {
-  AMaKCharacter *character = AMaKCharacter::character_;
+  AMaKCharacter *character =
+      UMyGameInstance::GetInstance()->GetPlayerCharacter();
   Belongings *belongings = character->GetItemComponent()->GetBelongings();
   // Get belonging instances(所持アイテム)
   // create item slot widget

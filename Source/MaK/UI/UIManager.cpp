@@ -1,5 +1,6 @@
 #include "UIManager.h"
 #include "../Character/MaKCharacter.h"
+#include "../GameInstance/MyGameInstance.h"
 #include "../UI/ItemUI/WBItem.h"
 #include "../UI/ItemUI/WBItemSlot.h"
 #include "Blueprint/WidgetBlueprintLibrary.h"
@@ -11,15 +12,16 @@ UIManager::UIManager(AMaKCharacter *character) { character_ = character; }
 void UIManager::SetItemUI() {
   const FString path = TEXT("/Game/UI/WBItem.WBItem_C");
   UWBItem *wbItemInstance = CreateUI<UWBItem>(path);
-  wbItemInstance->SetUpWBItem(character_);
+  wbItemInstance->SetUpWBItem();
   wbItemInstance->AddToViewport(0);
 }
 
-//明示的宣言
+// 明示的宣言
 template UWBItemSlot *UIManager::CreateUI<UWBItemSlot>(const FString &path);
 
 template <typename T> T *UIManager::CreateUI(const FString &path) {
-  AMaKCharacter *character = AMaKCharacter::character_;
+  AMaKCharacter *character =
+      UMyGameInstance::GetInstance()->GetPlayerCharacter();
 
   TSubclassOf<UUserWidget> widgetClass =
       TSoftClassPtr<UUserWidget>(FSoftObjectPath(*path)).LoadSynchronous();

@@ -6,7 +6,6 @@
 
 #include "WBItem.generated.h"
 
-class AMaKCharacter;
 class UItemDataBase;
 struct FItemInstanceData;
 
@@ -15,7 +14,7 @@ class UWBItem : public UUserWidget {
   GENERATED_BODY()
 public:
   // setup
-  void SetUpWBItem(AMaKCharacter *ch);
+  void SetUpWBItem();
 
   // UI
   void SetItemSlots();
@@ -26,5 +25,5 @@ public:
 private:
 private:
   UItemDataBase *itemDataBase_;
-  TArray<UWBItemSlot*> itemSlotWidgets_;
+  TArray<UWBItemSlot *> itemSlotWidgets_;
 };

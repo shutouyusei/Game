@@ -6,12 +6,12 @@
 
 struct FBelonging;
 struct FItemInstanceData;
+class UItemComponent;
 
 UCLASS()
 class UWBItemSlot : public UUserWidget {
   GENERATED_BODY()
 public:
-
   UFUNCTION(BlueprintCallable)
   void UseItem();
 
@@ -22,4 +22,5 @@ public:
 
 private:
   FBelonging *belonging_;
+  UItemComponent *itemComponent_;
 };

@@ -11,7 +11,7 @@ UItemComponent::~UItemComponent() {}
 // NOTE:this function must call after create this component in character
 void UItemComponent::SetUpItemComponent(AMaKCharacter *character) {
   owner_ = character;
-  useItemHandler_ = new UseItemHandler(character);
+  useItemHandler_ = new UseItemHandler();
 }
 
 void UItemComponent::SetUpBelongings() {
