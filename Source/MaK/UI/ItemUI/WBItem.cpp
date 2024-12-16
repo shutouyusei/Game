@@ -6,10 +6,6 @@
 #include "../UIManager.h"
 #include "WBItemSlot.h"
 
-void UWBItem::SetUpWBItem() {
-  itemDataBase_ = UMyGameInstance::GetInstance()->GetItemDataBase();
-}
-
 void UWBItem::SetItemSlots() {
   AMaKCharacter *character =
       UMyGameInstance::GetInstance()->GetPlayerCharacter();
@@ -27,8 +23,11 @@ void UWBItem::AddItemSlot(FBelonging &belonging) {
   const FString WBItemSlotPath = TEXT("a");
   UWBItemSlot *itemSlotWidget =
       UIManager::CreateUI<UWBItemSlot>(WBItemSlotPath);
-  const FItemInstanceData *itemInstance =
-      itemDataBase_->FetchItem(belonging.id);
+  // Get item Data Base
+  UItemDataBase *itemDataBase =
+      UMyGameInstance::GetInstance()->GetItemDataBase();
+  // Fetch item
+  const FItemInstanceData *itemInstance = itemDataBase->FetchItem(belonging.id);
 
   itemSlotWidget->SetItemDetails(belonging, itemInstance);
   itemSlotWidgets_.Add(itemSlotWidget);

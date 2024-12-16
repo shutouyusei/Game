@@ -7,12 +7,12 @@
 #include "Kismet/GameplayStatics.h"
 #include "UObject/ConstructorHelpers.h"
 
-UIManager::UIManager(AMaKCharacter *character) { character_ = character; }
+UIManager::UIManager() {}
 
 void UIManager::SetItemUI() {
+  // UWBItem
   const FString path = TEXT("/Game/UI/WBItem.WBItem_C");
   UWBItem *wbItemInstance = CreateUI<UWBItem>(path);
-  wbItemInstance->SetUpWBItem();
   wbItemInstance->AddToViewport(0);
 }
 

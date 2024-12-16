@@ -13,9 +13,6 @@ UCLASS()
 class UWBItem : public UUserWidget {
   GENERATED_BODY()
 public:
-  // setup
-  void SetUpWBItem();
-
   // UI
   void SetItemSlots();
 
@@ -24,6 +21,5 @@ public:
 
 private:
 private:
-  UItemDataBase *itemDataBase_;
   TArray<UWBItemSlot *> itemSlotWidgets_;
 };
