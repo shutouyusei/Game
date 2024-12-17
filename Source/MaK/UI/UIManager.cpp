@@ -11,20 +11,21 @@ UIManager::UIManager() {}
 
 void UIManager::SetItemUI() {
   // UWBItem
-  const FString path = TEXT("/Game/UI/WBItem.WBItem_C");
+  UE_LOG(LogTemp, Warning, TEXT("SetItemUI"));
+  const FString path = TEXT("/Game/UI/UWBItem.UWBItem_C");
   UWBItem *wbItemInstance = CreateUI<UWBItem>(path);
-  wbItemInstance->AddToViewport(0);
+  // wbItemInstance->AddToViewport(0);
 }
 
 // 明示的宣言
 template UWBItemSlot *UIManager::CreateUI<UWBItemSlot>(const FString &path);
 
 template <typename T> T *UIManager::CreateUI(const FString &path) {
+  TSubclassOf<UUserWidget> widgetClass =
+      TSoftClassPtr<UUserWidget>(FSoftObjectPath(*path)).LoadSynchronous();
   AMaKCharacter *character =
       UMyGameInstance::GetInstance()->GetPlayerCharacter();
 
-  TSubclassOf<UUserWidget> widgetClass =
-      TSoftClassPtr<UUserWidget>(FSoftObjectPath(*path)).LoadSynchronous();
   APlayerController *playerController =
       UGameplayStatics::GetPlayerController(character, 0);
   if (widgetClass && playerController) {

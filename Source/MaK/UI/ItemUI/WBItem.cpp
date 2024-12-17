@@ -18,7 +18,7 @@ void UWBItem::SetItemSlots() {
 void UWBItem::AddItemSlot(Belonging &belonging) {
   // NOTE:blueprint path
   // Set data to item slot widget
-  const FString WBItemSlotPath = TEXT("a");
+  const FString WBItemSlotPath = TEXT("/Game/UI/UWBItemSlot.UWBItemSlot_C");
   UWBItemSlot *itemSlotWidget =
       UIManager::CreateUI<UWBItemSlot>(WBItemSlotPath);
   // Get item Data Base

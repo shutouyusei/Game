@@ -18,8 +18,10 @@ public:
   void AddItemSlot(Belonging &belonging);
   void RemoveItemSlot();
 
+  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI")
+  TArray<UWBItemSlot *> itemSlotWidgets_;
+
 private:
 public:
 private:
-  TArray<UWBItemSlot *> itemSlotWidgets_;
 };

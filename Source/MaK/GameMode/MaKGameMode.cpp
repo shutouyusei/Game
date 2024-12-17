@@ -20,5 +20,6 @@ void AMaKGameMode::BeginPlay() {
   Super::BeginPlay();
   // UI
   uiManager_ = new UIManager();
+  uiManager_->SetItemUI();
   // item component
 }

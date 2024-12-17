@@ -11,9 +11,9 @@ UMyGameInstance *UMyGameInstance::instance_ = nullptr;
 void UMyGameInstance::Init() {
   UE_LOG(LogTemp, Warning, TEXT("UMyGameInstance"));
   instance_ = this;
-  SetDataBase();
   SetPlayerCharacter();
   SetItemComponent();
+  SetDataBase();
 }
 
 void UMyGameInstance::Shutdown() {}
@@ -25,9 +25,11 @@ void UMyGameInstance::SetDataBase() {
   equipmentDataBase_->BeginPlay(this);
 }
 void UMyGameInstance::SetPlayerCharacter() {
-  if (playerCharacter_ == nullptr) {
-    playerCharacter_ = Cast<AMaKCharacter>(
-        UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
+  //WARNING::GetPlayerCharacter()はゲーム開始時にはnullptrを返す
+  playerCharacter_ =
+      Cast<AMaKCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
+  if (!playerCharacter_) {
+    UE_LOG(LogTemp, Warning, TEXT("playerCharacter_ is nullptr"));
   }
 }
 void UMyGameInstance::SetItemComponent() {
