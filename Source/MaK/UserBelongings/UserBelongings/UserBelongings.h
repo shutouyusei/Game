@@ -2,21 +2,21 @@
 
 class DataBase;
 
-struct Belonging {
+struct BelongingAmount {
   int id;
   int amount;
 };
 
 class UserBelongings {
 public:
-  UserBelongings(TArray<Belonging> &belongings, DataBase *dataBase);
+  UserBelongings(TArray<BelongingAmount> &belongings, DataBase *dataBase);
   virtual ~UserBelongings();
   void Increase(int id, int amount);
   void Decrease(int id, int amount);
   virtual void Use(int id);
   virtual void Use(const char *name);
-  //get
-  TArray<Belonging> GetBelonging() { return belongings_; }
+  // get
+  TArray<BelongingAmount> GetBelonging() { return belongingAmount_; }
   DataBase *GetDataBase() { return dataBase_; }
 
 protected:
@@ -24,6 +24,6 @@ protected:
   void Remove(int index);
 
 private:
-  TArray<Belonging> belongings_;
+  TArray<BelongingAmount> belongingAmount_;
   DataBase *dataBase_;
 };

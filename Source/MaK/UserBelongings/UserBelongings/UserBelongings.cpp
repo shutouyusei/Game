@@ -1,13 +1,15 @@
 #include "UserBelongings.h"
-#include "CoreMinimal.h"
 #include "../DataBase/DataBase.h"
+#include "CoreMinimal.h"
 
-UserBelongings::UserBelongings(TArray<Belonging> &belonging, DataBase *DataBase): belongings_(belonging), dataBase_(DataBase) {};
+UserBelongings::UserBelongings(TArray<BelongingAmount> &belonging,
+                               DataBase *DataBase)
+    : belongingAmount_(belonging), dataBase_(DataBase) {};
 
 UserBelongings::~UserBelongings() {};
 
 void UserBelongings::Increase(int id, int amount) {
-  for (Belonging &belonging : belongings_) {
+  for (BelongingAmount &belonging : belongingAmount_) {
     if (id == belonging.id) {
       belonging.amount += amount;
       return;
@@ -18,7 +20,7 @@ void UserBelongings::Increase(int id, int amount) {
 
 void UserBelongings::Decrease(int id, int amount) {
   int index = 0;
-  for (Belonging &belonging : belongings_) {
+  for (BelongingAmount &belonging : belongingAmount_) {
     if (id == belonging.id) {
       if (amount < belonging.amount) {
         belonging.amount -= amount;
@@ -32,10 +34,10 @@ void UserBelongings::Decrease(int id, int amount) {
 }
 
 void UserBelongings::Add(int id, int amount) {
-  belongings_.Add(Belonging(id, amount));
+  belongingAmount_.Add(BelongingAmount(id, amount));
 }
 
-void UserBelongings::Remove(int index) { belongings_.RemoveAt(index); }
+void UserBelongings::Remove(int index) { belongingAmount_.RemoveAt(index); }
 
 void UserBelongings::Use(int id) {}
 

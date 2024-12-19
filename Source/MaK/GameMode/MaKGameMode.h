@@ -7,7 +7,6 @@
 
 #include "MaKGameMode.generated.h"
 
-class UIManager;
 UCLASS(minimalapi)
 class AMaKGameMode : public AGameModeBase {
   GENERATED_BODY()
@@ -24,5 +23,4 @@ public:
   // UI
 
 protected:
-  UIManager *uiManager_;
 };

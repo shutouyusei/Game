@@ -9,9 +9,7 @@
 
 class USpringArmComponent;
 class UCameraComponent;
-class UEquipmentComponent;
 class UInputMappingContext;
-class UStatsComponent;
 class UInputAction;
 struct FInputActionValue;
 
@@ -27,15 +25,6 @@ private:
             meta = (AllowPrivateAccess = "true"))
   USpringArmComponent *CameraBoom;
 
-  /** EquipmentComponent */
-  UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Equipment,
-            meta = (AllowPrivateAccess = "true"))
-  UEquipmentComponent *EquipmentComponent;
-
-  /** StatesComponent */
-  UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Stats,
-            meta = (AllowPrivateAccess = "true"))
-  UStatsComponent *StatsComponent;
   /** Follow camera */
   UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera,
             meta = (AllowPrivateAccess = "true"))
@@ -64,10 +53,6 @@ private:
 public:
   AMaKCharacter();
   ~AMaKCharacter();
-  UStatsComponent *GetStatsComponent() const { return StatsComponent; };
-  UEquipmentComponent *GetEquipmentComponent() const {
-    return EquipmentComponent;
-  };
 
 protected:
   virtual void BeginPlay() override;

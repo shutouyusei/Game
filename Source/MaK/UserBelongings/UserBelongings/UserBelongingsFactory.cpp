@@ -8,7 +8,8 @@
 
 UserBelongings *UserBelongingsFactory::CreateBelongings() {
 #ifdef TEST
-  TArray<Belonging> belongings = {Belonging(1, 1), Belonging(2, 2)};
+  TArray<BelongingAmount> belongings = {BelongingAmount(1, 1),
+                                        BelongingAmount(2, 2)};
   DataBase *dataBase = new DataBase();
   return new UserBelongings(belongings, dataBase);
 #else
