@@ -1,8 +1,8 @@
 #pragma once
-#include "../DataBaseFactory.h"
-class DataBase;
+#include "../DataBase.h"
+#include "ItemData.h"
 
-class ItemDataBaseFactory : public DataBaseFactory {
+class ItemDataBaseFactory {
 public:
-  virtual DataBase *Create() override;
+  DataBase<FItemData> *Create();
 };

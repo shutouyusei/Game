@@ -1,9 +1,11 @@
 #include "ItemDataBaseFactory.h"
-#include "CoreMinimal.h"
-#include "Engine/DataTable.h"
 
-DataBase *ItemDataBaseFactory::Create() {
-  UDataTable *table = LoadObject<UDataTable>(
-      nullptr, TEXT("DataTable'/Game/Data/DT_ItemData.ItemData'"));
-  return new DataBase(table);
+DataBase<FItemData> *ItemDataBaseFactory::Create() {
+  const TCHAR *path = TEXT("Game/Data/ItemData.ItemData");
+  // TODO:AsyncLoad
+  UDataTable *table =
+      LoadObject<UDataTable>(nullptr, path, nullptr, LOAD_None, nullptr);
+
+  DataBase<FItemData> *dataBase = new DataBase<FItemData>(table);
+  return dataBase;
 }
