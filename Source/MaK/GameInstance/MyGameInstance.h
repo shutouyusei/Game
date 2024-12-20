@@ -6,24 +6,19 @@
 
 #include "MyGameInstance.generated.h"
 
-class UItemDataBase;
-class UEquipmentDataBase;
-
 UCLASS()
 class MAK_API UMyGameInstance : public UGameInstance {
   GENERATED_BODY()
 public:
-private:
-  FStreamableManager streamableManager;
-  TObjectPtr<UItemDataBase> itemDataBase;
-  TObjectPtr<UEquipmentDataBase> equipmentDataBase;
-public:
   void Init() override;
   void Shutdown() override;
-  FStreamableManager *GetStreamableManager() { return &streamableManager; };
-  UItemDataBase *GetItemDataBase() { return itemDataBase; };
-  UEquipmentDataBase *GetEquipmentDataBase() { return equipmentDataBase;};
-  static UMyGameInstance *GetInstance();
+  //
+  FStreamableManager *GetStreamableManager() { return &streamableManager_; };
+
 private:
-  void SetDataBase();
+public:
+private:
+  FStreamableManager streamableManager_;
+  // static instance
+  static UMyGameInstance *instance_;
 };
