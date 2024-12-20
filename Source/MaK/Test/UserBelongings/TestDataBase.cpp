@@ -14,18 +14,18 @@ bool operator==(FItemData &lhs, FItemData &rhs) {
 
 bool operator!=(FItemData &lhs, FItemData &rhs) { return !(lhs == rhs); }
 
+//  ItemDataBase
 IMPLEMENT_SIMPLE_AUTOMATION_TEST(FItemDataBaseTest, "DataBase.ItemDataBaseTest",
                                  EAutomationTestFlags::EditorContext |
                                      EAutomationTestFlags::EngineFilter)
 bool FItemDataBaseTest::RunTest(const FString &Parameters) {
   TestHelper *helper = new TestHelper();
-  // NOTE:オブジェクト追加ごとに検証
-  //  ItemDataBase
+
   DataBaseFactory *factory = new ItemDataBaseFactory();
   DataBase *itemDataBase = factory->Create();
   helper->NotNull(itemDataBase);
   // fetchTest
-  FItemData *itemData = (FItemData *)itemDataBase->FetchData(1);
+  FFetchedData *itemData = itemDataBase->FetchData(1);
   helper->NotNull(itemData);
   return helper->IsTest();
 }

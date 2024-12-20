@@ -6,6 +6,4 @@
 USTRUCT(BlueprintType)
 struct FItemData : public FFetchedData {
   GENERATED_USTRUCT_BODY()
-  FString name;
-  FString item;
 };

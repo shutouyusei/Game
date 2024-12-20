@@ -1,10 +1,13 @@
 #pragma once
 
-#include "CoreMinimal.h"
-#include "Engine/DataTable.h"
-#include "FetchedData.h"
+struct FFetchedData;
+class UDataTable;
 
 class DataBase {
 public:
-  virtual FFetchedData *FetchData(const int id) = 0;
+  DataBase(UDataTable *table) : table_(table) {}
+  FFetchedData *FetchData(const int id);
+
+private:
+  UDataTable *table_;
 };

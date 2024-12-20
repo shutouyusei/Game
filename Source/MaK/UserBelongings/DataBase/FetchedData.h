@@ -7,6 +7,8 @@
 USTRUCT(BlueprintType)
 struct FFetchedData : public FTableRowBase {
   GENERATED_USTRUCT_BODY()
+  UPROPERTY()
   FString name;
+  UPROPERTY()
   FString item;
 };
