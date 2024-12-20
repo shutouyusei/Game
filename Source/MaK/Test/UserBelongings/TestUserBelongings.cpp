@@ -1,5 +1,5 @@
-#include "../../UserBelongings/UserBelongings/UserBelongings.h"
-#include "../../UserBelongings/UserBelongings/UserBelongingsFactory.h"
+#include "../../UserBelongings/UserBelongings.h"
+#include "../../UserBelongings/UserBelongingsFactory.h"
 #include "../Test.h"
 #include "CoreMinimal.h"
 

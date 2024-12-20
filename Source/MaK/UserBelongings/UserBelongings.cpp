@@ -1,10 +1,8 @@
 #include "UserBelongings.h"
-#include "../DataBase/DataBase.h"
 #include "CoreMinimal.h"
 
-UserBelongings::UserBelongings(TArray<BelongingAmount> &belonging,
-                               DataBase *DataBase)
-    : belongingAmount_(belonging), dataBase_(DataBase) {};
+UserBelongings::UserBelongings(TArray<BelongingAmount> &belonging)
+    : belongingAmount_(belonging) {};
 
 UserBelongings::~UserBelongings() {};
 

@@ -1,7 +1,7 @@
-#include "../../UserBelongings/DataBase/DataBase.h"
-#include "../../UserBelongings/DataBase/DataBaseFactory.h"
-#include "../../UserBelongings/DataBase/Item/ItemData.h"
-#include "../../UserBelongings/DataBase/Item/ItemDataBaseFactory.h"
+#include "../../DataBase/DataBase.h"
+#include "../../DataBase/DataBaseFactory.h"
+#include "../../DataBase/Item/ItemData.h"
+#include "../../DataBase/Item/ItemDataBaseFactory.h"
 #include "../Test.h"
 
 bool operator==(FItemData &lhs, FItemData &rhs) {

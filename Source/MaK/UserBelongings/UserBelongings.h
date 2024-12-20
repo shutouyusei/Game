@@ -1,7 +1,5 @@
 #pragma once
 
-class DataBase;
-
 struct BelongingAmount {
   int id;
   int amount;
@@ -9,7 +7,7 @@ struct BelongingAmount {
 
 class UserBelongings {
 public:
-  UserBelongings(TArray<BelongingAmount> &belongings, DataBase *dataBase);
+  UserBelongings(TArray<BelongingAmount> &belongings);
   virtual ~UserBelongings();
   void Increase(int id, int amount);
   void Decrease(int id, int amount);
@@ -17,7 +15,6 @@ public:
   virtual void Use(const char *name);
   // get
   TArray<BelongingAmount> GetBelonging() { return belongingAmount_; }
-  DataBase *GetDataBase() { return dataBase_; }
 
 protected:
   void Add(int id, int amount);
@@ -25,5 +22,4 @@ protected:
 
 private:
   TArray<BelongingAmount> belongingAmount_;
-  DataBase *dataBase_;
 };
