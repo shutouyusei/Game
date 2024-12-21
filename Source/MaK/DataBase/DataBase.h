@@ -1,10 +1,15 @@
 #pragma once
+
 #include "CoreMinimal.h"
 #include "Engine/DataTable.h"
 
 template <typename T> class DataBase {
 public:
-  T *FetchData(const int id) {
+  T *AccessDataBase(const int id) {
+    if (!table_) {
+      FString msg = TEXT("[DataBase]Table is not set");
+      throw msg;
+    }
     T *data = table_->FindRow<T>(FName(*FString::FromInt(id)), "");
     return data;
   };

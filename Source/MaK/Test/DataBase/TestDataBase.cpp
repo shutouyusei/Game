@@ -8,10 +8,14 @@ IMPLEMENT_SIMPLE_AUTOMATION_TEST(FItemDataBaseTest,
                                      EAutomationTestFlags::EngineFilter)
 bool FItemDataBaseTest::RunTest(const FString &Parameters) {
   UE_LOG(LogTemp, Warning, TEXT("FItemDataBaseTest"));
-  TestHelper *helper = new TestHelper();
+  TestHelper helper;
 
-  ItemDataBaseComponent *itemDataBaseComponent = new ItemDataBaseComponent();
-  FItemData *ret = itemDataBaseComponent->FetchData(1);
-  helper->NotNull(ret, "ItemDataBaseComponent FetchData is NULL");
-  return helper->IsTest();
+  ItemDataBaseComponent itemDataBaseComponent;
+  itemDataBaseComponent.ComponentSetUp();
+  FItemData *ret = itemDataBaseComponent.FetchData(1);
+  helper.NotNull(ret, "ItemDataBaseComponent FetchData is NULL");
+  ItemDataBaseComponent itemDataBaseComponent2;
+  ret = itemDataBaseComponent2.FetchData(1);
+  helper.NotNull(ret, "ItemDataBaseComponent FetchData is NULL");
+  return helper.IsTest();
 }
