@@ -1,8 +1,20 @@
 #pragma once
-#include "../DataBaseFactory.h"
-class DataBase;
+#include "../DataBase.h"
 
-class ItemDataBaseFactory : public DataBaseFactory {
+struct FItemData;
+struct FAbilityBookData;
+struct FMaterialData;
+struct FImportantItemData;
+
+class ItemDataBaseFactory {
 public:
-  virtual DataBase *Create() override;
+  DataBase<FItemData> *CreateFItem();
+  DataBase<FAbilityBookData> *CreateFAbilityBook();
+  DataBase<FMaterialData> *CreateFMaterial();
+  DataBase<FImportantItemData> *CreateFImportantItem();
+
+private:
+  UDataTable *CreateDataTable(FString &item);
+  template <typename T> DataBase<T> *CreateDataBase(FString &item);
+  FString itemDataPath_ = TEXT("/Game/Data/Item/");
 };
