@@ -1,7 +1,7 @@
 #pragma once
 #include "../DataBase.h"
-#include "ItemData.h"
 
+struct FItemData;
 
 class ItemDataBaseFactory {
 public:

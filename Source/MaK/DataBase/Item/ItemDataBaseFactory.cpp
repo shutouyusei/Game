@@ -1,5 +1,6 @@
 #include "ItemDataBaseFactory.h"
 #include "../DataTableFactory.h"
+#include "ItemData.h"
 
 DataBase<FItemData> *ItemDataBaseFactory::CreateFItem() {
   DataTableFactory factory;
