@@ -9,7 +9,10 @@ class ItemDataBaseComponent {
 public:
   ItemDataBaseComponent();
   ~ItemDataBaseComponent();
+  // NOTE: this function is called at first and only once
   void ComponentSetUp();
+
+  // interface for database
   FItemData *FetchFItemData(const int id);
   FMaterialData *FetchFMaterialData(const int id);
   FAbilityBookData *FetchFAbilityBookData(const int id);
