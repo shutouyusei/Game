@@ -1,5 +1,5 @@
-#include "../../DataBase/Item/ItemDataBaseComponent.h"
 #include "../Test.h"
+#include "ItemDataBaseComponent.h"
 
 //  ItemDataBase
 IMPLEMENT_SIMPLE_AUTOMATION_TEST(FItemDataBaseTest,

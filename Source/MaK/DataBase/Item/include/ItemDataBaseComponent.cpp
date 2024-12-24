@@ -1,5 +1,5 @@
 #include "ItemDataBaseComponent.h"
-#include "ItemDataBaseFactory.h"
+#include "../ItemDataBaseFactory.h"
 
 // initialize static variables
 DataBase<FItemData> *ItemDataBaseComponent::fItemDataBase_ = nullptr;
@@ -12,9 +12,10 @@ DataBase<FImportantItemData> *ItemDataBaseComponent::fImportantItemDataBase_ =
 //
 ItemDataBaseComponent::ItemDataBaseComponent() {}
 
+ItemDataBaseComponent::~ItemDataBaseComponent() {}
+
 void ItemDataBaseComponent::ComponentSetUp() {
   ItemDataBaseFactory factory;
-  isSetUp_ = true;
   ItemDataBaseComponent::fItemDataBase_ = factory.CreateFItem();
   ItemDataBaseComponent::fMaterialDataBase_ = factory.CreateFMaterial();
   ItemDataBaseComponent::fAbilityBookDataBase_ = factory.CreateFAbilityBook();
@@ -22,13 +23,11 @@ void ItemDataBaseComponent::ComponentSetUp() {
       factory.CreateFImportantItem();
 }
 
-ItemDataBaseComponent::~ItemDataBaseComponent() {
-  if (isSetUp_) {
-    fItemDataBase_ = nullptr;
-    fMaterialDataBase_ = nullptr;
-    fAbilityBookDataBase_ = nullptr;
-    fImportantItemDataBase_ = nullptr;
-  }
+void ItemDataBaseComponent::ComponentCleanUp() {
+  delete fItemDataBase_;
+  delete fMaterialDataBase_;
+  delete fAbilityBookDataBase_;
+  delete fImportantItemDataBase_;
 }
 
 FItemData *ItemDataBaseComponent::FetchFItemData(const int id) {

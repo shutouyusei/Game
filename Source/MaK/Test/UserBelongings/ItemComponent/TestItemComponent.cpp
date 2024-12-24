@@ -1,6 +1,6 @@
-#include "../../../UserBelongings/ItemBelongings/ItemComponent.h"
 #include "../../Test.h"
 #include "CoreMinimal.h"
+#include "ItemComponent.h"
 
 IMPLEMENT_SIMPLE_AUTOMATION_TEST(FItemComponentTest,
                                  "UserBelongings.ItemComponentTest",
@@ -11,7 +11,7 @@ bool FItemComponentTest::RunTest(const FString &Parameters) {
   ItemComponent itemComponent;
   itemComponent.ComponentSetUp();
   // get test
-  UE_LOG(LogTemp, Warning, TEXT("Test: get data"));
+  UE_LOG(LogTemp, Log, TEXT("Test: get data"));
   itemComponent.GetItemBelongings(ItemType::FItem);
   itemComponent.GetItemBelongings(ItemType::FAbilityBook);
   itemComponent.GetItemBelongings(ItemType::FImportant);
