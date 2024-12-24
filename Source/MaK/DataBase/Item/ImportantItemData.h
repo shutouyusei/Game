@@ -5,7 +5,7 @@
 #include "ImportantItemData.generated.h"
 
 USTRUCT(BlueprintType)
-struct FImportantItemDataData : public FTableRowBase {
+struct FImportantItemData : public FTableRowBase {
   GENERATED_USTRUCT_BODY()
 
   // ImportantItemData ID

@@ -12,10 +12,10 @@ bool FItemDataBaseTest::RunTest(const FString &Parameters) {
 
   ItemDataBaseComponent itemDataBaseComponent;
   itemDataBaseComponent.ComponentSetUp();
-  FItemData *ret = itemDataBaseComponent.FetchData(1);
+  FItemData *ret = itemDataBaseComponent.FetchFItemData(1);
   helper.NotNull(ret, "ItemDataBaseComponent FetchData is NULL");
   ItemDataBaseComponent itemDataBaseComponent2;
-  ret = itemDataBaseComponent2.FetchData(1);
+  ret = itemDataBaseComponent2.FetchFItemData(1);
   helper.NotNull(ret, "ItemDataBaseComponent FetchData is NULL");
   return helper.IsTest();
 }
