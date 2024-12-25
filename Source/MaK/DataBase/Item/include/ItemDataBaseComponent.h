@@ -1,9 +1,9 @@
 #pragma once
-#include "../DataBase.h"
-#include "AbilityBookData.h"
-#include "ImportantItemData.h"
-#include "ItemData.h"
-#include "MaterialData.h"
+#include "../../DataBase.h"
+#include "../AbilityBookData.h"
+#include "../ImportantItemData.h"
+#include "../ItemData.h"
+#include "../MaterialData.h"
 
 class ItemDataBaseComponent {
 public:
@@ -11,6 +11,8 @@ public:
   ~ItemDataBaseComponent();
   // NOTE: this function is called at first and only once
   void ComponentSetUp();
+  // NOTE: this function is called at last and only once
+  void ComponentCleanUp();
 
   // interface for database
   FItemData *FetchFItemData(const int id);
@@ -19,7 +21,6 @@ public:
   FImportantItemData *FetchFImportantItemData(const int id);
 
 private:
-  bool isSetUp_ = false;
   static DataBase<FItemData> *fItemDataBase_;
   static DataBase<FMaterialData> *fMaterialDataBase_;
   static DataBase<FAbilityBookData> *fAbilityBookDataBase_;
