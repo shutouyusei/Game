@@ -35,5 +35,6 @@ std::string FItemUseHandler::SetItemPath(FString itemPath) {
   projectDir.Append("Source/Lua/Item/");
   std::string rootPath = TCHAR_TO_UTF8(*projectDir);
   std::string itemPathStr = TCHAR_TO_UTF8(*itemPath);
+  // Source/Lua/Item/ + itemPath + .lua
   return rootPath + itemPathStr + ".lua";
 }
