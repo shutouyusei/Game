@@ -11,8 +11,6 @@ public:
   virtual ~UserBelongings();
   void Increase(int id, int amount);
   void Decrease(int id, int amount);
-  virtual void Use(int id);
-  virtual void Use(const char *name);
   // get
   TArray<BelongingAmount> GetBelonging() { return belongingAmount_; }
 

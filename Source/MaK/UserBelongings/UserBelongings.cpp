@@ -36,7 +36,3 @@ void UserBelongings::Add(int id, int amount) {
 }
 
 void UserBelongings::Remove(int index) { belongingAmount_.RemoveAt(index); }
-
-void UserBelongings::Use(int id) {}
-
-void UserBelongings::Use(const char *name) {}

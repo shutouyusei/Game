@@ -1,5 +1,4 @@
 #pragma once
-
 #include <lua.hpp>
 
 // NOTE: luaを扱うときに初期化，lua実行後は必ず解放すること
