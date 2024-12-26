@@ -1,5 +1,5 @@
 #pragma once
-#include "../../UserBelongings.h"
+#include "../UserBelongings.h"
 
 enum ItemType { FItem, FAbilityBook, FImportant, Material };
 

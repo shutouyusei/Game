@@ -16,7 +16,7 @@ public class MaK : ModuleRules
     PublicIncludePaths.Add(ModuleDirectory + "/../Lua/include");
     //Module include PublicIncludePaths
     PublicIncludePaths.Add(ModuleDirectory + "/DataBase/Item/include");
-    PublicIncludePaths.Add(ModuleDirectory + "/UserBelongings/ItemBelongings/include");
+    PublicIncludePaths.Add(ModuleDirectory + "/UserBelongings/include");
     PublicIncludePaths.Add(ModuleDirectory + "/UseHandler");
     PublicIncludePaths.Add(ModuleDirectory + "/LuaHandler");
     PublicIncludePaths.Add(ModuleDirectory + "/Stats");

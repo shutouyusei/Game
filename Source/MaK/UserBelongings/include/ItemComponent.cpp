@@ -1,5 +1,5 @@
 #include "ItemComponent.h"
-#include "../ItemBelongingsFactory.h"
+#include "../ItemBelongings/ItemBelongingsFactory.h"
 #include "CoreMinimal.h"
 
 // initialize static member
@@ -13,6 +13,9 @@ ItemComponent::ItemComponent() {}
 ItemComponent::~ItemComponent() {}
 
 void ItemComponent::ComponentSetUp() {
+  if (fItemBelongings_ != nullptr) {
+    return;
+  }
   // initialize UserBelongings
   fItemBelongings_ = FItemBelongingsFactory().CreateBelongings();
   fAbilityBookBelongings_ = FAbilityBookBelongingsFactory().CreateBelongings();
@@ -22,9 +25,13 @@ void ItemComponent::ComponentSetUp() {
 
 void ItemComponent::ComponentCleanUp() {
   delete fItemBelongings_;
+  fItemBelongings_ = nullptr;
   delete fAbilityBookBelongings_;
+  fAbilityBookBelongings_ = nullptr;
   delete fImportantBelongings_;
+  fImportantBelongings_ = nullptr;
   delete fmaterialBelongings_;
+  fmaterialBelongings_ = nullptr;
 }
 
 UserBelongings *ItemComponent::GetItemBelongings(ItemType type) {

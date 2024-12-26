@@ -15,6 +15,9 @@ ItemDataBaseComponent::ItemDataBaseComponent() {}
 ItemDataBaseComponent::~ItemDataBaseComponent() {}
 
 void ItemDataBaseComponent::ComponentSetUp() {
+  if (ItemDataBaseComponent::fItemDataBase_ != nullptr) {
+    return;
+  }
   ItemDataBaseFactory factory;
   ItemDataBaseComponent::fItemDataBase_ = factory.CreateFItem();
   ItemDataBaseComponent::fMaterialDataBase_ = factory.CreateFMaterial();
@@ -25,9 +28,13 @@ void ItemDataBaseComponent::ComponentSetUp() {
 
 void ItemDataBaseComponent::ComponentCleanUp() {
   delete fItemDataBase_;
+  fItemDataBase_ = nullptr;
   delete fMaterialDataBase_;
+  fMaterialDataBase_ = nullptr;
   delete fAbilityBookDataBase_;
+  fAbilityBookDataBase_ = nullptr;
   delete fImportantItemDataBase_;
+  fImportantItemDataBase_ = nullptr;
 }
 
 FItemData *ItemDataBaseComponent::FetchFItemData(const int id) {

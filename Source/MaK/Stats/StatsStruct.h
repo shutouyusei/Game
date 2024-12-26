@@ -35,3 +35,17 @@ struct FStatsStruct {
   UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Stats")
   float HolyRes = 0.0;
 };
+
+enum class StatsType {
+  HP,
+  MP,
+  AD,
+  AP,
+  AR,
+  MR,
+  FireRes,
+  IceRes,
+  DarkRes,
+  ElecRes,
+  HolyRes
+};
