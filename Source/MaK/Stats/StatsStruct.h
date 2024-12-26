@@ -3,17 +3,15 @@
 #pragma once
 #include "CoreMinimal.h"
 
-#include "CharacterStats.generated.h"
+#include "StatsStruct.generated.h"
 /**
  *
  */
 USTRUCT(BlueprintType)
-struct FCharacterStats {
+struct FStatsStruct {
   GENERATED_USTRUCT_BODY()
   UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Stats")
   float Level = 1.0;
-  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Stats")
-  float EXP = 0.0;
   UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Stats")
   float HP = 0.0;
   UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Stats")
