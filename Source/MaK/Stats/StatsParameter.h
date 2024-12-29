@@ -2,16 +2,20 @@
 
 class StatsParameter {
 public:
+  StatsParameter(float parametor = 0.0f);
+  //
   float Get();
-  void Set(float parameter);
   //
   float GetDefault();
   void SetDefault(float parameter);
-  //
+
+  // change stats
   void Increase(float amount);
-  void Decrease(float amount);
+  virtual void Decrease(float amount);
+  void SetRatio(float ratio);
 
 protected:
-  float parameter_;
   float defaultParameter_;
+  float ratio_ = 1.0f;
+  float deviation_ = 0.0f;
 };

@@ -6,8 +6,9 @@ void StatsResource::SetDeathCallback(void (*deathCallback)()) {
 
 void StatsResource::Heal(float amount) {
   currentParameter_ += amount;
-  if (currentParameter_ > parameter_) {
-    currentParameter_ = parameter_;
+  float parameter = Get();
+  if (currentParameter_ > parameter) {
+    currentParameter_ = parameter;
   }
 }
 
@@ -21,4 +22,16 @@ void StatsResource::Damage(float amount) {
   }
 }
 
+void StatsResource::Decrease(float amount) {
+  StatsParameter::Decrease(amount);
+  float parameter = Get();
+  if (currentParameter_ > parameter) {
+    currentParameter_ = parameter;
+  }
+}
+
 float StatsResource::GetCurrent() { return currentParameter_; }
+
+void StatsResource::SetCurrent(float amount) {
+  currentParameter_ = amount;
+}
