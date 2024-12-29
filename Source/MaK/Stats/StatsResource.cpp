@@ -1,19 +1,24 @@
 #include "StatsResource.h"
 
-void StatsResource::IncreaseResource(float amount) {
-  resource += amount;
-  if (MaxResource < resource) {
-    resource = MaxResource;
+void StatsResource::SetDeathCallback(void (*deathCallback)()) {
+  deathCallback_ = deathCallback;
+}
+
+void StatsResource::Heal(float amount) {
+  currentParameter_ += amount;
+  if (currentParameter_ > parameter_) {
+    currentParameter_ = parameter_;
   }
 }
 
-void StatsResource::DecreaseResource(float amount) {
-  resource -= amount;
-  if (resource < 0.0) {
-    // NOTE:dead
-    resource = 0.0;
-    if (deathCallback != nullptr) {
-      deathCallback();
+void StatsResource::Damage(float amount) {
+  currentParameter_ -= amount;
+  if (currentParameter_ < 0) {
+    currentParameter_ = 0;
+    if (deathCallback_ != nullptr) {
+      deathCallback_();
     }
   }
 }
+
+float StatsResource::GetCurrent() { return currentParameter_; }

@@ -1,15 +1,16 @@
 #pragma once
-
-class StatsResource;
+#include "StatsResource.h"
 
 class StatsBase {
 public:
-  StatsBase(void (*deathCallback)() = nullptr);
+  StatsBase();
   virtual ~StatsBase();
 
 public:
-private:
-  // HP, MP
-  StatsResource *HP_;
-  StatsResource *MP_;
+  StatsResource HP_;
+  StatsResource MP_;
+  StatsParameter AD_;
+  StatsParameter AP_;
+  StatsParameter AR_;
+  StatsParameter MR_;
 };

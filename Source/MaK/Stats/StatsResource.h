@@ -1,15 +1,16 @@
 #pragma once
+#include "StatsParameter.h"
 
-class StatsResource {
+class StatsResource : public StatsParameter {
 public:
-  StatsResource(void (*deathCallback)() = nullptr) : deathCallback(deathCallback) {};
-  float resource;
+  void SetDeathCallback(void (*deathCallback)());
+  //
+  void Heal(float amount);
+  void Damage(float amount);
+  //
+  float GetCurrent();
 
 private:
-  float MaxResource;
-  void (*deathCallback)();
-
-public:
-  void IncreaseResource(float amount);
-  void DecreaseResource(float amount);
+  float currentParameter_;
+  void (*deathCallback_)();
 };
