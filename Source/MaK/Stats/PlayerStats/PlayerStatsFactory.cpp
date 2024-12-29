@@ -17,6 +17,17 @@ StatsBase *PlayerStatsFactory::CreateStats() {
   return stats;
 }
 
+StatsBase *PlayerStatsFactory::CreateStats(FStatsStruct stats) {
+  StatsBase *statsBase = new StatsBase();
+  statsBase->HP_.SetCurrent(stats.HP);
+  statsBase->MP_.SetCurrent(stats.MP);
+  statsBase->AD_.SetDefault(stats.AD);
+  statsBase->AP_.SetDefault(stats.AP);
+  statsBase->AR_.SetDefault(stats.AR);
+  statsBase->MR_.SetDefault(stats.MR);
+  return statsBase;
+}
+
 
 PlayerStatsFactory::~PlayerStatsFactory() {}
 
