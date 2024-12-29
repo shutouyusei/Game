@@ -1,0 +1,6 @@
+#pragma once
+#include "StatsBase.h"
+
+class CharacterStats: public StatsBase {
+  public:
+};

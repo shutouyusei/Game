@@ -1,21 +1,15 @@
 #pragma once
-#include "StatsStruct.h"
+
+class StatsResource;
 
 class StatsBase {
 public:
-  virtual ~StatsBase() = default;
+  StatsBase(void (*deathCallback)() = nullptr);
+  virtual ~StatsBase();
 
-private:
-  float HP_;
-  float MP_;
-  FStatsStruct baseStats_;
-};
-
-//
-//
-
-class StatsBaseFactory {
 public:
-  virtual StatsBase *CreateStatsBase() = 0;
-  virtual StatsBase *CreateStatsBase(FStatsStruct stats) = 0;
+private:
+  // HP, MP
+  StatsResource *HP_;
+  StatsResource *MP_;
 };
