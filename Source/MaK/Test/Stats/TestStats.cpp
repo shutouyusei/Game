@@ -2,6 +2,7 @@
 #include "CoreMinimal.h"
 #include <StatsComponent.h>
 #include <corecrt_wstring.h>
+
 bool operator==(FStatsStruct &a, FStatsStruct &b) {
   bool retval1 = (a.HP == b.HP) && (a.MP == b.MP) && (a.AD == b.AD) &&
                  (a.AP == b.AP) && (a.AR == b.MR) && (a.MR == b.MR);
@@ -10,7 +11,8 @@ bool operator==(FStatsStruct &a, FStatsStruct &b) {
                  (a.HolyRes == b.HolyRes);
   return retval1 && retval2;
 }
-// XXX:大体のエラーこのファイル内だから頑張ってね
+
+bool operator!=(FStatsStruct &a, FStatsStruct &b) { return !(a == b); }
 
 IMPLEMENT_SIMPLE_AUTOMATION_TEST(FPlayerStatsComponentTest,
                                  "Stats.PlayerStatsComponentTest",
@@ -19,30 +21,46 @@ IMPLEMENT_SIMPLE_AUTOMATION_TEST(FPlayerStatsComponentTest,
 bool FPlayerStatsComponentTest::RunTest(const FString &Parameters) {
   TestHelper helper;
   // Stats Component Set Up
-  FStatsStruct testcase = {100f, 100f, 100f, 100f, 100f, 0f, 0f, 0f, 0f, 0f};
-  PlayerStatsComponent statsComponent;
+  FStatsStruct testcase = {100, 100, 100, 100, 100, 0, 0, 0, 0, 0, 0};
+  StatsComponent statsComponent;
+  FStatsStruct stat = statsComponent.GetStats();
   statsComponent.ComponentSetUp(testcase);
-  helper.Equal(statsComponent.GetStats(), testcase, "testcase1");
+  helper.Equal(stat, testcase, "testcase1");
 
   StatsBase *stats = statsComponent.Get();
   stats->MP_.Increase(10);
-  helper.Equal(110, stats->MP_.Get(), "testcase2");
+  float mp = stats->MP_.Get();
+  float answer = 110;
+  helper.Equal(mp, answer, "testcase2");
 
   stats->MP_.Decrease(10);
-  helper.Equal(100, stats->MP_.Get(), "testcase3");
+  mp = stats->MP_.Get();
+  answer = 100;
+  helper.Equal(mp, answer, "testcase3");
 
   stats->MP_.SetRatio(1.1);
-  helper.Equal(120, stats->MP_.Get(), "testcase4");
+  mp = stats->MP_.Get();
+  answer = 120;
+  helper.Equal(answer, mp, "testcase4");
   // HP test
-  helper.Equal(100, stats->HP_.GetCurrent(), "testcase5");
+  float hp = stats->HP_.GetCurrent();
+  answer = 100;
+  helper.Equal(answer, hp, "testcase5");
 
   stats->HP_.Damage(10);
-  helper.Equal(100, stats->HP_.Get(), "testcase6");
-  helper.Equal(90, stats->HP_.GetCurrent(), "testcase7");
+  hp = stats->HP_.Get();
+  answer = 100;
+  helper.Equal(answer, hp, "testcase6");
+  hp = stats->HP_.GetCurrent();
+  answer = 90;
+  helper.Equal(answer, hp, "testcase7");
 
   stats->HP_.Heal(100);
-  helper.Equal(100, stats->HP_.Get(), "testcase8");
-  helper.Equal(100, stats->HP_.GetCurrent(), "testcase9");
+  hp = stats->HP_.Get();
+  answer = 100;
+  helper.Equal(answer, hp, "testcase8");
+  hp = stats->HP_.GetCurrent();
+  helper.Equal(answer, hp, "testcase9");
 
   statsComponent.ComponentCleanUp();
   return helper.IsTest();
@@ -54,14 +72,17 @@ IMPLEMENT_SIMPLE_AUTOMATION_TEST(FStatsComponentTest, "Stats.DeathNotifyTest",
 bool FStatsComponentTest::RunTest(const FString &Parameters) {
   TestHelper helper;
   // Stats Component Set Up
-  FStatsStruct testcase = {100f, 100f, 100f, 100f, 100f, 0f, 0f, 0f, 0f, 0f};
-  PlayerStatsComponent statsComponent;
+  FStatsStruct testcase = {100, 100, 100, 100, 100, 0, 0, 0, 0, 0, 0};
+  StatsComponent statsComponent;
   statsComponent.ComponentSetUp(testcase);
-  helper.Equal(statsComponent.GetStats(), testcase, "testcase1");
+  FStatsStruct stat = statsComponent.GetStats();
+  helper.Equal(stat, testcase, "testcase1");
   StatsBase *stats = statsComponent.Get();
 
   stats->HP_.Damage(150);
-  helper.Equal(0, stats->HP_.GetCurrent(), "testcase2");
+  float answer = 0;
+  float hp = stats->HP_.GetCurrent();
+  helper.Equal(answer, hp, "testcase2");
 
   statsComponent.ComponentCleanUp();
   return helper.IsTest();
