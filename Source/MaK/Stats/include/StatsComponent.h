@@ -8,14 +8,11 @@ public:
   ~StatsComponent();
   // set up component
   void ComponentSetUp();
-  void ComponentSetUp(FStatsStruct stats);
   // clean up component
   void ComponentCleanUp();
-  FStatsStruct GetStats();
 
   StatsBase *Get() { return stats_; };
 
 private:
-  void SetDeathCallback();
   static StatsBase *stats_;
 };

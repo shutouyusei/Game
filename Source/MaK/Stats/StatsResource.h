@@ -8,10 +8,9 @@ public:
   void Heal(float amount);
   void Damage(float amount);
   //
-  void SetCurrent(float amount);
-  float GetCurrent();
+  void SetCurrentParameter(float amount);
+  float GetCurrentParameter();
 
-  //
   void Decrease(float amount) override;
 
 private:

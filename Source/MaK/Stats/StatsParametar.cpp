@@ -1,14 +1,19 @@
 #include "StatsParameter.h"
 
-StatsParameter::StatsParameter(float parameter) : defaultParameter_(parameter) {}
+StatsParameter::StatsParameter(float parameter)
+    : defaultParameter_(parameter) {}
 
-float StatsParameter::Get() { return defaultParameter_ * ratio_ + deviation_; }
+float StatsParameter::GetParameter() {
+  return (defaultParameter_ + deviation_) * ratio_;
+}
 
 void StatsParameter::SetRatio(float ratio) { ratio_ = ratio; }
 
-float StatsParameter::GetDefault() { return defaultParameter_; }
+float StatsParameter::GetDefaultParameter() { return defaultParameter_; }
 
-void StatsParameter::SetDefault(float parameter) { defaultParameter_ = parameter;}
+void StatsParameter::SetDefaultParameter(float parameter) {
+  defaultParameter_ = parameter;
+}
 
 void StatsParameter::Increase(float amount) { deviation_ += amount; }
 
