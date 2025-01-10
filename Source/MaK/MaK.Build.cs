@@ -20,6 +20,7 @@ public class MaK : ModuleRules
     PublicIncludePaths.Add(ModuleDirectory + "/UseHandler");
     PublicIncludePaths.Add(ModuleDirectory + "/LuaHandler");
     PublicIncludePaths.Add(ModuleDirectory + "/Stats/include");
+    PublicIncludePaths.Add(ModuleDirectory + "/Character");
     //
     PublicAdditionalLibraries.Add(ModuleDirectory + "/../Lua/lib/lua54.lib");
     var luaDLLPath = ModuleDirectory + "/../../Binaries/Win64/lua54.dll";
