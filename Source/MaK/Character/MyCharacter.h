@@ -13,6 +13,7 @@ public:
   ~AMyCharacter();
 
 private:
+  void BeginPlay() override;
   virtual void SetupPlayerInputComponent(
       class UInputComponent *PlayerInputComponent) override;
   // Ability Function

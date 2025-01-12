@@ -1,11 +1,15 @@
 #include "MyCharacter.h"
-#include "../Ability/MyCharacter/Normal/MyCharacterNormalAttack.h"
+#include "Ability/NormalAttakck.h"
 #include "Animation/AnimInstance.h"
 #include "Animation/AnimMontage.h"
 #include "EnhancedInputComponent.h"
 
 AMyCharacter::AMyCharacter() {
-  normalAttack_ = new MyCharacterNormalAttack(this);
+}
+void AMyCharacter::BeginPlay() {
+  Super::BeginPlay();
+  normalAttack_ =
+      NormalAttackFactory().CreateAbility(GetMesh()->GetAnimInstance());
 }
 
 AMyCharacter::~AMyCharacter() { delete normalAttack_; }
@@ -30,4 +34,4 @@ void AMyCharacter::SetupPlayerInputComponent(
   }
 }
 
-void AMyCharacter::Attack() { normalAttack_->DoAbility(); }
+void AMyCharacter::Attack() { normalAttack_->DoAbility(this->GetTransform()); }
