@@ -1,15 +1,14 @@
 #pragma once
 #include "../Ability.h"
 
-class AActor;
+class UShapeComponent;
 
 class AttackAbility : public Ability {
 public:
   AttackAbility(UAnimInstance *animInstance, UAnimMontage *animMontage,
-                AActor *collision);
+                UShapeComponent *collision);
   void DoAbility(FTransform transform) override;
 
 private:
-//TODO:BOXCOLLISIONで良きかも
-  AActor *collision_;
+  UShapeComponent *collision_;
 };

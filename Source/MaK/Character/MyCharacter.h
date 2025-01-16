@@ -4,6 +4,7 @@
 
 class Ability;
 class UAnimMontage;
+class UShapeComponent;
 
 UCLASS()
 class AMyCharacter : public AMaKCharacter {
@@ -12,8 +13,10 @@ public:
   AMyCharacter();
   ~AMyCharacter();
 
+  UFUNCTION(BlueprintCallable, Category = "Ability")
+  void SetNormalAttack(UShapeComponent *weapon);
+
 private:
-  void BeginPlay() override;
   virtual void SetupPlayerInputComponent(
       class UInputComponent *PlayerInputComponent) override;
   // Ability Function

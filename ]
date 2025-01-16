@@ -1,0 +1,9 @@
+#pragma once
+#include "Attack/AttackAbility.h"
+
+class AActor;
+
+class NormalAttackFactory : public AbilityFactory {
+public:
+  Ability *CreateAbility(UAnimInstance *animInstance, AActor *weapon) override;
+};

@@ -3,16 +3,16 @@
 #include "Animation/AnimInstance.h"
 #include "Animation/AnimMontage.h"
 #include "EnhancedInputComponent.h"
+#include "Components/ShapeComponent.h"
 
-AMyCharacter::AMyCharacter() {
-}
-void AMyCharacter::BeginPlay() {
-  Super::BeginPlay();
-  normalAttack_ =
-      NormalAttackFactory().CreateAbility(GetMesh()->GetAnimInstance());
-}
+AMyCharacter::AMyCharacter() {}
 
 AMyCharacter::~AMyCharacter() { delete normalAttack_; }
+
+void AMyCharacter::SetNormalAttack(UShapeComponent *weapon) {
+  normalAttack_ =
+      NormalAttackFactory(weapon).CreateAbility(GetMesh()->GetAnimInstance());
+}
 
 void AMyCharacter::SetupPlayerInputComponent(
     class UInputComponent *PlayerInputComponent) {
