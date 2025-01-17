@@ -30,7 +30,11 @@ void AttackAbility::OnMontageEnded(UAnimMontage *montage, bool bInterrupted) {
 
 void AttackAbility::AbilityDelegate(AActor *otherActor) {
   // Delegate the ability
-  UE_LOG(LogTemp, Warning, TEXT("Delegate the ability"));
-  //Actor name
-  UE_LOG(LogTemp, Warning, TEXT("Actor name: %s"), *otherActor->GetName());
+  //TODO: ダメージ処理　うまく抽象化してください
+  if(otherActor->ActorHasTag("Enemy")) {
+    UE_LOG(LogTemp, Warning, TEXT("Enemy hit"));
+
+  }else if (otherActor->ActorHasTag("Player")) {
+    UE_LOG(LogTemp, Warning, TEXT("Player hit"));
+  }
 }

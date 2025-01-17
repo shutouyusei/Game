@@ -4,14 +4,15 @@
 
 void AAttackCollision::NotifyActorBeginOverlap(AActor *otherActor) {
   // Check if the other actor is an enemy
-  if (bCanDealDamage && otherActor->ActorHasTag("Enemy")) {
+  if (bCanDealDamage) {
     // Deal damage to the enemy
     AbilityDelegate_(otherActor);
   }
 }
 
-void AAttackCollision::SetAbility( std::function<void(AActor *)> AbilityDelegate) {
-    // std::functionをラムダで生成して設定
+void AAttackCollision::SetAbility(
+    std::function<void(AActor *)> AbilityDelegate) {
+  // std::functionをラムダで生成して設定
   AbilityDelegate_ = AbilityDelegate;
   bCanDealDamage = true;
 }
