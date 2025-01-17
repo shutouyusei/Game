@@ -1,12 +1,12 @@
 #pragma once
 #include "Attack/AttackAbility.h"
-
-class UShapeComponent;
+#include "Attack/AttackCollision.h"
 
 class NormalAttackFactory : public AbilityFactory {
 public:
-  NormalAttackFactory(UShapeComponent *weapon) : weapon_(weapon) {}
+  NormalAttackFactory(AAttackCollision *weapon) : weapon_(weapon) {}
   Ability *CreateAbility(UAnimInstance *animInstance) override;
+
 private:
-  UShapeComponent *weapon_;
+  AAttackCollision *weapon_;
 };

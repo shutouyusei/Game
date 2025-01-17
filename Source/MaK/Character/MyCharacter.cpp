@@ -2,14 +2,14 @@
 #include "Ability/NormalAttakck.h"
 #include "Animation/AnimInstance.h"
 #include "Animation/AnimMontage.h"
-#include "EnhancedInputComponent.h"
 #include "Components/ShapeComponent.h"
+#include "EnhancedInputComponent.h"
 
 AMyCharacter::AMyCharacter() {}
 
 AMyCharacter::~AMyCharacter() { delete normalAttack_; }
 
-void AMyCharacter::SetNormalAttack(UShapeComponent *weapon) {
+void AMyCharacter::SetNormalAttack(AAttackCollision *weapon) {
   normalAttack_ =
       NormalAttackFactory(weapon).CreateAbility(GetMesh()->GetAnimInstance());
 }

@@ -1,4 +1,5 @@
 #pragma once
+#include "Ability/NormalAttakck.h"
 #include "MaKCharacter.h"
 #include "MyCharacter.generated.h"
 
@@ -14,7 +15,7 @@ public:
   ~AMyCharacter();
 
   UFUNCTION(BlueprintCallable, Category = "Ability")
-  void SetNormalAttack(UShapeComponent *weapon);
+  void SetNormalAttack(AAttackCollision *weapon);
 
 private:
   virtual void SetupPlayerInputComponent(
