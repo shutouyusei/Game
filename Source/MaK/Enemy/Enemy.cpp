@@ -4,14 +4,16 @@
 
 AEnemy::AEnemy() {
   // Constructor
+  Tags.Add("Game");
 }
 
 AEnemy::~AEnemy() {
   // Destructor
   StatsComponent statsComponent;
-  StatsBase *statsBase = statsComponent.GetStatsManager()->GetStats(this);
-  delete statsBase;
   StatsComponent().GetStatsManager()->RemoveStats(this);
+
+  StatsBase *statsBase = StatsComponent().GetStatsManager()->GetStats(this);
+  StatsFactory().DestroyStats(statsBase);
 }
 void AEnemy::SetStats(FStatsStruct stats) {
   // Set stats

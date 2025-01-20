@@ -9,6 +9,11 @@ StatsBase *StatsFactory::CreateStats(FStatsStruct stats) {
   return statsBase;
 }
 
+void StatsFactory::DestroyStats(StatsBase *statsBase) {
+  delete statsBase;
+  statsBase = nullptr;
+}
+
 void StatsFactory::SetStats(StatsBase *statsBase, FStatsStruct stats) {
   statsBase->HP_.SetCurrentParameter(stats.HP);
   statsBase->MP_.SetCurrentParameter(stats.MP);

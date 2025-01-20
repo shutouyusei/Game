@@ -3,6 +3,7 @@
 
 class StatsResource : public StatsParameter {
 public:
+  ~StatsResource() = default;
   void SetDeathCallback(void (*deathCallback)());
   //
   void Heal(float amount);

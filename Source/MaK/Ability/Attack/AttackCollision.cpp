@@ -1,6 +1,7 @@
 #include "AttackCollision.h"
 #include "Animation/AnimMontage.h"
 #include "AttackAbility.h"
+#include "StatsBase.h"
 
 void AAttackCollision::NotifyActorBeginOverlap(AActor *otherActor) {
   // Check if the other actor is an enemy

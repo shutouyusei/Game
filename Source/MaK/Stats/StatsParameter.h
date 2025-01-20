@@ -3,6 +3,7 @@
 class StatsParameter {
 public:
   StatsParameter(float parametor = 0.0f);
+  virtual ~StatsParameter() = default;
   //
   float GetParameter();
   //

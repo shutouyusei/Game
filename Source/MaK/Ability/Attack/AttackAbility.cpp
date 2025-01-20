@@ -1,14 +1,16 @@
 #include "AttackAbility.h"
 #include "AttackCollision.h"
 #include "Components/ShapeComponent.h"
+#include "Damage.h"
 #include "GameFramework/Actor.h"
+#include "StatsComponent.h"
 
 AttackAbility::AttackAbility(UAnimInstance *animInstance,
                              UAnimMontage *animMontage,
-                             AAttackCollision *collision)
+                             AAttackCollision *collision, StatsBase *stats)
     : Ability(animInstance, animMontage) {
   collision_ = collision;
-  delegate_ = std::bind(&AttackAbility::AbilityDelegate, this, std::placeholders::_1);
+  stats_ = stats;
 }
 
 AttackAbility::~AttackAbility() {
@@ -17,6 +19,8 @@ AttackAbility::~AttackAbility() {
 
 void AttackAbility::DoAbility(FTransform transform) {
   // Attack the target
+  std::function<void(AActor *)> delegate_ =
+      std::bind(&AttackAbility::AbilityDelegate, this, std::placeholders::_1);
   collision_->SetAbility(delegate_);
   PlayMontage();
   // Check if the collision is valid
@@ -30,11 +34,10 @@ void AttackAbility::OnMontageEnded(UAnimMontage *montage, bool bInterrupted) {
 
 void AttackAbility::AbilityDelegate(AActor *otherActor) {
   // Delegate the ability
-  //TODO: ダメージ処理　うまく抽象化してください
-  if(otherActor->ActorHasTag("Enemy")) {
-    UE_LOG(LogTemp, Warning, TEXT("Enemy hit"));
-
-  }else if (otherActor->ActorHasTag("Player")) {
-    UE_LOG(LogTemp, Warning, TEXT("Player hit"));
+  if (otherActor->ActorHasTag("Game")) {
+    StatsComponent statsComponent;
+    StatsManager *statsManager = statsComponent.GetStatsManager();
+    StatsBase *otherStats = statsManager->GetStats(otherActor);
+    Damage::ApplyDamage(stats_, otherStats, 10.0f);
   }
 }

@@ -4,14 +4,17 @@
 #include "Animation/AnimMontage.h"
 #include "Components/ShapeComponent.h"
 #include "EnhancedInputComponent.h"
+#include "StatsComponent.h"
 
-AMyCharacter::AMyCharacter() {}
+AMyCharacter::AMyCharacter() { StatsComponent statsComponent; }
 
 AMyCharacter::~AMyCharacter() { delete normalAttack_; }
 
 void AMyCharacter::SetNormalAttack(AAttackCollision *weapon) {
-  normalAttack_ =
-      NormalAttackFactory(weapon).CreateAbility(GetMesh()->GetAnimInstance());
+  StatsComponent statsComponent;
+  StatsBase *stats = statsComponent.GetPlayerStats();
+  normalAttack_ = NormalAttackFactory(weapon, stats)
+                      .CreateAbility(GetMesh()->GetAnimInstance());
 }
 
 void AMyCharacter::SetupPlayerInputComponent(

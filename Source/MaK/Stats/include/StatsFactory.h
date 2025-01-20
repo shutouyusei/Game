@@ -6,6 +6,7 @@ class StatsFactory {
 public:
   virtual StatsBase *CreateStats();
   virtual StatsBase *CreateStats(FStatsStruct stats);
+  virtual void DestroyStats(StatsBase *statsBase);
   virtual ~StatsFactory() = default;
 
 protected:
