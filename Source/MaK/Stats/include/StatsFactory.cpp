@@ -1,6 +1,14 @@
 #include "StatsFactory.h"
 #include "StatsBase.h"
 
+StatsBase *StatsFactory::CreateStats() { return new StatsBase(); }
+
+StatsBase *StatsFactory::CreateStats(FStatsStruct stats) {
+  StatsBase *statsBase = new StatsBase();
+  SetStats(statsBase, stats);
+  return statsBase;
+}
+
 void StatsFactory::SetStats(StatsBase *statsBase, FStatsStruct stats) {
   statsBase->HP_.SetCurrentParameter(stats.HP);
   statsBase->MP_.SetCurrentParameter(stats.MP);

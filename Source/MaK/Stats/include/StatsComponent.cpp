@@ -4,6 +4,8 @@
 
 StatsBase *StatsComponent::stats_ = nullptr;
 
+StatsManager StatsComponent::statsManager_;
+
 StatsComponent::StatsComponent() {}
 
 StatsComponent::~StatsComponent() {}
@@ -14,6 +16,5 @@ void StatsComponent::ComponentSetUp() {
   }
   stats_ = PlayerStatsFactory().CreateStats();
 }
-
 
 void StatsComponent::ComponentCleanUp() { delete stats_; }

@@ -11,4 +11,6 @@ class AEnemy : public ACharacter {
 public:
   AEnemy();
   ~AEnemy();
+  UFUNCTION(BlueprintCallable)
+  void SetStats(FStatsStruct stats);
 };
