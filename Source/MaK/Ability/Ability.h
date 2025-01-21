@@ -6,6 +6,7 @@ class UAbilityNotify;
 class UAnimInstance;
 class UAnimMontage;
 
+
 class Ability {
 public:
   Ability(UAnimInstance *animInstance, UAnimMontage *animMontage);
