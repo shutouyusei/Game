@@ -1,17 +1,24 @@
 #pragma once
-#include "Animation/AnimInstance.h"
-#include "Animation/AnimMontage.h"
+#include "AbilityNotify.h"
 #include "CoreMinimal.h"
+
+class UAbilityNotify;
+class UAnimInstance;
+class UAnimMontage;
 
 class Ability {
 public:
   Ability(UAnimInstance *animInstance, UAnimMontage *animMontage);
-  virtual ~Ability() = default;
+  virtual ~Ability();
   virtual void DoAbility(FTransform transform) = 0;
+
   virtual void OnMontageEnded(UAnimMontage *montage, bool bInterrupted);
 
 protected:
   void PlayMontage();
+
+  UPROPERTY()
+  TArray<UAbilityNotify *> notifies_;
 
 private:
   UAnimInstance *animInstance_;

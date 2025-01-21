@@ -13,7 +13,6 @@ void AAttackCollision::NotifyActorBeginOverlap(AActor *otherActor) {
 
 void AAttackCollision::SetAbility(
     std::function<void(AActor *)> AbilityDelegate) {
-  // std::functionをラムダで生成して設定
   AbilityDelegate_ = AbilityDelegate;
   bCanDealDamage = true;
 }
