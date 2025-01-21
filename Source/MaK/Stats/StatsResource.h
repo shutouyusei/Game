@@ -1,10 +1,11 @@
 #pragma once
 #include "StatsParameter.h"
+#include <functional>
 
 class StatsResource : public StatsParameter {
 public:
   ~StatsResource() = default;
-  void SetDeathCallback(void (*deathCallback)());
+  void SetDeathCallback(std::function<void()> deathCallback);
   //
   void Heal(float amount);
   void Damage(float amount);
@@ -16,5 +17,5 @@ public:
 
 private:
   float currentParameter_;
-  void (*deathCallback_)();
+  std::function<void()> deathCallback_;
 };

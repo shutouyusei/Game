@@ -1,6 +1,7 @@
 #include "StatsResource.h"
+#include <functional>
 
-void StatsResource::SetDeathCallback(void (*deathCallback)()) {
+void StatsResource::SetDeathCallback(std::function<void()> deathCallback) {
   deathCallback_ = deathCallback;
 }
 
@@ -14,7 +15,7 @@ void StatsResource::Heal(float amount) {
 
 void StatsResource::Damage(float amount) {
   currentParameter_ -= amount;
-  if (currentParameter_ < 0) {
+  if (currentParameter_ <= 0) {
     currentParameter_ = 0;
     if (deathCallback_ != nullptr) {
       deathCallback_();

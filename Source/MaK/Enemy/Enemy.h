@@ -2,6 +2,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "StatsStruct.h"
 
 #include "Enemy.generated.h"
 
@@ -11,6 +12,11 @@ class AEnemy : public ACharacter {
 public:
   AEnemy();
   ~AEnemy();
-  UFUNCTION(BlueprintCallable)
-  void SetStats(FStatsStruct stats);
+
+protected:
+  void BeginPlay() override;
+
+private:
+  UPROPERTY(EditAnywhere, Category = "Stats")
+  FStatsStruct stats_;
 };

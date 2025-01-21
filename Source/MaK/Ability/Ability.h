@@ -12,13 +12,15 @@ public:
 
 protected:
   void PlayMontage();
+
+private:
   UAnimInstance *animInstance_;
   UAnimMontage *animMontage_;
 };
 
+// NOTE:BeginPlayにてanimInstanceは生成される
+// それ以前でAbilityをCreateするとanimInstance がnullptrになる
 class AbilityFactory {
-  // NOTE:BeginPlayにてanimInstanceは生成される
-  // それ以前でAbilityをCreateするとanimInstance がnullptrになる
 public:
   virtual ~AbilityFactory() = default;
   virtual Ability *CreateAbility(UAnimInstance *animInstance) = 0;

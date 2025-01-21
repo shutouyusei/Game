@@ -1,6 +1,6 @@
 #pragma once
-#include "../StatsStruct.h"
 #include "StatsFactory.h"
+#include "StatsStruct.h"
 
 class PlayerStatsFactory : public StatsFactory {
 public:

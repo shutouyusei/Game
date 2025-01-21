@@ -17,6 +17,7 @@ AttackAbility::~AttackAbility() {
   // Destructor
 }
 
+//
 void AttackAbility::DoAbility(FTransform transform) {
   // Attack the target
   std::function<void(AActor *)> delegate_ =
@@ -28,7 +29,6 @@ void AttackAbility::DoAbility(FTransform transform) {
 
 void AttackAbility::OnMontageEnded(UAnimMontage *montage, bool bInterrupted) {
   // Check if the montage is interrupted
-  UE_LOG(LogTemp, Warning, TEXT("Montage ended"));
   collision_->DeleteAbility();
 }
 

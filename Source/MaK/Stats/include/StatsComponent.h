@@ -1,7 +1,7 @@
 #pragma once
-#include "../StatsStruct.h"
-#include "StatsBase.h"
 #include "../StatsManager.h"
+#include "StatsBase.h"
+#include "StatsStruct.h"
 
 class StatsComponent {
 public:
