@@ -21,7 +21,7 @@ void AMyCharacter::SetNormalAttack(AAttackCollision *weapon) {
                           EDamageElementType::None};
 
   {
-    AttackFactory attackFactory(animMontage, damage, weapon, stats);
+    AttackFactory attackFactory(animMontage, damage, this, weapon);
     abilities_.Add(attackFactory.CreateAbility(GetMesh()->GetAnimInstance()));
   }
 
@@ -29,24 +29,26 @@ void AMyCharacter::SetNormalAttack(AAttackCollision *weapon) {
       nullptr, TEXT("/Game/MyAbility/Montage/AM_DashAttack1.AM_DashAttack1"));
   damage = {20.0, EDamageType::Physical, EDamageElementType::None};
   {
-    AttackFactory attackFactory(animMontage, damage, weapon, stats);
+    AttackFactory attackFactory(animMontage, damage, this, weapon);
     abilities_.Add(attackFactory.CreateAbility(GetMesh()->GetAnimInstance()));
   }
 
   abilityManager_ = new AbilityManager(abilities_);
 }
 
-void AMyCharacter::SetupPlayerInputComponent(UInputComponent *PlayerInputComponent) {
+void AMyCharacter::SetupPlayerInputComponent(
+    UInputComponent *PlayerInputComponent) {
   Super::SetupPlayerInputComponent(PlayerInputComponent);
 
   if (UEnhancedInputComponent *EnhancedInputComponent =
           Cast<UEnhancedInputComponent>(PlayerInputComponent)) {
     // Normal Attack
     EnhancedInputComponent->BindAction(normalAttackAction_,
-                                        ETriggerEvent::Started, this,
+                                       ETriggerEvent::Started, this,
                                        &AMyCharacter::Attack);
-    EnhancedInputComponent->BindAction(skill1Action_, ETriggerEvent::Started, this, &AMyCharacter::Skill1);
-    } else {
+    EnhancedInputComponent->BindAction(skill1Action_, ETriggerEvent::Started,
+                                       this, &AMyCharacter::Skill1);
+  } else {
     UE_LOG(
         LogTemplateCharacter, Error,
         TEXT("'%s' Failed to find an Enhanced Input component! This template "

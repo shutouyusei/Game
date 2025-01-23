@@ -4,15 +4,15 @@
 
 class UShapeComponent;
 class AAttackCollision;
-class AActor;
 class StatsBase;
 class UAbilityNotify;
 
 class AttackAbility : public Ability {
 public:
   AttackAbility(UAnimInstance *animInstance, UAnimMontage *animMontage,
-                AAttackCollision *collision, StatsBase *stats,
+                AActor *owner, AAttackCollision *collisionm,
                 FDamageStruct damage);
+
   ~AttackAbility();
   void DoAbility() override;
 
@@ -25,6 +25,5 @@ public:
 private:
   FDamageStruct damage_;
   UAbilityNotify *notify_;
-  StatsBase *stats_;
   AAttackCollision *collision_;
 };

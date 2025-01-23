@@ -13,5 +13,5 @@ void Damage::ApplyDamage(StatsBase *applyier, StatsBase *target,
     UE_LOG(LogTemp, Warning, TEXT("Target is null"));
   }
   // calculate damage
-  target->HP_.Damage(damage.damage);
+  target->HP_.Damage(damage.power);
 }

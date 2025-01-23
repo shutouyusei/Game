@@ -18,7 +18,9 @@ public:
   void NotifyEnd(USkeletalMeshComponent *MeshComp,
                  UAnimSequenceBase *Animation) override;
 
-  void SetDelegate(std::function<void()> beginDelegate,std::function<void()> endDelegate);
+  void SetDelegate(std::function<void()> beginDelegate,
+                   std::function<void()> endDelegate);
+
 private:
   std::function<void()> beginDelegate_;
   std::function<void()> endDelegate_;

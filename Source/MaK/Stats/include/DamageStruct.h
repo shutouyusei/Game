@@ -22,8 +22,9 @@ enum class EDamageElementType : uint8 {
 USTRUCT(BlueprintType)
 struct FDamageStruct {
   GENERATED_USTRUCT_BODY()
+
   UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Damage")
-  float damage = 0.0;
+  float power = 0.0;
 
   UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Damage")
   EDamageType damageType = EDamageType::Physical;

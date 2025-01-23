@@ -1,16 +1,13 @@
 #include "AttackAbility.h"
 #include "AttackCollision.h"
 #include "Components/ShapeComponent.h"
-#include "GameFramework/Actor.h"
 #include "StatsComponent.h"
 
 AttackAbility::AttackAbility(UAnimInstance *animInstance,
-                             UAnimMontage *animMontage,
-                             AAttackCollision *collision, StatsBase *stats,
-                             FDamageStruct damage)
-    : Ability(animInstance, animMontage) {
+                             UAnimMontage *animMontage, AActor *owner,
+                             AAttackCollision *collision, FDamageStruct damage)
+    : Ability(animInstance, animMontage, owner) {
   collision_ = collision;
-  stats_ = stats;
   damage_ = damage;
 
   for (auto notify : notifies_) {
@@ -29,9 +26,9 @@ AttackAbility::~AttackAbility() {
 //
 void AttackAbility::DoAbility() {
   // Attack the target
-  if(notify_ != nullptr) {
-  notify_->SetDelegate([this]() { OnNotifyBegin(); },
-                       [this]() { OnNotifyEnd(); });
+  if (notify_ != nullptr) {
+    notify_->SetDelegate([this]() { OnNotifyBegin(); },
+                         [this]() { OnNotifyEnd(); });
   }
   //
   PlayMontage();
@@ -40,8 +37,8 @@ void AttackAbility::DoAbility() {
 
 void AttackAbility::OnMontageEnded(UAnimMontage *montage, bool bInterrupted) {
   // Check if the montage is interrupted
-  if(notify_ != nullptr) {
-  notify_->SetDelegate(nullptr, nullptr);
+  if (notify_ != nullptr) {
+    notify_->SetDelegate(nullptr, nullptr);
   }
 }
 
@@ -51,8 +48,9 @@ void AttackAbility::OnNotifyBegin() {
     if (otherActor->ActorHasTag("Game")) {
       StatsComponent statsComponent;
       StatsManager *statsManager = statsComponent.GetStatsManager();
+      StatsBase *ownerStats = statsManager->GetStats(owner_);
       StatsBase *otherStats = statsManager->GetStats(otherActor);
-      Damage::ApplyDamage(stats_, otherStats, damage_);
+      Damage::ApplyDamage(ownerStats, otherStats, damage_);
     }
   });
 }

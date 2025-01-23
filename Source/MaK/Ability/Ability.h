@@ -5,34 +5,33 @@
 class UAbilityNotify;
 class UAnimInstance;
 class UAnimMontage;
+class AActor;
 
 class Ability {
 public:
-  Ability(UAnimInstance *animInstance, UAnimMontage *animMontage);
-  virtual ~Ability();
-  virtual void DoAbility() = 0;
+  Ability(UAnimInstance *animInstance, UAnimMontage *animMontage,
+          AActor *owner);
 
-  virtual void OnMontageEnded(UAnimMontage *montage, bool bInterrupted);
+  virtual ~Ability();
+
+  virtual void DoAbility();
+
   void SetAnimNotifyDelegate(FName name, std::function<void()> beginDelegate,
                              std::function<void()> endDelegate);
-  UAnimMontage *GetAnimMontage() { return animMontage_; }
-  UAnimInstance *GetAnimInstance() { return animInstance_; }
+
+  // NOTE:Don't call it from outside
+  virtual void OnMontageEnded(UAnimMontage *montage, bool bInterrupted);
 
 protected:
   void PlayMontage();
 
+protected:
   UPROPERTY()
   TArray<UAbilityNotify *> notifies_;
+
+  AActor *owner_;
 
 private:
   UAnimInstance *animInstance_;
   UAnimMontage *animMontage_;
-};
-
-// NOTE:BeginPlayにてanimInstanceは生成される
-// それ以前でAbilityをCreateするとanimInstance がnullptrになる
-class AbilityFactory {
-public:
-  virtual ~AbilityFactory() = default;
-  virtual Ability *CreateAbility(UAnimInstance *animInstance) = 0;
 };

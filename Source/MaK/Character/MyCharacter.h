@@ -1,5 +1,4 @@
 #pragma once
-#include "Ability/NormalAttakck.h"
 #include "MaKCharacter.h"
 #include "MyCharacter.generated.h"
 
@@ -20,7 +19,8 @@ public:
   void SetNormalAttack(AAttackCollision *weapon);
 
 private:
-  virtual void SetupPlayerInputComponent(UInputComponent *PlayerInputComponent) override;
+  virtual void
+  SetupPlayerInputComponent(UInputComponent *PlayerInputComponent) override;
   // Ability Function
   void Attack();
   void Skill1();
