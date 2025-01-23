@@ -6,6 +6,7 @@
 class Ability;
 class UAnimMontage;
 class UShapeComponent;
+class AbilityManager;
 
 UCLASS()
 class AMyCharacter : public AMaKCharacter {
@@ -27,5 +28,6 @@ private:
   UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input,
             meta = (AllowPrivateAccess = "true"))
   UInputAction *normalAttackAction_;
-  Ability *normalAttack_;
+  AbilityManager *abilityManager_;
+  TArray<Ability *> abilities_;
 };

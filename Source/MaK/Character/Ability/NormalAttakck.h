@@ -3,10 +3,12 @@
 #include "Attack/AttackCollision.h"
 
 class StatsBase;
+
 class NormalAttackFactory : public AbilityFactory {
 public:
   NormalAttackFactory(AAttackCollision *weapon, StatsBase *stats)
-      : weapon_(weapon), stats_(stats) {}
+      : weapon_(weapon), stats_(stats) {};
+
   Ability *CreateAbility(UAnimInstance *animInstance) override;
 
 private:

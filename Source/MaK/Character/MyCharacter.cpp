@@ -1,5 +1,6 @@
 #include "MyCharacter.h"
 #include "Ability/NormalAttakck.h"
+#include "AbilityManager.h"
 #include "Animation/AnimInstance.h"
 #include "Animation/AnimMontage.h"
 #include "Components/ShapeComponent.h"
@@ -8,13 +9,14 @@
 
 AMyCharacter::AMyCharacter() { StatsComponent statsComponent; }
 
-AMyCharacter::~AMyCharacter() { delete normalAttack_; }
+AMyCharacter::~AMyCharacter() { delete abilityManager_; }
 
 void AMyCharacter::SetNormalAttack(AAttackCollision *weapon) {
   StatsComponent statsComponent;
   StatsBase *stats = statsComponent.GetPlayerStats();
-  normalAttack_ = NormalAttackFactory(weapon, stats)
-                      .CreateAbility(GetMesh()->GetAnimInstance());
+  abilities_.Add(NormalAttackFactory(weapon, stats)
+                     .CreateAbility(GetMesh()->GetAnimInstance()));
+  abilityManager_ = new AbilityManager(abilities_);
 }
 
 void AMyCharacter::SetupPlayerInputComponent(
@@ -37,4 +39,4 @@ void AMyCharacter::SetupPlayerInputComponent(
   }
 }
 
-void AMyCharacter::Attack() { normalAttack_->DoAbility(this->GetTransform()); }
+void AMyCharacter::Attack() { abilityManager_->ExecuteAbility(0); }

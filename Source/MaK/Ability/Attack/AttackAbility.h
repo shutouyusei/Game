@@ -14,7 +14,7 @@ public:
                 AAttackCollision *collision, StatsBase *stats,
                 FDamageStruct damage);
   ~AttackAbility();
-  void DoAbility(FTransform transform) override;
+  void DoAbility() override;
 
   // Delegate
   void OnMontageEnded(UAnimMontage *montage, bool bInterrupted) override;
@@ -23,7 +23,6 @@ public:
   void OnNotifyEnd();
 
 private:
-  bool isAttacking_ = false;
   FDamageStruct damage_;
   UAbilityNotify *notify_;
   StatsBase *stats_;

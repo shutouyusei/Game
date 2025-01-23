@@ -6,8 +6,9 @@ Ability::Ability(UAnimInstance *animInstance, UAnimMontage *animMontage)
     : animInstance_(animInstance), animMontage_(animMontage) {
   // Create Object
   // Get notify instance from montage
-  for(auto notify : animMontage_->Notifies) {
-    if (UAbilityNotify *abilityNotify = Cast<UAbilityNotify>(notify.NotifyStateClass)) {
+  for (auto notify : animMontage_->Notifies) {
+    if (UAbilityNotify *abilityNotify =
+            Cast<UAbilityNotify>(notify.NotifyStateClass)) {
       notifies_.Add(abilityNotify);
     }
   }
@@ -15,6 +16,16 @@ Ability::Ability(UAnimInstance *animInstance, UAnimMontage *animMontage)
 
 Ability::~Ability() {
   // Destructor
+}
+
+void Ability::SetAnimNotifyDelegate(FName name,
+                                    std::function<void()> beginDelegate,
+                                    std::function<void()> endDelegate) {
+  for (auto notify : notifies_) {
+    if (notify->Name == name) {
+      notify->SetDelegate(beginDelegate, endDelegate);
+    }
+  }
 }
 
 void Ability::OnMontageEnded(UAnimMontage *montage, bool bInterrupted) {

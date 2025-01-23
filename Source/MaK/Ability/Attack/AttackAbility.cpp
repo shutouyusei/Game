@@ -27,11 +27,7 @@ AttackAbility::~AttackAbility() {
 }
 
 //
-void AttackAbility::DoAbility(FTransform transform) {
-  if (isAttacking_) {
-    return;
-  }
-  isAttacking_ = true;
+void AttackAbility::DoAbility() {
   // Attack the target
   notify_->SetDelegate([this]() { OnNotifyBegin(); },
                        [this]() { OnNotifyEnd(); });
@@ -43,7 +39,6 @@ void AttackAbility::DoAbility(FTransform transform) {
 void AttackAbility::OnMontageEnded(UAnimMontage *montage, bool bInterrupted) {
   // Check if the montage is interrupted
   notify_->SetDelegate(nullptr, nullptr);
-  isAttacking_ = false;
 }
 
 void AttackAbility::OnNotifyBegin() {
