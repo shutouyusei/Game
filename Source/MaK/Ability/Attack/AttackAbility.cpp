@@ -29,8 +29,10 @@ AttackAbility::~AttackAbility() {
 //
 void AttackAbility::DoAbility() {
   // Attack the target
+  if(notify_ != nullptr) {
   notify_->SetDelegate([this]() { OnNotifyBegin(); },
                        [this]() { OnNotifyEnd(); });
+  }
   //
   PlayMontage();
   // Check if the collision is valid
@@ -38,7 +40,9 @@ void AttackAbility::DoAbility() {
 
 void AttackAbility::OnMontageEnded(UAnimMontage *montage, bool bInterrupted) {
   // Check if the montage is interrupted
+  if(notify_ != nullptr) {
   notify_->SetDelegate(nullptr, nullptr);
+  }
 }
 
 void AttackAbility::OnNotifyBegin() {
