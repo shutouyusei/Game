@@ -2,6 +2,8 @@
 #include "Ability.h"
 #include "AbilityNotify.h"
 #include "AbilityWithMontage.h"
+#include "Animation/AnimInstance.h"
+#include "Animation/AnimMontage.h"
 #include "CoreMinimal.h"
 
 class UAnimInstance;

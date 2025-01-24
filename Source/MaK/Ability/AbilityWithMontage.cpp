@@ -1,9 +1,8 @@
 #include "AbilityWithMontage.h"
-#include "Animation/AnimInstance.h"
-#include "Animation/AnimMontage.h"
 
-AbilityWithMontage::AbilityWithMontage(AActor *owner,UAnimInstance *animInstance_) : Ability(owner),animInstance_(animInstance_) {
-}
+AbilityWithMontage::AbilityWithMontage(AActor *owner,
+                                       UAnimInstance *animInstance_)
+    : Ability(owner), animInstance_(animInstance_) {}
 
 AbilityWithMontage::~AbilityWithMontage() {
   // Destructor
@@ -12,7 +11,6 @@ AbilityWithMontage::~AbilityWithMontage() {
     notify->SetDelegate(nullptr, nullptr);
   }
 }
-
 
 void AbilityWithMontage::PlayMontage() {
   animInstance_->Montage_Play(animMontage_);
@@ -50,6 +48,8 @@ void AbilityWithMontage::SetUpAbilityWithMontage() {
     }
   }
 
-  //TODO:先行入力機能いりそうだったらつける
-  SetAnimNotifyDelegate(TEXT("Ability"), [this]() { isExecuting_ = true; }, [this]() { isExecuting_ = false; });
+  // TODO:先行入力機能いりそうだったらつける
+  SetAnimNotifyDelegate(
+      TEXT("Ability"), [this]() { isExecuting_ = true; },
+      [this]() { isExecuting_ = false; });
 }

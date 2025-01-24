@@ -1,8 +1,7 @@
 #pragma once
 #include "../AbilityWithMontage.h"
+#include "AttackCollision.h"
 #include "DamageStruct.h"
-
-class AAttackCollision;
 
 class AttackAbility : public AbilityWithMontage {
 public:
@@ -11,10 +10,9 @@ public:
   ~AttackAbility() = default;
   virtual void DoAbility() override;
   virtual void EndAbility() override;
+
 protected:
   void SetUpAttackAbility(UAnimMontage *animMontage, FDamageStruct damage);
-
-private:
   FDamageStruct damage_;
   AAttackCollision *collision_;
 };

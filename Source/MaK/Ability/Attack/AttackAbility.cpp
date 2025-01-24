@@ -1,5 +1,4 @@
 #include "AttackAbility.h"
-#include "AttackCollision.h"
 #include "Damage.h"
 #include "StatsComponent.h"
 
@@ -14,7 +13,6 @@ void AttackAbility::DoAbility() {
 
 void AttackAbility::EndAbility() {
   // Stop the attack animation
-  StopMontage();
   isExecuting_ = false;
 }
 

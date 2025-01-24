@@ -1,7 +1,7 @@
 #include "MyCharacter.h"
 #include "AbilityManager.h"
 #include "EnhancedInputComponent.h"
-#include "Sword/Base/SwordAttack1.h"
+#include "Sword/Base/SwordAttackCombo.h"
 #include "Sword/Skill/DodgeAttack1.h"
 
 AMyCharacter::AMyCharacter() {}
@@ -11,7 +11,7 @@ AMyCharacter::~AMyCharacter() {}
 void AMyCharacter::SetNormalAttack(AAttackCollision *weapon) {
   abilityManager_ = new AbilityManager();
   Ability *ability =
-      new SwordAttack1(this, GetMesh()->GetAnimInstance(), weapon);
+      new SwordAttackCombo(this, GetMesh()->GetAnimInstance(), weapon);
   abilityManager_->AddAbility(ability);
   Ability *dodgeAbility =
       new DodgeAttack1(this, GetMesh()->GetAnimInstance(), weapon);
