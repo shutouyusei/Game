@@ -7,15 +7,13 @@ class Ability;
 // アビリティの入力制御
 class AbilityManager {
 public:
-  AbilityManager(TArray<Ability *> abilities);
+  AbilityManager();
   ~AbilityManager();
+  void AddAbility(Ability *ability);
+  void SetAbility(int index, Ability *ability);
   void ExecuteAbility(int index);
 
 private:
-  void EndAbility();
-  bool canInput_ = true;
-  bool isExecuting_ = false;
-  TArray<Ability *> abilities_;
+  TArray<Ability*> abilities_;
   int currentAbilityIndex_ = -1;
-  int nextAbilityIndex_ = -1;
 };

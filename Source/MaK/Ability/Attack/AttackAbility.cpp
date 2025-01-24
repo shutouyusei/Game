@@ -1,61 +1,44 @@
 #include "AttackAbility.h"
 #include "AttackCollision.h"
-#include "Components/ShapeComponent.h"
+#include "Damage.h"
 #include "StatsComponent.h"
 
-AttackAbility::AttackAbility(UAnimInstance *animInstance,
-                             UAnimMontage *animMontage, AActor *owner,
-                             AAttackCollision *collision, FDamageStruct damage)
-    : Ability(animInstance, animMontage, owner) {
-  collision_ = collision;
-  damage_ = damage;
+AttackAbility::AttackAbility(AActor *owner, UAnimInstance *animInstance,
+                             AAttackCollision *collision)
+    : AbilityWithMontage(owner, animInstance), collision_(collision) {}
 
-  for (auto notify : notifies_) {
-    if (notify->Name == TEXT("Attack")) {
-      UE_LOG(LogTemp, Warning, TEXT("Attack notify found"));
-      notify_ = notify;
-    }
-  }
-}
-
-AttackAbility::~AttackAbility() {
-  // Destructor
-  notify_->SetDelegate(nullptr, nullptr);
-}
-
-//
 void AttackAbility::DoAbility() {
-  // Attack the target
-  if (notify_ != nullptr) {
-    notify_->SetDelegate([this]() { OnNotifyBegin(); },
-                         [this]() { OnNotifyEnd(); });
-  }
-  //
+  // Play the attack animation
   PlayMontage();
-  // Check if the collision is valid
 }
 
-void AttackAbility::OnMontageEnded(UAnimMontage *montage, bool bInterrupted) {
-  // Check if the montage is interrupted
-  if (notify_ != nullptr) {
-    notify_->SetDelegate(nullptr, nullptr);
-  }
+void AttackAbility::EndAbility() {
+  // Stop the attack animation
+  StopMontage();
+  isExecuting_ = false;
 }
 
-void AttackAbility::OnNotifyBegin() {
-  // Check if the notify is beginning
-  collision_->SetAbility([this](AActor *otherActor) {
-    if (otherActor->ActorHasTag("Game")) {
-      StatsComponent statsComponent;
-      StatsManager *statsManager = statsComponent.GetStatsManager();
-      StatsBase *ownerStats = statsManager->GetStats(owner_);
-      StatsBase *otherStats = statsManager->GetStats(otherActor);
-      Damage::ApplyDamage(ownerStats, otherStats, damage_);
-    }
-  });
-}
+void AttackAbility::SetUpAttackAbility(UAnimMontage *animMontage,
+                                       FDamageStruct damage) {
+  // Set up the attack ability
+  animMontage_ = animMontage;
+  damage_ = damage;
+  SetUpAbilityWithMontage();
+  auto damageToEnemy = [this]() -> void {
+    collision_->SetAbility([this](AActor *otherActor) {
+      if (otherActor->ActorHasTag("Game")) {
+        StatsComponent statsComponent;
+        StatsManager *statsManager = statsComponent.GetStatsManager();
 
-void AttackAbility::OnNotifyEnd() {
-  // Check if the notify is ending
-  collision_->DeleteAbility();
+        StatsBase *ownerStats = statsManager->GetStats(owner_);
+        StatsBase *otherStats = statsManager->GetStats(otherActor);
+
+        Damage::ApplyDamage(ownerStats, otherStats, damage_);
+      }
+    });
+  };
+
+  auto endDelegate = [this]() -> void { collision_->DeleteAbility(); };
+
+  SetAnimNotifyDelegate(TEXT("Attack"), damageToEnemy, endDelegate);
 }

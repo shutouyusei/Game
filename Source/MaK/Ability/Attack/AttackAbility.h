@@ -1,29 +1,20 @@
 #pragma once
-#include "../Ability.h"
-#include "Damage.h"
+#include "../AbilityWithMontage.h"
+#include "DamageStruct.h"
 
-class UShapeComponent;
 class AAttackCollision;
-class StatsBase;
-class UAbilityNotify;
 
-class AttackAbility : public Ability {
+class AttackAbility : public AbilityWithMontage {
 public:
-  AttackAbility(UAnimInstance *animInstance, UAnimMontage *animMontage,
-                AActor *owner, AAttackCollision *collisionm,
-                FDamageStruct damage);
-
-  ~AttackAbility();
-  void DoAbility() override;
-
-  // Delegate
-  void OnMontageEnded(UAnimMontage *montage, bool bInterrupted) override;
-
-  void OnNotifyBegin();
-  void OnNotifyEnd();
+  AttackAbility(AActor *owner, UAnimInstance *animInstance,
+                AAttackCollision *collisionm);
+  ~AttackAbility() = default;
+  virtual void DoAbility() override;
+  virtual void EndAbility() override;
+protected:
+  void SetUpAttackAbility(UAnimMontage *animMontage, FDamageStruct damage);
 
 private:
   FDamageStruct damage_;
-  UAbilityNotify *notify_;
   AAttackCollision *collision_;
 };

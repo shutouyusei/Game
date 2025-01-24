@@ -2,40 +2,45 @@
 #include "Ability.h"
 #include "AbilityNotify.h"
 
-AbilityManager::AbilityManager(TArray<Ability *> abilities)
-    : abilities_(abilities) {
-  for (auto ability : abilities_) {
+AbilityManager::AbilityManager() {}
+
+AbilityManager::~AbilityManager() {
+  for (Ability *ability : abilities_) {
+    delete ability;
+    ability = nullptr;
+  }
+  abilities_.Empty();
+}
+
+void AbilityManager::SetAbility(int index, Ability *ability) {
+  if (index < abilities_.Num()) {
+    abilities_[index] = ability;
+  } else {
+    UE_LOG(LogTemp, Error,
+           TEXT("AbilityManager::SetAbility: Index out of range"));
   }
 }
 
-AbilityManager::~AbilityManager() {}
+void AbilityManager::AddAbility(Ability *ability) { abilities_.Add(ability); }
 
 void AbilityManager::ExecuteAbility(int index) {
-  Ability *ability = abilities_[index];
-  if (canInput_) {
-    if (isExecuting_) {
-      nextAbilityIndex_ = index;
-      return;
-    }
-    ability->SetAnimNotifyDelegate( FName("RejectInput"), [this]() { canInput_ = false; }, [this]() { canInput_ = true; });
-
-    ability->SetAnimNotifyDelegate( FName("Ability"), [this]() { isExecuting_ = true; }, [this]() { EndAbility(); });
-
-    currentAbilityIndex_ = index;
-    abilities_[index]->DoAbility();
+  if (index >= abilities_.Num()) {
+    UE_LOG(LogTemp, Error,
+           TEXT("AbilityManager::ExecuteAbility: Index out of range"));
+    return;
   }
-}
 
-void AbilityManager::EndAbility() {
-  isExecuting_ = false;
+  if (currentAbilityIndex_ == -1) {
+    currentAbilityIndex_ = index;
+    abilities_[currentAbilityIndex_]->DoAbility();
+    return;
+  }
+
   Ability *ability = abilities_[currentAbilityIndex_];
-
-  ability->SetAnimNotifyDelegate( FName("RejectInput"),nullptr ,nullptr );
-
-  ability->SetAnimNotifyDelegate( FName("Ability"),nullptr ,nullptr);
-
-  if (nextAbilityIndex_ != -1) {
-    ExecuteAbility(nextAbilityIndex_);
-    nextAbilityIndex_ = -1;
+  if (ability->IsExecuting()) {
+  } else {
+    ability->EndAbility();
+    currentAbilityIndex_ = index;
+    abilities_[currentAbilityIndex_]->DoAbility();
   }
 }

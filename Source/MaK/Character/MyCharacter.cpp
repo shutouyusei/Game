@@ -1,39 +1,28 @@
 #include "MyCharacter.h"
 #include "AbilityManager.h"
-#include "Animation/AnimInstance.h"
-#include "Animation/AnimMontage.h"
-#include "Attack/AttackAbilityFactory.h"
-#include "Components/ShapeComponent.h"
 #include "EnhancedInputComponent.h"
-#include "StatsComponent.h"
+#include "Sword/Base/SwordAttack1.h"
+#include "Sword/Skill/DodgeAttack1.h"
 
-AMyCharacter::AMyCharacter() { StatsComponent statsComponent; }
+AMyCharacter::AMyCharacter() {}
 
-AMyCharacter::~AMyCharacter() { delete abilityManager_; }
+AMyCharacter::~AMyCharacter() {}
 
 void AMyCharacter::SetNormalAttack(AAttackCollision *weapon) {
-  StatsComponent statsComponent;
-  StatsBase *stats = statsComponent.GetPlayerStats();
+  abilityManager_ = new AbilityManager();
+  Ability *ability =
+      new SwordAttack1(this, GetMesh()->GetAnimInstance(), weapon);
+  abilityManager_->AddAbility(ability);
+  Ability *dodgeAbility =
+      new DodgeAttack1(this, GetMesh()->GetAnimInstance(), weapon);
+  abilityManager_->AddAbility(dodgeAbility);
+}
+void AMyCharacter::BeginPlay() { Super::BeginPlay(); }
 
-  UAnimMontage *animMontage = LoadObject<UAnimMontage>(
-      nullptr, TEXT("/Game/MyAbility/Montage/AM_Attack1.AM_Attack1"));
-  FDamageStruct damage = {10.0, EDamageType::Physical,
-                          EDamageElementType::None};
-
-  {
-    AttackFactory attackFactory(animMontage, damage, this, weapon);
-    abilities_.Add(attackFactory.CreateAbility(GetMesh()->GetAnimInstance()));
-  }
-
-  animMontage = LoadObject<UAnimMontage>(
-      nullptr, TEXT("/Game/MyAbility/Montage/AM_DashAttack1.AM_DashAttack1"));
-  damage = {20.0, EDamageType::Physical, EDamageElementType::None};
-  {
-    AttackFactory attackFactory(animMontage, damage, this, weapon);
-    abilities_.Add(attackFactory.CreateAbility(GetMesh()->GetAnimInstance()));
-  }
-
-  abilityManager_ = new AbilityManager(abilities_);
+void AMyCharacter::EndPlay(const EEndPlayReason::Type EndPlayReason) {
+  Super::EndPlay(EndPlayReason);
+  delete abilityManager_;
+  abilityManager_ = nullptr;
 }
 
 void AMyCharacter::SetupPlayerInputComponent(

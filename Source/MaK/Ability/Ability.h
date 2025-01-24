@@ -1,37 +1,19 @@
 #pragma once
-#include "AbilityNotify.h"
 #include "CoreMinimal.h"
-
-class UAbilityNotify;
-class UAnimInstance;
-class UAnimMontage;
-class AActor;
+#include "GameFramework/Actor.h"
 
 class Ability {
 public:
-  Ability(UAnimInstance *animInstance, UAnimMontage *animMontage,
-          AActor *owner);
+  Ability(AActor *owner) : owner_(owner) {}
+  virtual ~Ability() = default;
 
-  virtual ~Ability();
-
-  virtual void DoAbility();
-
-  void SetAnimNotifyDelegate(FName name, std::function<void()> beginDelegate,
-                             std::function<void()> endDelegate);
-
-  // NOTE:Don't call it from outside
-  virtual void OnMontageEnded(UAnimMontage *montage, bool bInterrupted);
+  virtual void DoAbility() = 0;
+  virtual void EndAbility() = 0;
+  bool IsExecuting() { return isExecuting_; }
 
 protected:
-  void PlayMontage();
+  bool isExecuting_ = false;
 
 protected:
-  UPROPERTY()
-  TArray<UAbilityNotify *> notifies_;
-
   AActor *owner_;
-
-private:
-  UAnimInstance *animInstance_;
-  UAnimMontage *animMontage_;
 };

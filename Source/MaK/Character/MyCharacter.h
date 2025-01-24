@@ -19,11 +19,15 @@ public:
   void SetNormalAttack(AAttackCollision *weapon);
 
 private:
-  virtual void
-  SetupPlayerInputComponent(UInputComponent *PlayerInputComponent) override;
   // Ability Function
   void Attack();
   void Skill1();
+
+protected:
+  virtual void
+  SetupPlayerInputComponent(UInputComponent *PlayerInputComponent) override;
+  virtual void BeginPlay() override;
+  virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 
 private:
   UPROPERTY(EditAnywhere, Category = Input,
@@ -34,5 +38,4 @@ private:
   UInputAction *skill1Action_;
 
   AbilityManager *abilityManager_;
-  TArray<Ability *> abilities_;
 };

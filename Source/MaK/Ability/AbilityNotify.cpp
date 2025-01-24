@@ -1,5 +1,6 @@
 #include "AbilityNotify.h"
 #include "Animation/AnimInstance.h"
+#include <functional>
 
 UAbilityNotify::UAbilityNotify() {
   // Constructor

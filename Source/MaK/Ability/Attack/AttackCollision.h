@@ -1,11 +1,8 @@
 #pragma once
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include <functional>
 
 #include "AttackCollision.generated.h"
-
-class AttackAbility;
 
 UCLASS()
 class AAttackCollision : public AActor {

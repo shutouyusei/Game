@@ -1,6 +1,6 @@
 #pragma once
+#include "CoreMinimal.h"
 #include "Animation/AnimNotifies/AnimNotifyState.h"
-#include <functional>
 
 #include "AbilityNotify.generated.h"
 

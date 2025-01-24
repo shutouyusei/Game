@@ -1,13 +1,12 @@
 #include "AttackCollision.h"
-#include "Animation/AnimMontage.h"
-#include "AttackAbility.h"
-#include "StatsBase.h"
+#include <functional>
 
 void AAttackCollision::NotifyActorBeginOverlap(AActor *otherActor) {
   // Check if the other actor is an enemy
   if (bCanDealDamage) {
     // Deal damage to the enemy
-    AbilityDelegate_(otherActor);
+    if (AbilityDelegate_ != nullptr)
+      AbilityDelegate_(otherActor);
   }
 }
 
