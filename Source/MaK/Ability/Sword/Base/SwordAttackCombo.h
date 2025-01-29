@@ -1,18 +1,22 @@
 #pragma once
-#include "Attack/AttackAbility.h"
+#include "Ability.h"
 
-class SwordAttackCombo : public AttackAbility {
+class AAttackCollision;
+class UAnimInstance;
+
+class SwordAttackCombo : public Ability {
 public:
   SwordAttackCombo(AActor *owner, UAnimInstance *animInstance,
                    AAttackCollision *collision);
-  ~SwordAttackCombo() = default;
+  ~SwordAttackCombo();
 
   virtual void DoAbility() override;
   virtual void EndAbility() override;
+  virtual bool IsExecuting() override {
+    return comboAbilities_[comboCount_]->IsExecuting();
+  }
 
 private:
-  UAnimMontage *comboMontage_[4];
-  FDamageStruct comboDamage_[4];
-
+  Ability *comboAbilities_[4];
   int comboCount_ = 0;
 };

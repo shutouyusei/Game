@@ -8,6 +8,7 @@ AttackAbility::AttackAbility(AActor *owner, UAnimInstance *animInstance,
 
 void AttackAbility::DoAbility() {
   // Play the attack animation
+  isExecuting_ = true;
   PlayMontage();
 }
 

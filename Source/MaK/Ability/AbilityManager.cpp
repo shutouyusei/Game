@@ -39,7 +39,6 @@ void AbilityManager::ExecuteAbility(int index) {
   Ability *ability = abilities_[currentAbilityIndex_];
   if (ability->IsExecuting()) {
   } else {
-    ability->EndAbility();
     currentAbilityIndex_ = index;
     abilities_[currentAbilityIndex_]->DoAbility();
   }

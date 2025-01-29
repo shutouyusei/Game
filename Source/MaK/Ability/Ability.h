@@ -9,7 +9,7 @@ public:
 
   virtual void DoAbility() = 0;
   virtual void EndAbility() = 0;
-  bool IsExecuting() { return isExecuting_; }
+  virtual bool IsExecuting() { return isExecuting_; }
 
 protected:
   bool isExecuting_ = false;
