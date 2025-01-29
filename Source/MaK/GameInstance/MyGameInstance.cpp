@@ -1,4 +1,5 @@
 #include "MyGameInstance.h"
+#include "ComponentManager.h"
 #include "Engine/Engine.h"
 #include "Kismet/GameplayStatics.h"
 
@@ -8,7 +9,7 @@ UMyGameInstance *UMyGameInstance::instance_ = nullptr;
 void UMyGameInstance::Init() {
   UE_LOG(LogTemp, Warning, TEXT("UMyGameInstance"));
   instance_ = this;
+  ComponentManager::SetUpComponents();
 }
 
-void UMyGameInstance::Shutdown() {}
-
+void UMyGameInstance::Shutdown() { ComponentManager::CleanUpComponents(); }

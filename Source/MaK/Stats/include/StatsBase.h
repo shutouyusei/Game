@@ -1,5 +1,5 @@
 #pragma once
-#include "StatsResource.h"
+#include "../StatsResource.h"
 
 class StatsBase {
 public:

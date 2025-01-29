@@ -1,6 +1,7 @@
 #pragma once
-#include "../StatsBase.h"
-#include "../StatsStruct.h"
+#include "../StatsManager.h"
+#include "StatsBase.h"
+#include "StatsStruct.h"
 
 class StatsComponent {
 public:
@@ -11,8 +12,10 @@ public:
   // clean up component
   void ComponentCleanUp();
 
-  StatsBase *Get() { return stats_; };
+  StatsBase *GetPlayerStats() { return stats_; };
+  StatsManager *GetStatsManager() { return &statsManager_; };
 
 private:
   static StatsBase *stats_;
+  static StatsManager statsManager_;
 };
