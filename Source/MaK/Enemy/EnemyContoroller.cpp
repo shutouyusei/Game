@@ -27,3 +27,11 @@ void AEnemyContoroller::OnUnPossess() {
   Super::OnUnPossess();
   BehaviorTreeComponent_->StopTree();
 };
+
+void AEnemyContoroller::SetPlayer(APawn *Player) {
+  if(BlackboardComponent_ == nullptr) {
+    UE_LOG(LogTemp, Warning, TEXT("BlackboardComponent is nullptr"));
+    return;
+  }
+  BlackboardComponent_->SetValueAsObject("Player", Player);
+};

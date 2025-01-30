@@ -16,15 +16,20 @@ class MAK_API AEnemyContoroller : public AAIController {
   GENERATED_BODY()
 public:
   AEnemyContoroller();
-  void SetPlayer(APawn *player);
+
   UPROPERTY(EditAnywhere, Category = "BehaviorTree")
   UBehaviorTree *BehaviorTree_;
+
+  UFUNCTION(BlueprintCallable)
+  void SetPlayer(APawn *Player);
+
 protected:
-  UPROPERTY()
+  UPROPERTY(BluePrintReadOnly)
   UBehaviorTreeComponent *BehaviorTreeComponent_;
 
-  UPROPERTY()
+  UPROPERTY(BluePrintReadOnly)
   UBlackboardComponent *BlackboardComponent_;
+  
 
 protected:
   void BeginPlay() override;
