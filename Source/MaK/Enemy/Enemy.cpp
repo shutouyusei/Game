@@ -1,10 +1,14 @@
 #include "Enemy.h"
+#include "EnemyContoroller.h"
 #include "StatsComponent.h"
 #include "StatsFactory.h"
 
 AEnemy::AEnemy() {
   // Constructor
   Tags.Add("Game");
+  //AI Perception
+  PerceptionComponent = CreateDefaultSubobject<UAIPerceptionComponent>("PerceptionComponent");
+  AddOwnedComponent(PerceptionComponent);
 }
 
 AEnemy::~AEnemy() {
@@ -30,3 +34,4 @@ void AEnemy::BeginPlay() {
     Destroy();
   });
 }
+
