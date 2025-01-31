@@ -1,5 +1,4 @@
 #include "MyCharacter.h"
-#include "AbilityManager.h"
 #include "EnhancedInputComponent.h"
 #include "Sword/Base/SwordAttackCombo.h"
 #include "Sword/Skill/DodgeAttack1.h"
@@ -9,7 +8,9 @@ AMyCharacter::AMyCharacter() {}
 AMyCharacter::~AMyCharacter() {}
 
 void AMyCharacter::SetNormalAttack(AAttackCollision *weapon) {
-  abilityManager_ = new AbilityManager();
+  //attach component
+  abilityManager_ = CreateDefaultSubobject<UAbilityManager>("AbilityManager");
+
   Ability *ability =
       new SwordAttackCombo(this, GetMesh()->GetAnimInstance(), weapon);
   abilityManager_->AddAbility(ability);
@@ -21,8 +22,6 @@ void AMyCharacter::BeginPlay() { Super::BeginPlay(); }
 
 void AMyCharacter::EndPlay(const EEndPlayReason::Type EndPlayReason) {
   Super::EndPlay(EndPlayReason);
-  delete abilityManager_;
-  abilityManager_ = nullptr;
 }
 
 void AMyCharacter::SetupPlayerInputComponent(

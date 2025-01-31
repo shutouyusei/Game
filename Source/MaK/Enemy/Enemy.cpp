@@ -6,8 +6,9 @@
 AEnemy::AEnemy() {
   // Constructor
   Tags.Add("Game");
-  //AI Perception
-  PerceptionComponent = CreateDefaultSubobject<UAIPerceptionComponent>("PerceptionComponent");
+  // AI Perception
+  PerceptionComponent =
+      CreateDefaultSubobject<UAIPerceptionComponent>("PerceptionComponent");
   AddOwnedComponent(PerceptionComponent);
 }
 
@@ -34,4 +35,3 @@ void AEnemy::BeginPlay() {
     Destroy();
   });
 }
-

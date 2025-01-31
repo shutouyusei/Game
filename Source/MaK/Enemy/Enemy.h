@@ -1,9 +1,10 @@
 #pragma once
 
+#include "AbilityManager.h"
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
-#include "StatsStruct.h"
 #include "Perception/AIPerceptionComponent.h"
+#include "StatsStruct.h"
 
 #include "Enemy.generated.h"
 
@@ -20,9 +21,13 @@ protected:
   void BeginPlay() override;
 
 public:
-  UPROPERTY(VisibleAnywhere,Category="Perception")
+  UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Perception")
   UAIPerceptionComponent *PerceptionComponent;
-private:
+
+  UPROPERTY(EditAnywhere, Category = "Ability")
+  UAbilityManager *abilityManager_;
+
+protected:
   UPROPERTY(EditAnywhere, Category = "Stats")
   FStatsStruct stats_;
 };

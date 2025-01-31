@@ -1,10 +1,9 @@
 #include "AbilityManager.h"
-#include "Ability.h"
 #include "AbilityNotify.h"
 
-AbilityManager::AbilityManager() {}
+UAbilityManager::UAbilityManager() {}
 
-AbilityManager::~AbilityManager() {
+UAbilityManager::~UAbilityManager() {
   for (Ability *ability : abilities_) {
     delete ability;
     ability = nullptr;
@@ -12,21 +11,21 @@ AbilityManager::~AbilityManager() {
   abilities_.Empty();
 }
 
-void AbilityManager::SetAbility(int index, Ability *ability) {
+void UAbilityManager::SetAbility(int index, Ability *ability) {
   if (index < abilities_.Num()) {
     abilities_[index] = ability;
   } else {
     UE_LOG(LogTemp, Error,
-           TEXT("AbilityManager::SetAbility: Index out of range"));
+           TEXT("UAbilityManager::SetAbility: Index out of range"));
   }
 }
 
-void AbilityManager::AddAbility(Ability *ability) { abilities_.Add(ability); }
+void UAbilityManager::AddAbility(Ability *ability) { abilities_.Add(ability); }
 
-void AbilityManager::ExecuteAbility(int index) {
+void UAbilityManager::ExecuteAbility(int index) {
   if (index >= abilities_.Num()) {
     UE_LOG(LogTemp, Error,
-           TEXT("AbilityManager::ExecuteAbility: Index out of range"));
+           TEXT("UAbilityManager::ExecuteAbility: Index out of range"));
     return;
   }
 

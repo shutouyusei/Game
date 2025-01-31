@@ -1,11 +1,11 @@
 #pragma once
+#include "AbilityManager.h"
 #include "MaKCharacter.h"
 #include "MyCharacter.generated.h"
 
 class Ability;
 class UAnimMontage;
 class UShapeComponent;
-class AbilityManager;
 class UInputComponent;
 
 UCLASS()
@@ -23,6 +23,10 @@ private:
   void Attack();
   void Skill1();
 
+public:
+  UPROPERTY(EditAnywhere, Category = "Ability")
+  UAbilityManager *abilityManager_;
+
 protected:
   virtual void
   SetupPlayerInputComponent(UInputComponent *PlayerInputComponent) override;
@@ -36,6 +40,4 @@ private:
 
   UPROPERTY(EditAnywhere, Category = Input, meta = (AllowPrivat = "true"))
   UInputAction *skill1Action_;
-
-  AbilityManager *abilityManager_;
 };
