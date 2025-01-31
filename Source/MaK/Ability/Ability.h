@@ -1,10 +1,11 @@
 #pragma once
 #include "CoreMinimal.h"
-#include "GameFramework/Actor.h"
+
+class UAbilityManager;
 
 class Ability {
 public:
-  Ability(AActor *owner) : owner_(owner) {}
+  Ability(UAbilityManager *owner);
   virtual ~Ability() = default;
 
   virtual void DoAbility() = 0;
@@ -15,5 +16,5 @@ protected:
   bool isExecuting_ = false;
 
 protected:
-  AActor *owner_;
+  UAbilityManager *owner_;
 };

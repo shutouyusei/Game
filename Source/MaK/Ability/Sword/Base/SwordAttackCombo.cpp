@@ -4,7 +4,8 @@
 #include "SwordAttack3.h"
 #include "SwordAttack4.h"
 
-SwordAttackCombo::SwordAttackCombo(AActor *owner, UAnimInstance *animInstance,
+SwordAttackCombo::SwordAttackCombo(UAbilityManager *owner,
+                                   UAnimInstance *animInstance,
                                    AAttackCollision *collision)
     : Ability(owner) {
   // Set up the attack ability

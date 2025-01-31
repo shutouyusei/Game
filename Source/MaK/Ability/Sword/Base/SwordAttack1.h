@@ -3,7 +3,7 @@
 
 class SwordAttack1 : public AttackAbility {
 public:
-  SwordAttack1(AActor *owner, UAnimInstance *animInstance,
+  SwordAttack1(UAbilityManager *owner, UAnimInstance *animInstance,
                AAttackCollision *collision);
   ~SwordAttack1() = default;
 };

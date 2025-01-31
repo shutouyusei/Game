@@ -1,11 +1,13 @@
 #pragma once
 #include "../AbilityWithMontage.h"
-#include "AttackCollision.h"
-#include "DamageStruct.h"
+#include "Damage.h"
+
+class AAttackCollision;
+struct FDamageStruct;
 
 class AttackAbility : public AbilityWithMontage {
 public:
-  AttackAbility(AActor *owner, UAnimInstance *animInstance,
+  AttackAbility(UAbilityManager *owner, UAnimInstance *animInstance,
                 AAttackCollision *collisionm);
   ~AttackAbility() = default;
   virtual void DoAbility() override;

@@ -1,5 +1,7 @@
 #include "Enemy.h"
+#include "AbilityManager.h"
 #include "EnemyContoroller.h"
+#include "Perception/AIPerceptionComponent.h"
 #include "StatsComponent.h"
 #include "StatsFactory.h"
 

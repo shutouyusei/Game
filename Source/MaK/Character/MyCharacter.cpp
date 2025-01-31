@@ -8,14 +8,14 @@ AMyCharacter::AMyCharacter() {}
 AMyCharacter::~AMyCharacter() {}
 
 void AMyCharacter::SetNormalAttack(AAttackCollision *weapon) {
-  //attach component
+  // attach component
   abilityManager_ = CreateDefaultSubobject<UAbilityManager>("AbilityManager");
 
-  Ability *ability =
-      new SwordAttackCombo(this, GetMesh()->GetAnimInstance(), weapon);
+  Ability *ability = new SwordAttackCombo(abilityManager_,
+                                          GetMesh()->GetAnimInstance(), weapon);
   abilityManager_->AddAbility(ability);
   Ability *dodgeAbility =
-      new DodgeAttack1(this, GetMesh()->GetAnimInstance(), weapon);
+      new DodgeAttack1(abilityManager_, GetMesh()->GetAnimInstance(), weapon);
   abilityManager_->AddAbility(dodgeAbility);
 }
 void AMyCharacter::BeginPlay() { Super::BeginPlay(); }

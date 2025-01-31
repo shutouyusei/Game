@@ -2,15 +2,13 @@
 
 #include "AIController.h"
 #include "CoreMinimal.h"
-#include "BehaviorTree/BehaviorTree.h"
-#include "BehaviorTree/BehaviorTreeComponent.h"
-#include "BehaviorTree/BlackboardComponent.h"
 
 #include "EnemyContoroller.generated.h"
 
-/**
- *
- */
+class UBehaviorTree;
+class UBehaviorTreeComponent;
+class UBlackboardComponent;
+
 UCLASS()
 class MAK_API AEnemyContoroller : public AAIController {
   GENERATED_BODY()
@@ -29,7 +27,6 @@ protected:
 
   UPROPERTY(BluePrintReadOnly)
   UBlackboardComponent *BlackboardComponent_;
-  
 
 protected:
   void BeginPlay() override;

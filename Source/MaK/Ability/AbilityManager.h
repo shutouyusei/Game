@@ -13,6 +13,7 @@ class UAbilityManager : public UActorComponent {
 public:
   UAbilityManager();
   ~UAbilityManager();
+
   void AddAbility(Ability *ability);
   void SetAbility(int index, Ability *ability);
   void ExecuteAbility(int index);

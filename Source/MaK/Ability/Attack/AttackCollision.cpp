@@ -3,7 +3,7 @@
 
 void AAttackCollision::NotifyActorBeginOverlap(AActor *otherActor) {
   // Check if the other actor is an enemy
-  if (bCanDealDamage) {
+  if (bCanDealDamage_) {
     // Deal damage to the enemy
     if (AbilityDelegate_ != nullptr)
       AbilityDelegate_(otherActor);
@@ -13,10 +13,10 @@ void AAttackCollision::NotifyActorBeginOverlap(AActor *otherActor) {
 void AAttackCollision::SetAbility(
     std::function<void(AActor *)> AbilityDelegate) {
   AbilityDelegate_ = AbilityDelegate;
-  bCanDealDamage = true;
+  bCanDealDamage_ = true;
 }
 
 void AAttackCollision::DeleteAbility() {
   AbilityDelegate_ = nullptr;
-  bCanDealDamage = false;
+  bCanDealDamage_ = false;
 }

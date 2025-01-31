@@ -1,6 +1,6 @@
 #pragma once
-#include "CoreMinimal.h"
 #include "Animation/AnimNotifies/AnimNotifyState.h"
+#include "CoreMinimal.h"
 
 #include "AbilityNotify.generated.h"
 
@@ -10,16 +10,19 @@ class UAbilityNotify : public UAnimNotifyState {
 public:
   UAbilityNotify();
   ~UAbilityNotify();
-  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Notify")
-  FName Name;
 
+  void SetDelegate(std::function<void()> beginDelegate,
+                   std::function<void()> endDelegate);
+
+protected:
   void NotifyBegin(USkeletalMeshComponent *MeshComp,
                    UAnimSequenceBase *Animation, float TotalDuration) override;
   void NotifyEnd(USkeletalMeshComponent *MeshComp,
                  UAnimSequenceBase *Animation) override;
 
-  void SetDelegate(std::function<void()> beginDelegate,
-                   std::function<void()> endDelegate);
+public:
+  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Notify")
+  FName Name;
 
 private:
   std::function<void()> beginDelegate_;

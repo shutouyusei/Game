@@ -1,10 +1,15 @@
 #include "EnemyContoroller.h"
+#include "BehaviorTree/BehaviorTree.h"
+#include "BehaviorTree/BehaviorTreeComponent.h"
+#include "BehaviorTree/BlackboardComponent.h"
 #include "UObject/ConstructorHelpers.h"
 
 AEnemyContoroller::AEnemyContoroller() {
   // Constructor
-  BehaviorTreeComponent_ = CreateDefaultSubobject<UBehaviorTreeComponent>("BehaviorTreeComponent");
-  BlackboardComponent_ = CreateDefaultSubobject<UBlackboardComponent>("BlackboardComponent");
+  BehaviorTreeComponent_ =
+      CreateDefaultSubobject<UBehaviorTreeComponent>("BehaviorTreeComponent");
+  BlackboardComponent_ =
+      CreateDefaultSubobject<UBlackboardComponent>("BlackboardComponent");
 }
 
 void AEnemyContoroller::BeginPlay() {
@@ -15,7 +20,7 @@ void AEnemyContoroller::BeginPlay() {
 void AEnemyContoroller::OnPossess(APawn *InPawn) {
   Super::OnPossess(InPawn);
 
-  if(BehaviorTree_ == nullptr) {
+  if (BehaviorTree_ == nullptr) {
     UE_LOG(LogTemp, Warning, TEXT("BehaviorTree is nullptr"));
     return;
   }
@@ -29,7 +34,7 @@ void AEnemyContoroller::OnUnPossess() {
 };
 
 void AEnemyContoroller::SetPlayer(APawn *Player) {
-  if(BlackboardComponent_ == nullptr) {
+  if (BlackboardComponent_ == nullptr) {
     UE_LOG(LogTemp, Warning, TEXT("BlackboardComponent is nullptr"));
     return;
   }

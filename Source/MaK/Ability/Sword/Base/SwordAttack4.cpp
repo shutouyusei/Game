@@ -1,6 +1,6 @@
 #include "SwordAttack4.h"
 
-SwordAttack4::SwordAttack4(AActor *owner, UAnimInstance *animInstance,
+SwordAttack4::SwordAttack4(UAbilityManager *owner, UAnimInstance *animInstance,
                            AAttackCollision *collision)
     : AttackAbility(owner, animInstance, collision) {
   // Set up the attack ability

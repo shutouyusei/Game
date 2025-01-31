@@ -1,8 +1,10 @@
 #include "AttackAbility.h"
-#include "Damage.h"
+#include "AttackCollision.h"
 #include "StatsComponent.h"
+#include "AbilityManager.h"
 
-AttackAbility::AttackAbility(AActor *owner, UAnimInstance *animInstance,
+AttackAbility::AttackAbility(UAbilityManager *owner,
+                             UAnimInstance *animInstance,
                              AAttackCollision *collision)
     : AbilityWithMontage(owner, animInstance), collision_(collision) {}
 
@@ -28,8 +30,9 @@ void AttackAbility::SetUpAttackAbility(UAnimMontage *animMontage,
       if (otherActor->ActorHasTag("Game")) {
         StatsComponent statsComponent;
         StatsManager *statsManager = statsComponent.GetStatsManager();
+        AActor *owner = owner_->GetOwner();
 
-        StatsBase *ownerStats = statsManager->GetStats(owner_);
+        StatsBase *ownerStats = statsManager->GetStats(owner);
         StatsBase *otherStats = statsManager->GetStats(otherActor);
 
         Damage::ApplyDamage(ownerStats, otherStats, damage_);

@@ -1,14 +1,13 @@
 #pragma once
 
-#include "AbilityManager.h"
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
-#include "Perception/AIPerceptionComponent.h"
 #include "StatsStruct.h"
 
 #include "Enemy.generated.h"
 
 class UAIPerceptionComponent;
+class UAbilityManager;
 
 UCLASS()
 class AEnemy : public ACharacter {

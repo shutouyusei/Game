@@ -3,7 +3,7 @@
 
 class DodgeAttack1 : public AttackAbility {
 public:
-  DodgeAttack1(AActor *owner, UAnimInstance *animInstance,
+  DodgeAttack1(UAbilityManager *owner, UAnimInstance *animInstance,
                AAttackCollision *collision);
   ~DodgeAttack1() = default;
 };

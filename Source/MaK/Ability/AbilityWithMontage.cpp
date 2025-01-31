@@ -1,6 +1,11 @@
 #include "AbilityWithMontage.h"
+#include "Ability.h"
+#include "AbilityNotify.h"
+#include "Animation/AnimInstance.h"
+#include "Animation/AnimMontage.h"
+#include "CoreMinimal.h"
 
-AbilityWithMontage::AbilityWithMontage(AActor *owner,
+AbilityWithMontage::AbilityWithMontage(UAbilityManager *owner,
                                        UAnimInstance *animInstance_)
     : Ability(owner), animInstance_(animInstance_) {}
 
@@ -17,10 +22,6 @@ void AbilityWithMontage::PlayMontage() {
 
   // NOTE:モンタージュ再生後でしかdelegateの設定ができない！！
   // こんなのしるか
-
-  FOnMontageEnded endDelegate;
-  endDelegate.BindRaw(this, &AbilityWithMontage::OnMontageEnded);
-  animInstance_->Montage_SetEndDelegate(endDelegate, animMontage_);
 }
 
 void AbilityWithMontage::StopMontage() {

@@ -1,6 +1,6 @@
 #include "DodgeAttack1.h"
 
-DodgeAttack1::DodgeAttack1(AActor *owner, UAnimInstance *animInstance,
+DodgeAttack1::DodgeAttack1(UAbilityManager *owner, UAnimInstance *animInstance,
                            AAttackCollision *collision)
     : AttackAbility(owner, animInstance, collision) {
   // Set up the attack ability

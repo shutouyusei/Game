@@ -6,7 +6,7 @@ class UAnimInstance;
 
 class SwordAttackCombo : public Ability {
 public:
-  SwordAttackCombo(AActor *owner, UAnimInstance *animInstance,
+  SwordAttackCombo(UAbilityManager *owner, UAnimInstance *animInstance,
                    AAttackCollision *collision);
   ~SwordAttackCombo();
 
