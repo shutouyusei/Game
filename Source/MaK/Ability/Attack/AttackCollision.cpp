@@ -1,5 +1,22 @@
 #include "AttackCollision.h"
+#include "AttackAbility.h"
+#include "Components/StaticMeshComponent.h"
 #include <functional>
+
+AAttackCollision::AAttackCollision() {
+  CollisionMesh =
+      CreateDefaultSubobject<UStaticMeshComponent>(TEXT("CollisionMesh"));
+  // collision preset overlap all
+  CollisionMesh->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
+  CollisionMesh->SetCollisionObjectType(ECollisionChannel::ECC_WorldDynamic);
+  CollisionMesh->SetCollisionResponseToAllChannels(ECR_Overlap);
+  RootComponent = CollisionMesh;
+}
+
+AAttackCollision::~AAttackCollision() {
+  if (AbilityDelegate_ != nullptr)
+    AbilityDelegate_ = nullptr;
+}
 
 void AAttackCollision::NotifyActorBeginOverlap(AActor *otherActor) {
   // Check if the other actor is an enemy

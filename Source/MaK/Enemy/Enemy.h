@@ -26,6 +26,12 @@ public:
   UPROPERTY(EditAnywhere, Category = "Ability")
   UAbilityManager *abilityManager_;
 
+  UPROPERTY(EditAnywhere, Category = "Attack")
+  UChildActorComponent *weapon_;
+
+  UPROPERTY(EditAnywhere, Category = "Attack")
+  FName socketName_ = "None";
+
 protected:
   UPROPERTY(EditAnywhere, Category = "Stats")
   FStatsStruct stats_;

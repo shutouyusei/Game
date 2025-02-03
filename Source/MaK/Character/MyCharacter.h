@@ -15,9 +15,6 @@ public:
   AMyCharacter();
   ~AMyCharacter();
 
-  UFUNCTION(BlueprintCallable, Category = "Ability")
-  void SetNormalAttack(AAttackCollision *weapon);
-
 private:
   // Ability Function
   void Attack();
@@ -26,6 +23,10 @@ private:
 public:
   UPROPERTY(EditAnywhere, Category = "Ability")
   UAbilityManager *abilityManager_;
+
+  UPROPERTY(EditAnywhere, Category = "Attack")
+  UChildActorComponent *weapon_;
+
 
 protected:
   virtual void

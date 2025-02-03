@@ -4,13 +4,21 @@
 
 #include "AttackCollision.generated.h"
 
+class UStaticMeshComponent;
+
 UCLASS()
 class AAttackCollision : public AActor {
   GENERATED_BODY()
+  AAttackCollision();
+  ~AAttackCollision();
 
 public:
   void SetAbility(std::function<void(AActor *)> AbilityDelegate);
   void DeleteAbility();
+
+public:
+  UPROPERTY(EditAnywhere)
+  UStaticMeshComponent *CollisionMesh;
 
 protected:
   virtual void NotifyActorBeginOverlap(AActor *otherActor) override;

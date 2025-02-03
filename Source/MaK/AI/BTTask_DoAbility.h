@@ -13,7 +13,7 @@ public:
   UBTTask_DoAbility();
 
   UPROPERTY(EditAnywhere, Category = "Ability")
-  uint8 AbilityIndex;
+  int abilityIndex_;
 
 private:
   virtual EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent &OwnerComp,

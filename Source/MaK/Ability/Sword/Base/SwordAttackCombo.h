@@ -18,5 +18,5 @@ public:
 
 private:
   Ability *comboAbilities_[4];
-  int comboCount_ = 0;
+  int comboCount_ = 3;
 };
