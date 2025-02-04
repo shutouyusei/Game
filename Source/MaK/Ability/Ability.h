@@ -6,18 +6,18 @@
 
 class UAbilityManager;
 
-UCLASS()
+UCLASS(Blueprintable)
 class UAbility : public UObject {
   GENERATED_BODY()
 public:
   UAbility();
   virtual ~UAbility() = default;
 
-  //NOTE: call by Ability Manager when set ability
+  // NOTE: call by Ability Manager when set ability
   void SetOwner(UAbilityManager *owner);
 
-  //NOTE :Don't call directly
-  //Call by Ability Manager
+  // NOTE :Don't call directly
+  // Call by Ability Manager
   virtual void DoAbility();
   virtual void EndAbility();
 

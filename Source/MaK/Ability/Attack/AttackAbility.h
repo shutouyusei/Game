@@ -1,20 +1,25 @@
 #pragma once
-#include "../AbilityWithMontage.h"
+#include "../AnimAbility.h"
 #include "Damage.h"
+
+#include "AttackAbility.generated.h"
 
 class AAttackCollision;
 struct FDamageStruct;
 
-class AttackAbility : public AbilityWithMontage {
+UCLASS(Blueprintable)
+class UAttackAbility : public UAnimAbility {
+  GENERATED_BODY()
 public:
-  AttackAbility(UAbilityManager *owner, UAnimInstance *animInstance,
-                AAttackCollision *collisionm);
-  ~AttackAbility() = default;
+  UAttackAbility();
+  ~UAttackAbility() = default;
   virtual void DoAbility() override;
   virtual void EndAbility() override;
 
-protected:
-  void SetUpAttackAbility(UAnimMontage *animMontage, FDamageStruct damage);
+public:
+  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ability")
   FDamageStruct damage_;
+
+protected:
   AAttackCollision *collision_;
 };

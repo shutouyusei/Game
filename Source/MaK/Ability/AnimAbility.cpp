@@ -1,11 +1,13 @@
 #include "AnimAbility.h"
-#include "Ability.h"
 #include "Animation/AnimInstance.h"
 #include "Animation/AnimMontage.h"
-#include "CanInputNotify.h"
-#include "CanNextAbilityNotify.h"
 #include "CoreMinimal.h"
 #include "Gameframework/Character.h"
+// Ability Manager
+#include "AbilityManager.h"
+// Notify
+#include "CanInputNotify.h"
+#include "CanNextAbilityNotify.h"
 
 UAnimAbility::UAnimAbility() : UAbility() {}
 
@@ -14,7 +16,7 @@ UAnimAbility::~UAnimAbility() {}
 void UAnimAbility::PlayMontage() {
   // Get AnimInstance
   UAnimInstance *animInstance = GetAnimInstance();
-  //モンタージュを再生
+  // モンタージュを再生
   animInstance->Montage_Play(animMontage_);
   // NOTE:モンタージュ再生後でしかdelegateの設定ができない！！
   FOnMontageEnded del;

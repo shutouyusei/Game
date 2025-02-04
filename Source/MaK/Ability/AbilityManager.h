@@ -15,13 +15,13 @@ public:
   ~UAbilityManager();
 
   UFUNCTION(BlueprintCallable, Category = "Ability")
-  void SetAbility(int index, UAbility *ability);
+  void SetAbility(int index, TSubclassOf<UAbility> abilityClass);
 
   UFUNCTION(BlueprintCallable, Category = "Ability")
   void Execute(int index);
 
   // アビリティからの通知
-  void CanInput(); 
+  void CanInput();
   void CanNextAbility();
 
   void End();
@@ -33,7 +33,7 @@ private:
 
 public:
   UPROPERTY(EditAnywhere, Category = "Ability")
-  TArray<UAbility *> abilities_;
+  TArray<TSubclassOf<UAbility>> abilities_;
 
 private:
   bool canInput_ = true;

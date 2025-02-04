@@ -6,7 +6,6 @@
 #include "Perception/AIPerceptionComponent.h"
 #include "StatsComponent.h"
 #include "StatsFactory.h"
-#include "Sword/Base/SwordAttackCombo.h"
 
 AEnemy::AEnemy() {
   // Constructor
@@ -47,17 +46,4 @@ void AEnemy::BeginPlay() {
     UE_LOG(LogTemp, Warning, TEXT("Enemy %s died"), *GetName());
     Destroy();
   });
-  // Ability
-  weapon_->AttachToComponent(
-      GetMesh(), FAttachmentTransformRules::SnapToTargetNotIncludingScale,
-      socketName_);
-  AAttackCollision *weapon = Cast<AAttackCollision>(weapon_->GetChildActor());
-  if (weapon) {
-    Ability *ability = new SwordAttackCombo(
-        abilityManager_, GetMesh()->GetAnimInstance(), weapon);
-    abilityManager_->AddAbility(ability);
-  } else {
-    UE_LOG(LogTemp, Error, TEXT("'%s' Failed to find a weapon!"),
-           *GetNameSafe(this));
-  }
 }

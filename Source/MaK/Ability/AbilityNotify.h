@@ -4,7 +4,7 @@
 
 #include "AbilityNotify.generated.h"
 
-UCLASS()
+UCLASS(Blueprintable)
 class UAbilityNotify : public UAnimNotifyState {
   GENERATED_BODY()
 public:
