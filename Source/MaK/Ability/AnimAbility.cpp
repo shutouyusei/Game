@@ -1,53 +1,41 @@
 #include "AnimAbility.h"
 #include "Ability.h"
-#include "AbilityNotify.h"
 #include "Animation/AnimInstance.h"
 #include "Animation/AnimMontage.h"
+#include "CanInputNotify.h"
+#include "CanNextAbilityNotify.h"
 #include "CoreMinimal.h"
+#include "Gameframework/Character.h"
 
-UAnimAbility::UAnimAbility():UAbility(){}
+UAnimAbility::UAnimAbility() : UAbility() {}
 
-UAnimAbility::~UAnimAbility() {
-  // Clear notify
-  for (auto notify : notifies_) {
-    notify->SetDelegate(nullptr, nullptr);
-  }
-}
+UAnimAbility::~UAnimAbility() {}
 
 void UAnimAbility::PlayMontage() {
-  animInstance_->Montage_Play(animMontage_);
-
+  // Get AnimInstance
+  UAnimInstance *animInstance = GetAnimInstance();
+  //モンタージュを再生
+  animInstance->Montage_Play(animMontage_);
   // NOTE:モンタージュ再生後でしかdelegateの設定ができない！！
-  // こんなのしるか
+  FOnMontageEnded del;
+  del.BindUObject(this, &UAnimAbility::OnMontageEnded);
+  animInstance->Montage_SetEndDelegate(del, animMontage_);
 }
 
+// NOTE:ここの関数いるかわからん
 void UAnimAbility::StopMontage() {
-  animInstance_->Montage_Stop(0.0f, animMontage_);
+  // Get AnimInstance
+  UAnimInstance *animInstance = GetAnimInstance();
+  // NOTE: 0.0fで即座に停止
+  animInstance->Montage_Stop(0.0f, animMontage_);
+  EndAbility();
 }
 
-void UAnimAbility::SetAnimNotifyDelegate(
-    FName name, std::function<void()> beginDelegate,
-    std::function<void()> endDelegate) {
-  for (auto notify : notifies_) {
-    if (notify->Name == name) {
-      notify->SetDelegate(beginDelegate, endDelegate);
-    }
-  }
+void UAnimAbility::OnMontageEnded(UAnimMontage *montage, bool interrupted) {
+  EndAbility();
 }
 
-// NOTE: call after setting animMontage_
-// and in the constructor of the child class
-void UAnimAbility::SetUpAbilityWithMontage() {
-  // Get UAbilityNotify
-  for (auto notify : animMontage_->Notifies) {
-    if (UAbilityNotify *abilityNotify =
-            Cast<UAbilityNotify>(notify.NotifyStateClass)) {
-      notifies_.Add(abilityNotify);
-    }
-  }
-
-  // TODO:先行入力機能いりそうだったらつける
-  SetAnimNotifyDelegate(
-      TEXT("Ability"), [this]() { isExecuting_ = true; },
-      [this]() { isExecuting_ = false; });
+UAnimInstance *UAnimAbility::GetAnimInstance() {
+  ACharacter *character = Cast<ACharacter>(owner_->GetOwner());
+  return character->GetMesh()->GetAnimInstance();
 }

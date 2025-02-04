@@ -1,9 +1,9 @@
-#include "CanInputNotify.h"
+#include "CanNextAbilityNotify.h"
 #include "AbilityManager.h"
 #include "GameFramework/Actor.h"
 
-void UCanInputNotify::Notify(USkeletalMeshComponent *MeshComp,
-                             UAnimSequenceBase *Animation) {
+void UCanNextAbilityNotify::Notify(USkeletalMeshComponent *MeshComp,
+                                   UAnimSequenceBase *Animation) {
   // Check if the notify is called
   // Get the owner of the mesh
   AActor *owner = MeshComp->GetOwner();
@@ -17,5 +17,5 @@ void UCanInputNotify::Notify(USkeletalMeshComponent *MeshComp,
     return;
   }
   // Set the ability manager to be able to input
-  abilityManager->CanInput();
+  abilityManager->CanNextAbility();
 }
