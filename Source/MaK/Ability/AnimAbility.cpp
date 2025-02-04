@@ -1,34 +1,31 @@
-#include "AbilityWithMontage.h"
+#include "AnimAbility.h"
 #include "Ability.h"
 #include "AbilityNotify.h"
 #include "Animation/AnimInstance.h"
 #include "Animation/AnimMontage.h"
 #include "CoreMinimal.h"
 
-AbilityWithMontage::AbilityWithMontage(UAbilityManager *owner,
-                                       UAnimInstance *animInstance_)
-    : Ability(owner), animInstance_(animInstance_) {}
+UAnimAbility::UAnimAbility():UAbility(){}
 
-AbilityWithMontage::~AbilityWithMontage() {
-  // Destructor
+UAnimAbility::~UAnimAbility() {
   // Clear notify
   for (auto notify : notifies_) {
     notify->SetDelegate(nullptr, nullptr);
   }
 }
 
-void AbilityWithMontage::PlayMontage() {
+void UAnimAbility::PlayMontage() {
   animInstance_->Montage_Play(animMontage_);
 
   // NOTE:モンタージュ再生後でしかdelegateの設定ができない！！
   // こんなのしるか
 }
 
-void AbilityWithMontage::StopMontage() {
+void UAnimAbility::StopMontage() {
   animInstance_->Montage_Stop(0.0f, animMontage_);
 }
 
-void AbilityWithMontage::SetAnimNotifyDelegate(
+void UAnimAbility::SetAnimNotifyDelegate(
     FName name, std::function<void()> beginDelegate,
     std::function<void()> endDelegate) {
   for (auto notify : notifies_) {
@@ -40,7 +37,7 @@ void AbilityWithMontage::SetAnimNotifyDelegate(
 
 // NOTE: call after setting animMontage_
 // and in the constructor of the child class
-void AbilityWithMontage::SetUpAbilityWithMontage() {
+void UAnimAbility::SetUpAbilityWithMontage() {
   // Get UAbilityNotify
   for (auto notify : animMontage_->Notifies) {
     if (UAbilityNotify *abilityNotify =

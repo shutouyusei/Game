@@ -28,3 +28,4 @@ private:
   std::function<void()> beginDelegate_;
   std::function<void()> endDelegate_;
 };
+// TODO:複数アビリティを定義できないので修正sする

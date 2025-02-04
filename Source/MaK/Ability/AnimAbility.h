@@ -1,14 +1,17 @@
 #pragma once
 #include "Ability.h"
 
+#include "UAnimAbility.generated.h"
+
 class UAnimInstance;
 class UAnimMontage;
 class UAbilityNotify;
 
-class AbilityWithMontage : public Ability {
+UCLASS()
+class UAnimAbility : public UAbility {
 public:
-  AbilityWithMontage(UAbilityManager *owner, UAnimInstance *animInstance);
-  virtual ~AbilityWithMontage();
+  UAnimAbility();
+  virtual ~UAnimAbility();
 
 protected:
   void SetAnimNotifyDelegate(FName name, std::function<void()> beginDelegate,

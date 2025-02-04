@@ -1,19 +1,25 @@
 #pragma once
 #include "CoreMinimal.h"
+#include "UObject/NoExportTypes.h"
+
+#include "Ability.generated.h"
 
 class UAbilityManager;
 
-class Ability {
+UCLASS()
+class UAbility : public UObject {
+  GENERATED_BODY()
 public:
-  Ability(UAbilityManager *owner);
-  virtual ~Ability() = default;
+  UAbility();
+  virtual ~UAbility() = default;
 
-  virtual void DoAbility() = 0;
-  virtual void EndAbility() = 0;
-  virtual bool IsExecuting() { return isExecuting_; }
+  //NOTE: call by Ability Manager when set ability
+  void SetOwner(UAbilityManager *owner);
 
-protected:
-  bool isExecuting_ = false;
+  //NOTE :Don't call directly
+  //Call by Ability Manager
+  virtual void DoAbility();
+  virtual void EndAbility();
 
 protected:
   UAbilityManager *owner_;

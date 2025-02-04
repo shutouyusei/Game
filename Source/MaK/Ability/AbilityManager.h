@@ -14,11 +14,30 @@ public:
   UAbilityManager();
   ~UAbilityManager();
 
-  void AddAbility(Ability *ability);
-  void SetAbility(int index, Ability *ability);
-  void ExecuteAbility(int index);
+  UFUNCTION(BlueprintCallable, Category = "Ability")
+  void SetAbility(int index, UAbility *ability);
+
+  UFUNCTION(BlueprintCallable, Category = "Ability")
+  void Execute(int index);
+
+  // アビリティからの通知
+  void CanInput(); 
+  void CanNextAbility();
+
+  void End();
 
 private:
-  TArray<Ability *> abilities_;
+  void BeginPlay() override;
+  void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
+  void ExecuteNext();
+
+public:
+  UPROPERTY(EditAnywhere, Category = "Ability")
+  TArray<UAbility *> abilities_;
+
+private:
+  bool canInput_ = true;
+  bool canNextAbility_ = true;
   int currentAbilityIndex_ = -1;
+  int nextAbilityIndex_ = -1;
 };
