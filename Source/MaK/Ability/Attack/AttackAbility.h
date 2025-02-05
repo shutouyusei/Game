@@ -16,10 +16,14 @@ public:
   virtual void DoAbility() override;
   virtual void EndAbility() override;
 
+private:
+  void AttachAttackCollision();
+  
+
 public:
-  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ability")
+  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ability|Attack")
   FDamageStruct damage_;
 
-protected:
-  AAttackCollision *collision_;
+  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ability|Attack")
+  FName collisionSocketName_;
 };

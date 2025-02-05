@@ -1,5 +1,4 @@
 #include "AbilityManager.h"
-#include "AbilityNotify.h"
 
 UAbilityManager::UAbilityManager() {}
 
@@ -53,7 +52,7 @@ void UAbilityManager::Execute(int index) {
   }
 }
 
-void UAbilityManager::End() { 
+void UAbilityManager::End() {
   canInput_ = true;
   canNextAbility_ = true;
   currentAbilityIndex_ = -1;

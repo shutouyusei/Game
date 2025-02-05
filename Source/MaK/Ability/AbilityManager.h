@@ -2,6 +2,7 @@
 #include "Ability.h"
 #include "Components/ActorComponent.h"
 #include "CoreMinimal.h"
+#include "Attack/AttackCollision.h"
 
 #include "AbilityManager.generated.h"
 
@@ -34,6 +35,9 @@ private:
 public:
   UPROPERTY(EditAnywhere, Category = "Ability")
   TArray<TSubclassOf<UAbility>> abilities_;
+
+  UPROPERTY(EditAnywhere, Category = "Ability")
+  AAttackCollision *attackCollision_;
 
 private:
   bool canInput_ = true;

@@ -1,6 +1,7 @@
 #include "AttackAbility.h"
 #include "AbilityManager.h"
-#include "AttackCollision.h"
+#include "DrawDebugHelpers.h"
+#include "Kismet/GameplayStatics.h"
 #include "StatsComponent.h"
 
 UAttackAbility::UAttackAbility() : UAnimAbility() {}
@@ -8,7 +9,17 @@ UAttackAbility::UAttackAbility() : UAnimAbility() {}
 void UAttackAbility::DoAbility() {
   // Play the attack animation
   PlayMontage();
+  owner_->attackCollision_->SetAbility(
+      [this](AActor *otherActor) {
+        // Get the stats component of the enemy
+        UE_LOG(LogTemp, Warning, TEXT("AttackAbility::DoAbility()"));
+      });
 }
 
-void UAttackAbility::EndAbility() { UAnimAbility::EndAbility(); }
+void UAttackAbility::EndAbility() {
+  owner_->attackCollision_->DeleteAbility();
+  UAnimAbility::EndAbility(); 
+}
+
 // TODO:AttackCollisionの設定
+
