@@ -1,9 +1,9 @@
 #pragma once
+#include "Components/StaticMeshComponent.h"
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 
 #include "AttackCollision.generated.h"
-
 
 UCLASS()
 class AAttackCollision : public AActor {
@@ -15,10 +15,12 @@ public:
   void SetAbility(std::function<void(AActor *)> AbilityDelegate);
   void DeleteAbility();
 
+  UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Collision")
+  UStaticMeshComponent *collisionMesh;
+
 protected:
   virtual void NotifyActorBeginOverlap(AActor *otherActor) override;
 
 private:
-  bool bCanDealDamage_ = false;
   std::function<void(AActor *)> AbilityDelegate_;
 };

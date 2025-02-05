@@ -5,10 +5,6 @@
 
 AMyCharacter::AMyCharacter() {
   abilityManager_ = CreateDefaultSubobject<UAbilityManager>("AbilityManager");
-
-  weapon_ = CreateDefaultSubobject<UChildActorComponent>("Weapon");
-  weapon_->SetupAttachment(GetMesh(), "weapon_r1Socket");
-  weapon_->SetChildActorClass(AAttackCollision::StaticClass());
 }
 
 AMyCharacter::~AMyCharacter() {}
@@ -16,7 +12,6 @@ AMyCharacter::~AMyCharacter() {}
 void AMyCharacter::BeginPlay() {
   Super::BeginPlay();
   // attach component
-  AAttackCollision *weapon = Cast<AAttackCollision>(weapon_->GetChildActor());
 }
 
 void AMyCharacter::EndPlay(const EEndPlayReason::Type EndPlayReason) {

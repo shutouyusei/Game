@@ -1,8 +1,8 @@
 #pragma once
 #include "Ability.h"
+#include "Attack/AttackCollision.h"
 #include "Components/ActorComponent.h"
 #include "CoreMinimal.h"
-#include "Attack/AttackCollision.h"
 
 #include "AbilityManager.generated.h"
 
@@ -20,6 +20,9 @@ public:
 
   UFUNCTION(BlueprintCallable, Category = "Ability")
   void Execute(int index);
+
+  UFUNCTION(BlueprintCallable, Category = "Ability")
+  void SetupAbilityManager(AAttackCollision *attackCollision);
 
   // アビリティからの通知
   void CanInput();

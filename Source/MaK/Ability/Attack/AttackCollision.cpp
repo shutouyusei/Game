@@ -3,8 +3,15 @@
 #include <functional>
 
 AAttackCollision::AAttackCollision() {
-  //default can't overlap
+  // default can't overlap
   SetActorEnableCollision(false);
+  // create the collision mesh
+  collisionMesh =
+      CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Collision Mesh"));
+  // collision settings
+  collisionMesh->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
+  collisionMesh->SetCollisionResponseToAllChannels(ECR_Ignore);
+  collisionMesh->SetCollisionResponseToChannel(ECC_Pawn, ECR_Overlap);
 }
 
 AAttackCollision::~AAttackCollision() {
@@ -23,6 +30,4 @@ void AAttackCollision::SetAbility(
   AbilityDelegate_ = AbilityDelegate;
 }
 
-void AAttackCollision::DeleteAbility() {
-  AbilityDelegate_ = nullptr;
-}
+void AAttackCollision::DeleteAbility() { AbilityDelegate_ = nullptr; }

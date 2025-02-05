@@ -17,11 +17,6 @@ AEnemy::AEnemy() {
 
   // Ability Manager
   abilityManager_ = CreateDefaultSubobject<UAbilityManager>("AbilityManager");
-
-  // Attack Collision
-  weapon_ = CreateDefaultSubobject<UChildActorComponent>("Weapon");
-  weapon_->SetupAttachment(GetMesh());
-  weapon_->SetChildActorClass(AAttackCollision::StaticClass());
 }
 
 AEnemy::~AEnemy() {

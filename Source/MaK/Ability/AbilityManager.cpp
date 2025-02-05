@@ -10,6 +10,10 @@ void UAbilityManager::BeginPlay() {
   }
 }
 
+void UAbilityManager::SetupAbilityManager(AAttackCollision *attackCollision) {
+  attackCollision_ = attackCollision;
+}
+
 void UAbilityManager::EndPlay(const EEndPlayReason::Type EndPlayReason) {
   for (TSubclassOf<UAbility> &abilityClass : abilities_) {
     abilityClass.GetDefaultObject()->SetOwner(nullptr);
