@@ -1,33 +1,17 @@
 #include "MyCharacter.h"
 #include "Attack/AttackCollision.h"
-#include "EnhancedInputComponent.h"
-#include "Sword/Base/SwordAttackCombo.h"
-#include "Sword/Skill/DodgeAttack1.h"
 #include "Components/ChildActorComponent.h"
+#include "EnhancedInputComponent.h"
 
 AMyCharacter::AMyCharacter() {
   abilityManager_ = CreateDefaultSubobject<UAbilityManager>("AbilityManager");
-
-  weapon_ = CreateDefaultSubobject<UChildActorComponent>("Weapon");
-  weapon_->SetupAttachment(GetMesh(),"weapon_r1Socket");
-  weapon_->SetChildActorClass(AAttackCollision::StaticClass());
-
 }
 
 AMyCharacter::~AMyCharacter() {}
 
-void AMyCharacter::BeginPlay() { 
+void AMyCharacter::BeginPlay() {
   Super::BeginPlay();
   // attach component
-  AAttackCollision *weapon = Cast<AAttackCollision>(weapon_->GetChildActor());
-  if(weapon) {
-    Ability *ability = new SwordAttackCombo(abilityManager_, GetMesh()->GetAnimInstance(), weapon);
-    abilityManager_->AddAbility(ability);
-    Ability *dodgeAbility = new DodgeAttack1(abilityManager_, GetMesh()->GetAnimInstance(), weapon);
-    abilityManager_->AddAbility(dodgeAbility);
-  }else {
-    UE_LOG(LogTemplateCharacter, Error, TEXT("'%s' Failed to find a weapon!"), *GetNameSafe(this));
-  }
 }
 
 void AMyCharacter::EndPlay(const EEndPlayReason::Type EndPlayReason) {
@@ -56,6 +40,6 @@ void AMyCharacter::SetupPlayerInputComponent(
   }
 }
 
-void AMyCharacter::Attack() { abilityManager_->ExecuteAbility(0); }
+void AMyCharacter::Attack() { abilityManager_->Execute(0); }
 
-void AMyCharacter::Skill1() { abilityManager_->ExecuteAbility(1); }
+void AMyCharacter::Skill1() { abilityManager_->Execute(1); }

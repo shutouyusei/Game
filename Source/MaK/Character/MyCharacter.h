@@ -5,7 +5,6 @@
 
 class Ability;
 class UAnimMontage;
-class UShapeComponent;
 class UInputComponent;
 
 UCLASS()
@@ -21,12 +20,8 @@ private:
   void Skill1();
 
 public:
-  UPROPERTY(EditAnywhere, Category = "Ability")
+  UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Ability")
   UAbilityManager *abilityManager_;
-
-  UPROPERTY(EditAnywhere, Category = "Attack")
-  UChildActorComponent *weapon_;
-
 
 protected:
   virtual void

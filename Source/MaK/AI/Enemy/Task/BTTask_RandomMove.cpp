@@ -1,5 +1,6 @@
-#include "AIController.h"
 #include "BTTask_RandomMove.h"
+
+#include "AIController.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/Pawn.h"
 

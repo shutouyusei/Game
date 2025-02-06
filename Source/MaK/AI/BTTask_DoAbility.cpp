@@ -27,6 +27,6 @@ UBTTask_DoAbility::ExecuteTask(UBehaviorTreeComponent &OwnerComp,
     return EBTNodeResult::Failed;
   }
   // Use the ability
-  AbilityManager_->ExecuteAbility(abilityIndex_);
+  AbilityManager_->Execute(abilityIndex_);
   return EBTNodeResult::Succeeded;
 }
