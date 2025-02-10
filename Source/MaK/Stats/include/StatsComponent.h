@@ -1,21 +1,14 @@
 #pragma once
-#include "../StatsManager.h"
+#include "Components/ActorComponent.h"
 #include "StatsBase.h"
 #include "StatsStruct.h"
 
-class StatsComponent {
+#include "StatsComponent.generated.h"
+
+UCLASS()
+class UStatsComponent : public UActorComponent {
+  GENERATED_BODY()
 public:
-  StatsComponent();
-  ~StatsComponent();
-  // set up component
-  void ComponentSetUp();
-  // clean up component
-  void ComponentCleanUp();
-
-  StatsBase *GetPlayerStats() { return stats_; };
-  StatsManager *GetStatsManager() { return &statsManager_; };
-
-private:
-  static StatsBase *stats_;
-  static StatsManager statsManager_;
+  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Stats")
+  UStatsBase *Stats;
 };

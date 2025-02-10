@@ -1,10 +1,10 @@
 #pragma once
 #include "DamageStruct.h"
 
-class StatsBase;
+class UStatsBase;
 
 class Damage {
 public:
-  static void ApplyDamage(StatsBase *applyier, StatsBase *target,
+  static void ApplyDamage(UStatsBase *applyier, UStatsBase *target,
                           FDamageStruct damage);
 };

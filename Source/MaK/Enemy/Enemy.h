@@ -8,6 +8,7 @@
 #include "Enemy.generated.h"
 
 class UAIPerceptionComponent;
+class UStatsComponent;
 
 UCLASS()
 class AEnemy : public ACharacter {
@@ -25,6 +26,9 @@ public:
 
   UPROPERTY(EditAnywhere, Category = "Ability")
   UAbilityManager *abilityManager_;
+
+  UPROPERTY(EditAnywhere, Category = "Stats")
+  UStatsComponent *StatsComponent;
 
 protected:
   UPROPERTY(EditAnywhere, Category = "Stats")

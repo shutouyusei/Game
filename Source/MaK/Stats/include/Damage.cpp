@@ -3,7 +3,7 @@
 #include "DamageStruct.h"
 #include "StatsBase.h"
 
-void Damage::ApplyDamage(StatsBase *applyier, StatsBase *target,
+void Damage::ApplyDamage(UStatsBase *applyier, UStatsBase *target,
                          FDamageStruct damage) {
   // Calculate damage
   if (applyier == nullptr) {
@@ -13,5 +13,5 @@ void Damage::ApplyDamage(StatsBase *applyier, StatsBase *target,
     UE_LOG(LogTemp, Warning, TEXT("Target is null"));
   }
   // calculate damage
-  target->HP_.Damage(damage.power);
+  target->Damage(damage.power);
 }

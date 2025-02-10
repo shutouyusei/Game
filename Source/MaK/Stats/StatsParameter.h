@@ -1,23 +1,25 @@
 #pragma once
+#include "UObject/NoExportTypes.h"
 
-class StatsParameter {
+#include "StatsParameter.generated.h"
+
+UCLASS()
+class UStatsParameter : public UObject {
+  GENERATED_BODY()
 public:
-  StatsParameter(float parametor = 0.0f);
-  virtual ~StatsParameter() = default;
+  UStatsParameter();
+  virtual ~UStatsParameter() = default;
   //
-  float GetParameter();
+  UFUNCTION(BlueprintCallable, Category = "Stats")
+  float Get();
   //
-  float GetDefaultParameter();
-  void SetDefaultParameter(float parameter);
+public:
+  UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Stats")
+  float defaultParameter_ = 0.0f;
 
-  // change stats
-  void Increase(float amount);
-  virtual void Decrease(float amount);
-
-  void SetRatio(float ratio);
-
-protected:
-  float defaultParameter_;
+  UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Stats")
   float ratio_ = 1.0f;
+
+  UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Stats")
   float deviation_ = 0.0f;
 };
