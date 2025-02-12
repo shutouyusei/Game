@@ -5,6 +5,7 @@ UAbilityManager::UAbilityManager() {}
 UAbilityManager::~UAbilityManager() {}
 
 void UAbilityManager::BeginPlay() {
+  Super::BeginPlay();
   for (TSubclassOf<UAbility> &abilityClass : abilities_) {
     abilityClass.GetDefaultObject()->SetOwner(this);
   }
@@ -15,6 +16,7 @@ void UAbilityManager::SetupAbilityManager(AAttackCollision *attackCollision) {
 }
 
 void UAbilityManager::EndPlay(const EEndPlayReason::Type EndPlayReason) {
+  Super::EndPlay(EndPlayReason);
   for (TSubclassOf<UAbility> &abilityClass : abilities_) {
     abilityClass.GetDefaultObject()->SetOwner(nullptr);
   }

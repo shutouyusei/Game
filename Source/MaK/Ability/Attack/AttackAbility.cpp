@@ -2,7 +2,7 @@
 #include "AbilityManager.h"
 #include "DrawDebugHelpers.h"
 #include "Kismet/GameplayStatics.h"
-#include "StatsComponent.h"
+#include "StatusComponent.h"
 
 UAttackAbility::UAttackAbility() : UAnimAbility() {}
 

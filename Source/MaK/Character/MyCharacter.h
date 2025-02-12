@@ -1,8 +1,9 @@
 #pragma once
 #include "AbilityManager.h"
 #include "MaKCharacter.h"
-#include "MyCharacter.generated.h"
+#include "StatusComponent.h"
 
+#include "MyCharacter.generated.h"
 class Ability;
 class UAnimMontage;
 class UInputComponent;
@@ -22,6 +23,9 @@ private:
 public:
   UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Ability")
   UAbilityManager *abilityManager_;
+
+  UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Status")
+  UStatusComponent *statusComponent_;
 
 protected:
   virtual void

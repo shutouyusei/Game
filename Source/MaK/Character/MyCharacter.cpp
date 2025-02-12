@@ -5,6 +5,8 @@
 
 AMyCharacter::AMyCharacter() {
   abilityManager_ = CreateDefaultSubobject<UAbilityManager>("AbilityManager");
+  statusComponent_ =
+      CreateDefaultSubobject<UStatusComponent>("StatusComponent");
 }
 
 AMyCharacter::~AMyCharacter() {}
