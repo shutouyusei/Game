@@ -1,6 +1,7 @@
 #pragma once
 #include "../StatusParameter.h"
 #include "Components/ActorComponent.h"
+#include "DamageStruct.h"
 
 #include "StatusComponent.generated.h"
 
@@ -10,6 +11,7 @@ class UStatusComponent : public UActorComponent {
 public:
   UStatusComponent();
   virtual ~UStatusComponent();
+  //
   UFUNCTION(BlueprintCallable, Category = "Status")
   float GetHP();
   UFUNCTION(BlueprintCallable, Category = "Status")
@@ -26,17 +28,17 @@ public:
 
 public:
   //
-  UPROPERTY(Instanced, EditAnywhere,Category = "Status")
+  UPROPERTY(Instanced, EditAnywhere, Category = "Status")
   UStatusParameter *HP_;
-  UPROPERTY(Instanced, EditAnywhere,Category = "Status")
+  UPROPERTY(Instanced, EditAnywhere, Category = "Status")
   UStatusParameter *MP_;
-  UPROPERTY(Instanced,EditAnywhere, Category = "Status")
+  UPROPERTY(Instanced, EditAnywhere, Category = "Status")
   UStatusParameter *AD_;
-  UPROPERTY(Instanced,EditAnywhere, Category = "Status")
+  UPROPERTY(Instanced, EditAnywhere, Category = "Status")
   UStatusParameter *AP_;
-  UPROPERTY(Instanced,EditAnywhere, Category = "Status")
+  UPROPERTY(Instanced, EditAnywhere, Category = "Status")
   UStatusParameter *AR_;
-  UPROPERTY(Instanced,EditAnywhere, Category = "Status")
+  UPROPERTY(Instanced, EditAnywhere, Category = "Status")
   UStatusParameter *MR_;
 
 private:

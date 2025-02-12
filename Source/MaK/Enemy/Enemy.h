@@ -24,10 +24,10 @@ public:
   UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Perception")
   UAIPerceptionComponent *PerceptionComponent;
 
-  UPROPERTY(EditAnywhere, Category = "Ability")
+  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ability")
   UAbilityManager *abilityManager_;
 
-  UPROPERTY(EditAnywhere, Category = "Status")
+  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Status")
   UStatusComponent *StatusComponent;
 
 protected:
