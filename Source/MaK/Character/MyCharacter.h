@@ -1,7 +1,7 @@
 #pragma once
 #include "AbilityManager.h"
 #include "MaKCharacter.h"
-#include "StatsComponent.h"
+#include "StatusComponent.h"
 
 #include "MyCharacter.generated.h"
 class Ability;
@@ -24,8 +24,8 @@ public:
   UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Ability")
   UAbilityManager *abilityManager_;
 
-  UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Stats")
-  UStatsComponent *statsComponent_;
+  UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Status")
+  UStatusComponent *statusComponent_;
 
 protected:
   virtual void

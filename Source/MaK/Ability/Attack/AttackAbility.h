@@ -1,6 +1,6 @@
 #pragma once
 #include "../AnimAbility.h"
-#include "Damage.h"
+#include "DamageStruct.h"
 
 #include "AttackAbility.generated.h"
 
@@ -18,7 +18,6 @@ public:
 
 private:
   void AttachAttackCollision();
-  
 
 public:
   UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ability|Attack")

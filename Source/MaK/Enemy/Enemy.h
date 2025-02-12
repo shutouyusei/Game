@@ -3,12 +3,12 @@
 #include "AbilityManager.h"
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
-#include "StatsStruct.h"
+#include "StatusStruct.h"
 
 #include "Enemy.generated.h"
 
 class UAIPerceptionComponent;
-class UStatsComponent;
+class UStatusComponent;
 
 UCLASS()
 class AEnemy : public ACharacter {
@@ -27,10 +27,10 @@ public:
   UPROPERTY(EditAnywhere, Category = "Ability")
   UAbilityManager *abilityManager_;
 
-  UPROPERTY(EditAnywhere, Category = "Stats")
-  UStatsComponent *StatsComponent;
+  UPROPERTY(EditAnywhere, Category = "Status")
+  UStatusComponent *StatusComponent;
 
 protected:
-  UPROPERTY(EditAnywhere, Category = "Stats")
-  FStatsStruct stats_;
+  UPROPERTY(EditAnywhere, Category = "Status")
+  FStatusStruct status_;
 };

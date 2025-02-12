@@ -19,7 +19,7 @@ public class MaK : ModuleRules
     PublicIncludePaths.Add(ModuleDirectory + "/UserBelongings/include");
     PublicIncludePaths.Add(ModuleDirectory + "/UseHandler");
     PublicIncludePaths.Add(ModuleDirectory + "/LuaHandler");
-    PublicIncludePaths.Add(ModuleDirectory + "/Stats/include");
+    PublicIncludePaths.Add(ModuleDirectory + "/Status/include");
     PublicIncludePaths.Add(ModuleDirectory + "/Character");
     PublicIncludePaths.Add(ModuleDirectory + "/Ability");
     //

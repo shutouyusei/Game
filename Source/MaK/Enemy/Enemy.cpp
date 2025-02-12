@@ -4,7 +4,7 @@
 #include "Components/ChildActorComponent.h"
 #include "EnemyContoroller.h"
 #include "Perception/AIPerceptionComponent.h"
-#include "StatsComponent.h"
+#include "StatusComponent.h"
 
 AEnemy::AEnemy() {
   // Constructor
@@ -16,8 +16,8 @@ AEnemy::AEnemy() {
 
   // Ability Manager
   abilityManager_ = CreateDefaultSubobject<UAbilityManager>("AbilityManager");
-  // Stats Component
-  StatsComponent = CreateDefaultSubobject<UStatsComponent>("StatsComponent");
+  // Status Component
+  StatusComponent = CreateDefaultSubobject<UStatusComponent>("StatusComponent");
 }
 
 AEnemy::~AEnemy() {}

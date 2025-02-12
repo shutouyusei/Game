@@ -31,7 +31,7 @@ public:
   void End();
 
 private:
-  void BeginPlay() override;
+  virtual void BeginPlay() override;
   void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
   void ExecuteNext();
 
