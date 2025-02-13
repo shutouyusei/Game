@@ -41,13 +41,9 @@ void UAbilityManager::Execute(int index) {
   if (!canInput_) {
     return;
   }
-  // Check if doing ability
-  if (currentAbilityIndex_ != -1) {
-    // push ability queue
+  // Check can next ability
+  if (!canNextAbility_) {
     nextAbilityIndex_ = index;
-    if (canNextAbility_) {
-      ExecuteNext();
-    }
     return;
   }
   // Execute ability

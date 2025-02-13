@@ -12,5 +12,6 @@ void UDamage::ApplyDamage(UStatusComponent *applyier, UStatusComponent *target,
                           FDamageStruct damage) {
   // Apply damage
   float calculatedDamage = CalculateDamage(applyier, target, damage);
+  UE_LOG(LogTemp, Warning, TEXT("Damage: %f"), calculatedDamage);
   target->Damage(calculatedDamage);
 }

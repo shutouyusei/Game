@@ -28,20 +28,21 @@ public:
 
 public:
   //
-  UPROPERTY(Instanced, EditAnywhere, Category = "Status")
+  UPROPERTY(Instanced, BlueprintReadWrite, EditAnywhere, Category = "Status")
   UStatusParameter *HP_;
-  UPROPERTY(Instanced, EditAnywhere, Category = "Status")
+  UPROPERTY(Instanced, BlueprintReadWrite, EditAnywhere, Category = "Status")
   UStatusParameter *MP_;
-  UPROPERTY(Instanced, EditAnywhere, Category = "Status")
+  UPROPERTY(Instanced, BlueprintReadWrite, EditAnywhere, Category = "Status")
   UStatusParameter *AD_;
-  UPROPERTY(Instanced, EditAnywhere, Category = "Status")
+  UPROPERTY(Instanced, BlueprintReadWrite, EditAnywhere, Category = "Status")
   UStatusParameter *AP_;
-  UPROPERTY(Instanced, EditAnywhere, Category = "Status")
+  UPROPERTY(Instanced, BlueprintReadWrite, EditAnywhere, Category = "Status")
   UStatusParameter *AR_;
-  UPROPERTY(Instanced, EditAnywhere, Category = "Status")
+  UPROPERTY(Instanced, BlueprintReadWrite, EditAnywhere, Category = "Status")
   UStatusParameter *MR_;
 
-private:
+  UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Status")
   float currentHP_;
+  UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Status")
   float currentMP_;
 };
