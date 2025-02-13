@@ -16,7 +16,7 @@ public:
   ~UAbilityManager();
 
   UFUNCTION(BlueprintCallable, Category = "Ability")
-  void SetAbility(int index, TSubclassOf<UAbility> abilityClass);
+  void SetAbility(int index, UAbility *abilityClass);
 
   UFUNCTION(BlueprintCallable, Category = "Ability")
   void Execute(int index);
@@ -39,8 +39,10 @@ public:
   UPROPERTY(EditAnywhere, Category = "Ability")
   TArray<TSubclassOf<UAbility>> abilities_;
 
-  UPROPERTY(EditAnywhere, Category = "Ability")
   AAttackCollision *attackCollision_;
+
+protected:
+  TArray<UAbility *> abilityInstances_;
 
 private:
   bool canInput_ = true;

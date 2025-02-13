@@ -4,28 +4,32 @@ UAbilityManager::UAbilityManager() {}
 
 UAbilityManager::~UAbilityManager() {}
 
-void UAbilityManager::BeginPlay() {
-  Super::BeginPlay();
-  for (TSubclassOf<UAbility> &abilityClass : abilities_) {
-    abilityClass.GetDefaultObject()->SetOwner(this);
-  }
-}
-
 void UAbilityManager::SetupAbilityManager(AAttackCollision *attackCollision) {
   attackCollision_ = attackCollision;
+}
+void UAbilityManager::BeginPlay() {
+  Super::BeginPlay();
+  // make abilities
+  for (TSubclassOf<UAbility> &abilityClass : abilities_) {
+    UAbility *ability = NewObject<UAbility>(this, abilityClass);
+    ability->SetOwner(this);
+    abilityInstances_.Add(ability);
+  }
 }
 
 void UAbilityManager::EndPlay(const EEndPlayReason::Type EndPlayReason) {
   Super::EndPlay(EndPlayReason);
-  for (TSubclassOf<UAbility> &abilityClass : abilities_) {
-    abilityClass.GetDefaultObject()->SetOwner(nullptr);
+  // delete array of ability instances
+  for (UAbility *ability : abilityInstances_) {
+    // delete ability ability instance
+    ability->ConditionalBeginDestroy();
   }
+  abilityInstances_.Empty();
 }
 
-void UAbilityManager::SetAbility(int index,
-                                 TSubclassOf<UAbility> abilityClass) {
-  if (index < abilities_.Num()) {
-    abilities_[index] = abilityClass;
+void UAbilityManager::SetAbility(int index, UAbility *ability) {
+  if (index < abilityInstances_.Num()) {
+    abilityInstances_[index] = ability;
   } else {
     UE_LOG(LogTemp, Error,
            TEXT("UAbilityManager::SetAbility: Index out of range"));
@@ -47,11 +51,11 @@ void UAbilityManager::Execute(int index) {
     return;
   }
   // Execute ability
-  if (index < abilities_.Num()) {
+  if (index < abilityInstances_.Num()) {
     canInput_ = false;
     canNextAbility_ = false;
     currentAbilityIndex_ = index;
-    abilities_[currentAbilityIndex_].GetDefaultObject()->DoAbility();
+    abilityInstances_[currentAbilityIndex_]->DoAbility();
   } else {
     UE_LOG(LogTemp, Error,
            TEXT("UAbilityManager::ExecuteAbility: Index out of range"));
@@ -65,7 +69,7 @@ void UAbilityManager::End() {
 }
 
 void UAbilityManager::ExecuteNext() {
-  abilities_[currentAbilityIndex_].GetDefaultObject()->EndAbility();
+  abilityInstances_[currentAbilityIndex_]->EndAbility();
   int index = nextAbilityIndex_;
   nextAbilityIndex_ = -1;
   Execute(index);
