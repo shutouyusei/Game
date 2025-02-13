@@ -1,6 +1,7 @@
 #pragma once
 #include "../StatusParameter.h"
 #include "Components/ActorComponent.h"
+#include "StatusStruct.h"
 #include "DamageStruct.h"
 
 #include "StatusComponent.generated.h"
@@ -25,20 +26,25 @@ public:
   bool UseMP(float mp);
   UFUNCTION(BlueprintCallable, Category = "Status")
   void RestoreMP(float mp);
+protected:
+  virtual void BeginPlay() override;
+  virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 
 public:
+  UPROPERTY(EditAnywhere, Category = "Status")
+  FStatusStruct status_;
   //
-  UPROPERTY(Instanced, BlueprintReadWrite, EditAnywhere, Category = "Status")
+  UPROPERTY(BlueprintReadWrite, Category = "Status")
   UStatusParameter *HP_;
-  UPROPERTY(Instanced, BlueprintReadWrite, EditAnywhere, Category = "Status")
+  UPROPERTY(BlueprintReadWrite, Category = "Status")
   UStatusParameter *MP_;
-  UPROPERTY(Instanced, BlueprintReadWrite, EditAnywhere, Category = "Status")
+  UPROPERTY(BlueprintReadWrite, Category = "Status")
   UStatusParameter *AD_;
-  UPROPERTY(Instanced, BlueprintReadWrite, EditAnywhere, Category = "Status")
+  UPROPERTY(BlueprintReadWrite,Category = "Status")
   UStatusParameter *AP_;
-  UPROPERTY(Instanced, BlueprintReadWrite, EditAnywhere, Category = "Status")
+  UPROPERTY(BlueprintReadWrite, Category = "Status")
   UStatusParameter *AR_;
-  UPROPERTY(Instanced, BlueprintReadWrite, EditAnywhere, Category = "Status")
+  UPROPERTY(BlueprintReadWrite, Category = "Status")
   UStatusParameter *MR_;
 
   UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Status")

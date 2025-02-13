@@ -14,9 +14,9 @@ public:
   virtual ~UAbility() = default;
 
   // NOTE: call by Ability Manager when set ability
-  // XXX:この方法だとEnemyとプレイヤーの区別ができない
-  // アビリティインスタンスは一つしか存在しない
   void SetOwner(UAbilityManager *owner);
+  virtual void BeginPlay();
+  virtual void EndPlay(const EEndPlayReason::Type EndPlayReason);
 
   // NOTE :Don't call directly
   // Call by Ability Manager

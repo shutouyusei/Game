@@ -13,6 +13,7 @@ void UAbilityManager::BeginPlay() {
   for (TSubclassOf<UAbility> &abilityClass : abilities_) {
     UAbility *ability = NewObject<UAbility>(this, abilityClass);
     ability->SetOwner(this);
+    ability->BeginPlay();
     abilityInstances_.Add(ability);
   }
 }
@@ -22,6 +23,7 @@ void UAbilityManager::EndPlay(const EEndPlayReason::Type EndPlayReason) {
   // delete array of ability instances
   for (UAbility *ability : abilityInstances_) {
     // delete ability ability instance
+    ability->EndPlay(EndPlayReason);
     ability->ConditionalBeginDestroy();
   }
   abilityInstances_.Empty();
@@ -51,7 +53,10 @@ void UAbilityManager::Execute(int index) {
     canInput_ = false;
     canNextAbility_ = false;
     currentAbilityIndex_ = index;
-    abilityInstances_[currentAbilityIndex_]->DoAbility();
+    // XXX :連続発動でcurrentAbilityIndex? = -1となる場合がありエラーとなっている 
+    // そのため-1か暫定的にチェックする
+    if(currentAbilityIndex_ != -1)
+      abilityInstances_[currentAbilityIndex_]->DoAbility();
   } else {
     UE_LOG(LogTemp, Error,
            TEXT("UAbilityManager::ExecuteAbility: Index out of range"));
@@ -65,7 +70,10 @@ void UAbilityManager::End() {
 }
 
 void UAbilityManager::ExecuteNext() {
-  abilityInstances_[currentAbilityIndex_]->EndAbility();
+  //XXX:ここも同様
+  //FIXME:多分エラーログ的にここのインデックスがバグってる可能性がある
+  if(currentAbilityIndex_ != -1)
+    abilityInstances_[currentAbilityIndex_]->EndAbility();
   int index = nextAbilityIndex_;
   nextAbilityIndex_ = -1;
   Execute(index);

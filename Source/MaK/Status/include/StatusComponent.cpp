@@ -11,6 +11,21 @@ UStatusComponent::UStatusComponent() {
 
 UStatusComponent::~UStatusComponent() {}
 
+void UStatusComponent::BeginPlay() {
+  Super::BeginPlay();
+  // Set Status
+  HP_->defaultParameter_ = status_.HP;
+  MP_->defaultParameter_ = status_.MP;
+  AD_->defaultParameter_ = status_.AD;
+  AP_->defaultParameter_ = status_.AP;
+  AR_->defaultParameter_ = status_.AR;
+  MR_->defaultParameter_ = status_.MR;
+}
+
+void UStatusComponent::EndPlay(const EEndPlayReason::Type EndPlayReason) {
+  Super::EndPlay(EndPlayReason);
+}
+
 float UStatusComponent::GetHP() {
   if (currentHP_ > HP_->Get()) {
     currentHP_ = HP_->Get();
