@@ -24,7 +24,6 @@ void UAbilityManager::EndPlay(const EEndPlayReason::Type EndPlayReason) {
   for (UAbility *ability : abilityInstances_) {
     // delete ability ability instance
     ability->EndPlay(EndPlayReason);
-    ability->ConditionalBeginDestroy();
   }
   abilityInstances_.Empty();
 }
@@ -51,6 +50,7 @@ void UAbilityManager::Execute(int index) {
   // Execute ability
   // XXX :連続発動でcurrentAbilityIndex? =
   // -1となる場合がありエラーとなっている そのため-1か暫定的にチェックする
+  // NOTE:UPROPERTYが原因かも後で検証
   if (index < abilityInstances_.Num() && index >= 0) {
     canInput_ = false;
     canNextAbility_ = false;

@@ -17,6 +17,7 @@ public:
 
 protected:
 private:
+  UPROPERTY()
   TArray<UAbility *> abilityInstances_;
   int currentAbilityIndex_ = 0;
 };

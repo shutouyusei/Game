@@ -22,14 +22,14 @@ public:
   void SetPlayer(APawn *Player);
 
 protected:
+  void BeginPlay() override;
+  void OnPossess(APawn *InPawn) override;
+  void OnUnPossess() override;
+
+protected:
   UPROPERTY(BluePrintReadOnly)
   UBehaviorTreeComponent *BehaviorTreeComponent_;
 
   UPROPERTY(BluePrintReadOnly)
   UBlackboardComponent *BlackboardComponent_;
-
-protected:
-  void BeginPlay() override;
-  void OnPossess(APawn *InPawn) override;
-  void OnUnPossess() override;
 };

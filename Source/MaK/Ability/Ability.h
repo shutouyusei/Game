@@ -24,5 +24,6 @@ public:
   virtual void EndAbility();
 
 protected:
+  UPROPERTY()
   UAbilityManager *owner_;
 };

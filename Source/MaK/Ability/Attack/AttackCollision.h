@@ -22,5 +22,8 @@ protected:
   virtual void NotifyActorBeginOverlap(AActor *otherActor) override;
 
 private:
+  // XXX:UPROPERTYに指定しないと勝手にGCに削除されるかも
+  // ただし使用期間が短いので対象にならない可能性もある
+  // TODO:UEのdelegateを使う
   std::function<void(AActor *)> AbilityDelegate_;
 };
