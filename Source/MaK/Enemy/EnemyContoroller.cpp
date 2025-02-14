@@ -2,6 +2,7 @@
 #include "BehaviorTree/BehaviorTree.h"
 #include "BehaviorTree/BehaviorTreeComponent.h"
 #include "BehaviorTree/BlackboardComponent.h"
+#include "MyCharacter.h"
 #include "UObject/ConstructorHelpers.h"
 
 AEnemyContoroller::AEnemyContoroller() {
@@ -15,6 +16,18 @@ AEnemyContoroller::AEnemyContoroller() {
 void AEnemyContoroller::BeginPlay() {
   // Called when the game starts or when spawned
   Super::BeginPlay();
+};
+
+APawn *AEnemyContoroller::GetEnemy() {
+  //TODO:優先して狙う敵を返す
+  for(auto actor : actors_){
+    //距離とか
+    AMyCharacter *player = Cast<AMyCharacter>(actor);
+    if(player != nullptr){
+      return player;
+    }
+  }
+  return nullptr;
 };
 
 void AEnemyContoroller::OnPossess(APawn *InPawn) {
@@ -31,12 +44,4 @@ void AEnemyContoroller::OnPossess(APawn *InPawn) {
 void AEnemyContoroller::OnUnPossess() {
   Super::OnUnPossess();
   BehaviorTreeComponent_->StopTree();
-};
-
-void AEnemyContoroller::SetPlayer(APawn *Player) {
-  if (BlackboardComponent_ == nullptr) {
-    UE_LOG(LogTemp, Warning, TEXT("BlackboardComponent is nullptr"));
-    return;
-  }
-  BlackboardComponent_->SetValueAsObject("Player", Player);
 };

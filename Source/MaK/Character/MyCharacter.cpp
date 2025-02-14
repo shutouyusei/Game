@@ -7,6 +7,8 @@ AMyCharacter::AMyCharacter() {
   abilityManager_ = CreateDefaultSubobject<UAbilityManager>("AbilityManager");
   statusComponent_ =
       CreateDefaultSubobject<UStatusComponent>("StatusComponent");
+  // 味方ポーンのタグはally
+  this->Tags.Add("ally");
 }
 
 AMyCharacter::~AMyCharacter() {}

@@ -27,10 +27,10 @@ public:
   UPROPERTY(EditAnywhere, Category = "BehaviorTree")
   UBehaviorTree *BehaviorTree_;
 
-  UPROPERTY()
-  TArray<AActor *> actors_;
 
 protected:
+  UPROPERTY()
+  TArray<AActor *> actors_;
   UPROPERTY(BluePrintReadOnly)
   UBehaviorTreeComponent *BehaviorTreeComponent_;
 
