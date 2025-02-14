@@ -11,7 +11,8 @@ UBTTask_DoAbility::UBTTask_DoAbility() {
 EBTNodeResult::Type
 UBTTask_DoAbility::ExecuteTask(UBehaviorTreeComponent &OwnerComp,
                                uint8 *NodeMemory) {
-  // Get the AI controller
+  // TODO:EnemyAIの作成
+  //  Get the AI controller
   AAIController *AIController = OwnerComp.GetAIOwner();
   if (AIController == nullptr) {
     return EBTNodeResult::Failed;
@@ -22,11 +23,12 @@ UBTTask_DoAbility::ExecuteTask(UBehaviorTreeComponent &OwnerComp,
     return EBTNodeResult::Failed;
   }
   // Get the ability manager
-  AbilityManager_ = AIPawn_->FindComponentByClass<UAbilityManager>();
-  if (AbilityManager_ == nullptr) {
+  UAbilityManager *abilityManager =
+      AIPawn_->FindComponentByClass<UAbilityManager>();
+  if (abilityManager == nullptr) {
     return EBTNodeResult::Failed;
   }
   // Use the ability
-  AbilityManager_->Execute(abilityIndex_);
+  abilityManager->Execute(abilityIndex_);
   return EBTNodeResult::Succeeded;
 }

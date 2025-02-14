@@ -13,12 +13,9 @@ public:
   UBTTask_DoAbility();
 
   UPROPERTY(EditAnywhere, Category = "Ability")
-  int abilityIndex_;
+  int abilityIndex_ = 0;
 
 private:
   virtual EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent &OwnerComp,
                                           uint8 *NodeMemory) override;
-
-private:
-  UAbilityManager *AbilityManager_;
 };

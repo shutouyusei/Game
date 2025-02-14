@@ -49,14 +49,13 @@ void UAbilityManager::Execute(int index) {
     return;
   }
   // Execute ability
-  if (index < abilityInstances_.Num()) {
+  // XXX :連続発動でcurrentAbilityIndex? =
+  // -1となる場合がありエラーとなっている そのため-1か暫定的にチェックする
+  if (index < abilityInstances_.Num() && index >= 0) {
     canInput_ = false;
     canNextAbility_ = false;
     currentAbilityIndex_ = index;
-    // XXX :連続発動でcurrentAbilityIndex? = -1となる場合がありエラーとなっている 
-    // そのため-1か暫定的にチェックする
-    if(currentAbilityIndex_ != -1)
-      abilityInstances_[currentAbilityIndex_]->DoAbility();
+    abilityInstances_[currentAbilityIndex_]->DoAbility();
   } else {
     UE_LOG(LogTemp, Error,
            TEXT("UAbilityManager::ExecuteAbility: Index out of range"));
@@ -70,10 +69,12 @@ void UAbilityManager::End() {
 }
 
 void UAbilityManager::ExecuteNext() {
-  //XXX:ここも同様
-  //FIXME:多分エラーログ的にここのインデックスがバグってる可能性がある
-  if(currentAbilityIndex_ != -1)
+  // XXX:ここも同様
+  // FIXME:多分エラーログ的にここのインデックスがバグってる可能性がある
+  if (currentAbilityIndex_ >= 0 &&
+      currentAbilityIndex_ < abilityInstances_.Num()) {
     abilityInstances_[currentAbilityIndex_]->EndAbility();
+  }
   int index = nextAbilityIndex_;
   nextAbilityIndex_ = -1;
   Execute(index);
@@ -83,7 +84,6 @@ void UAbilityManager::CanInput() { canInput_ = true; }
 
 void UAbilityManager::CanNextAbility() {
   canNextAbility_ = true;
-  if (nextAbilityIndex_ != -1) {
+  if (nextAbilityIndex_ < abilityInstances_.Num() && nextAbilityIndex_ >= 0)
     ExecuteNext();
-  }
 }
