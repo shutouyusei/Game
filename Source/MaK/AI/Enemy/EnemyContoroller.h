@@ -2,6 +2,7 @@
 
 #include "AIController.h"
 #include "CoreMinimal.h"
+#include "EnemyBehaviorState.h"
 
 #include "EnemyContoroller.generated.h"
 
@@ -15,19 +16,23 @@ class MAK_API AEnemyContoroller : public AAIController {
 public:
   AEnemyContoroller();
 
-  UFUNCTION(BlueprintCallable, Category = "AI")
-  APawn *TargetEnemy();
+  UFUNCTION(BlueprintCallable)
+  void SwitchBehaiviorState(EEnemyBehaiviorState NewState);
+  UFUNCTION(BlueprintCallable)
+  EEnemyBehaiviorState GetBehaiviorState() const { return BehaiviorState_; }
 
 protected:
   void BeginPlay() override;
   void OnPossess(APawn *InPawn) override;
   void OnUnPossess() override;
 
-public:
+protected:
+  UPROPERTY(EditAnywhere, Category = "State")
+  EEnemyBehaiviorState BehaiviorState_;
+
   UPROPERTY(EditAnywhere, Category = "BehaviorTree")
   UBehaviorTree *BehaviorTree_;
 
-protected:
   UPROPERTY(BluePrintReadOnly)
   UBehaviorTreeComponent *BehaviorTreeComponent_;
 

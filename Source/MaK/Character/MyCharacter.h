@@ -20,18 +20,18 @@ private:
   void Attack();
   void Skill1();
 
+protected:
+  virtual void
+  SetupPlayerInputComponent(UInputComponent *PlayerInputComponent) override;
+  virtual void BeginPlay() override;
+  virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
+
 public:
   UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Ability")
   UAbilityManager *abilityManager_;
 
   UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Status")
   UStatusComponent *statusComponent_;
-
-protected:
-  virtual void
-  SetupPlayerInputComponent(UInputComponent *PlayerInputComponent) override;
-  virtual void BeginPlay() override;
-  virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 
 private:
   UPROPERTY(EditAnywhere, Category = Input,

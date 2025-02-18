@@ -34,8 +34,6 @@ void AEnemyContoroller::OnUnPossess() {
   BehaviorTreeComponent_->StopTree();
 };
 
-APawn *AEnemyContoroller::TargetEnemy() {
-  // TODO:ターゲットアルゴリズム
-  APawn owner = GetPawn();
-  return
+void AEnemyContoroller::SwitchBehaiviorState(EEnemyBehaiviorState NewState) {
+  BehaiviorState_ = NewState;
 };
