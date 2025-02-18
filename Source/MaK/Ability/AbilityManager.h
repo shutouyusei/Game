@@ -8,7 +8,7 @@
 
 // NOTE: プレイヤー専用のアビリティマネージャー
 // アビリティの入力制御
-UCLASS()
+UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
 class UAbilityManager : public UActorComponent {
   GENERATED_BODY()
 public:
