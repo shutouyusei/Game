@@ -15,8 +15,8 @@ class MAK_API AEnemyContoroller : public AAIController {
 public:
   AEnemyContoroller();
 
-  UFUNCTION(BlueprintCallable,Category = "AI")
-  APawn *GetEnemy();
+  UFUNCTION(BlueprintCallable, Category = "AI")
+  APawn *TargetEnemy();
 
 protected:
   void BeginPlay() override;
@@ -26,9 +26,6 @@ protected:
 public:
   UPROPERTY(EditAnywhere, Category = "BehaviorTree")
   UBehaviorTree *BehaviorTree_;
-
-  UPROPERTY()
-  TArray<AActor *> actors_;
 
 protected:
   UPROPERTY(BluePrintReadOnly)

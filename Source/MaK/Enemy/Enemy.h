@@ -3,13 +3,12 @@
 #include "AbilityManager.h"
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
-#include "StatusStruct.h"
 #include "StatusComponent.h"
+#include "StatusStruct.h"
 
 #include "Enemy.generated.h"
 
 class UAIPerceptionComponent;
-class UAiSenseConfig_Sight;
 
 UCLASS()
 class AEnemy : public ACharacter {
@@ -18,18 +17,15 @@ public:
   AEnemy();
   ~AEnemy();
 
+  TArray<APawn *> *GetTargets();
+
 protected:
   void BeginPlay() override;
-  //XXX:エラー直してね
-  void OnTargetPerceptionUpdated(AActor *actor, FAIStimulus stimulus);
 
 public:
-  //AI
+  // AI
   UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Perception")
   UAIPerceptionComponent *PerceptionComponent;
-
-  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Perception")
-  UAISenseConfig_Sight *SightConfig;
 
   UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ability")
   UAbilityManager *abilityManager_;
@@ -37,8 +33,11 @@ public:
   UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Status")
   UStatusComponent *StatusComponent;
 
+  UPROPERTY(EditAnywhere,BlueprintReadWrite, Category = "AI")
+  TArray<AActor *> targets_;
 
 protected:
   UPROPERTY(EditAnywhere, Category = "Status")
   FStatusStruct status_;
+
 };

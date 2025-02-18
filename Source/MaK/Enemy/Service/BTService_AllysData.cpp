@@ -13,6 +13,11 @@ void UBTService_AllysData::TickNode(UBehaviorTreeComponent &OwnerComp,
     return;
   }
   UBlackboardComponent *blackboard = OwnerComp.GetBlackboardComponent();
-  // 
-  blackboard->SetValueAsObject(allysData_.SelectedKeyName, controller->GetEnemy());
+  //
+  APawn *target = controller->TargetEnemy();
+  if(target != nullptr){
+    blackboard->SetValueAsObject(allysData_.SelectedKeyName, target);
+  }else{
+    blackboard->ClearValue(allysData_.SelectedKeyName);
+  }
 }

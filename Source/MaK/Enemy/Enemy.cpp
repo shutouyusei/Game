@@ -7,16 +7,8 @@ AEnemy::AEnemy() {
   // Constructor
   Tags.Add("Game");
   // AI Perception
-  PerceptionComponent = CreateDefaultSubobject<UAIPerceptionComponent>("PerceptionComponent");
-  //視界
-  SightConfig = CreateDefaultSubobject<UAISenseConfig_Sight>("SightConfig");
-  if(SightConfig != nullptr){
-    PerceptionComponent->ConfigureSense(*SightConfig);
-  }
-  // Set delegate for perception
-  PerceptionComponent->OnTargetPerceptionUpdated.AddDynamic(
-      this, &AEnemy::OnPerceptionUpdated);
-
+  PerceptionComponent =
+      CreateDefaultSubobject<UAIPerceptionComponent>("PerceptionComponent");
   AddOwnedComponent(PerceptionComponent);
   // Ability Manager
   abilityManager_ = CreateDefaultSubobject<UAbilityManager>("AbilityManager");
@@ -31,13 +23,3 @@ void AEnemy::BeginPlay() {
   Super::BeginPlay();
 }
 
-void AEnemy::OnPerceptionUpdated(AActor *actor, FAIStimulus stimulus) {
-  // Called when perception is updated
-  AEnemyContoroller *controller = Cast<AEnemyContoroller>(GetController());
-  for (auto actor : actors) {
-    if (actor->ActorHasTag("ally")) {
-      UE_LOG(LogTemp, Warning, TEXT("Ally Detected"));
-      controller->actors_.AddUnique(actor);
-    }
-  }
-}
