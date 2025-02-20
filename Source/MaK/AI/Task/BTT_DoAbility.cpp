@@ -1,16 +1,16 @@
-#include "BTTask_DoAbility.h"
+#include "BTT_DoAbility.h"
 #include "AIController.h"
 #include "AbilityManager.h"
 #include "GameFramework/Pawn.h"
 
-UBTTask_DoAbility::UBTTask_DoAbility() {
+UBTT_DoAbility::UBTT_DoAbility() {
   NodeName = TEXT("Do Ability");
   bNotifyTick = false;
 }
 
 EBTNodeResult::Type
-UBTTask_DoAbility::ExecuteTask(UBehaviorTreeComponent &OwnerComp,
-                               uint8 *NodeMemory) {
+UBTT_DoAbility::ExecuteTask(UBehaviorTreeComponent &OwnerComp,
+                            uint8 *NodeMemory) {
   // TODO:EnemyAIの作成
   //  Get the AI controller
   AAIController *AIController = OwnerComp.GetAIOwner();

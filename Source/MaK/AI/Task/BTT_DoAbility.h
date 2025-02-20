@@ -2,15 +2,15 @@
 #include "BehaviorTree/BTTaskNode.h"
 #include "CoreMinimal.h"
 
-#include "BTTask_DoAbility.generated.h"
+#include "BTT_DoAbility.generated.h"
 
 class UAbilityManager;
 
 UCLASS()
-class MAK_API UBTTask_DoAbility : public UBTTaskNode {
+class UBTT_DoAbility : public UBTTaskNode {
   GENERATED_BODY()
 public:
-  UBTTask_DoAbility();
+  UBTT_DoAbility();
 
   UPROPERTY(EditAnywhere, Category = "Ability")
   int abilityIndex_ = 0;

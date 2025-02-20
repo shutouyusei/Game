@@ -3,13 +3,13 @@
 #include "BehaviorTree/BTService.h"
 #include "CoreMinimal.h"
 
-#include "BTService_AllysData.generated.h"
+#include "BTS_AllysData.generated.h"
 
 UCLASS()
-class UBTService_AllysData : public UBTService {
+class UBTS_AllysData : public UBTService {
   GENERATED_BODY()
 public:
-  UBTService_AllysData();
+  UBTS_AllysData();
 
 protected:
   virtual void TickNode(UBehaviorTreeComponent &OwnerComp, uint8 *NodeMemory,

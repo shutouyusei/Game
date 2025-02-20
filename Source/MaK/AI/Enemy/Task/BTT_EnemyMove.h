@@ -1,27 +1,20 @@
 #pragma once
+
 #include "BehaviorTree/BTTaskNode.h"
 #include "CoreMinimal.h"
 
-#include "BTTask_RandomMove.generated.h"
+#include "BTT_EnemyMove.generated.h"
 
-class APawn;
-
+// NOTE:敵の動きを制御するクラス
+// AIPerceptionと関連する
 UCLASS()
-class MAK_API UBTTask_RandomMove : public UBTTaskNode {
+class UBTT_EnemyMove : public UBTTaskNode {
   GENERATED_BODY()
-
 public:
-  UBTTask_RandomMove();
+  UBTT_EnemyMove();
 
-private:
   virtual EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent &OwnerComp,
                                           uint8 *NodeMemory) override;
-
-protected:
   virtual void TickTask(UBehaviorTreeComponent &OwnerComp, uint8 *NodeMemory,
                         float DeltaSeconds) override;
-
-protected:
-  APawn *AIPawn_;
-  FVector GoalLocation_;
 };
