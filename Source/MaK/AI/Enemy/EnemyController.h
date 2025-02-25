@@ -1,11 +1,11 @@
 #pragma once
+#include "../AIMemory.h"
 #include "../MyController.h"
 #include "EnemyBehaviorState.h"
+#include "Perception/AIPerceptionTypes.h"
 
 #include "EnemyController.generated.h"
-
 struct FBlackboardKeySelector;
-struct FAIStimulus;
 
 UCLASS()
 class AEnemyController : public AMyController {
@@ -13,15 +13,24 @@ class AEnemyController : public AMyController {
 public:
   AEnemyController();
 
-  //NOTE:UObjectデリゲートはUFUNCTION()を使って定義する
+  // NOTE:UObjectデリゲートはUFUNCTION()を使って定義する
   UFUNCTION()
   void OnTargetPerceptionUpdated(AActor *Actor, FAIStimulus Stimulus);
 
   UFUNCTION(BlueprintCallable)
+  AActor *GetTarget();
+
+  UFUNCTION(BlueprintCallable)
   void SwitchBehaiviorState(EEnemyBehaiviorState NewState);
+
+  UFUNCTION(BlueprintCallable)
+  FAIStimulus GetStimulusMemory();
+
   EEnemyBehaiviorState GetState();
 
 protected:
+  UPROPERTY()
+  FAIMemory StimulusMemory_;
   UPROPERTY(EditAnywhere, Category = "State")
   EEnemyBehaiviorState behaiviorState_;
 };
