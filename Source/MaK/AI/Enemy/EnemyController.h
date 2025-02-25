@@ -18,13 +18,7 @@ public:
   void OnTargetPerceptionUpdated(AActor *Actor, FAIStimulus Stimulus);
 
   UFUNCTION(BlueprintCallable)
-  AActor *GetTarget();
-
-  UFUNCTION(BlueprintCallable)
   void SwitchBehaiviorState(EEnemyBehaiviorState NewState);
-
-  UFUNCTION(BlueprintCallable)
-  FAIStimulus GetStimulusMemory();
 
   EEnemyBehaiviorState GetState();
 

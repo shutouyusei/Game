@@ -25,38 +25,12 @@ void AEnemyController::SwitchBehaiviorState(EEnemyBehaiviorState NewState) {
 
 EEnemyBehaiviorState AEnemyController::GetState() { return behaiviorState_; }
 
-AActor *AEnemyController::GetTarget() {
-  TArray<AActor *> PerceivedActors;
-  PerceptionComponent->GetCurrentlyPerceivedActors(
-      UAISense_Sight::StaticClass(), PerceivedActors);
-  if (PerceivedActors.Num() > 0) {
-    // 現在知覚している中での最優先を探す
-    return PerceivedActors[0];
-  }
-  return nullptr;
-}
-
-FAIStimulus AEnemyController::GetStimulusMemory() {
-  // MaxAge以上のデータは破棄
-  float age  = GetWorld()->GetTimeSeconds() - StimulusMemory_.time;
-  UAISenseConfig_Sight *SightConfig =
-      PerceptionComponent->GetSenseConfig<UAISenseConfig_Sight>();
-  if(age > SightConfig->GetMaxAge()) {
-    StimulusMemory_ = {0, FAIStimulus()};
-  }
-  return StimulusMemory_.Stimulus;
-}
-
 void AEnemyController::OnTargetPerceptionUpdated(AActor *Actor,
                                                  FAIStimulus Stimulus) {
   if (Stimulus.WasSuccessfullySensed()) {
     // プレイヤーを感知したら、追跡状態に遷移
     SwitchBehaiviorState(EEnemyBehaiviorState::Combat);
-  } else {
-    // 視覚でプレイヤーを感知できなくなった
-    float time = GetWorld()->GetTimeSeconds();
-    StimulusMemory_ = {
-      time + Stimulus.GetAge(), Stimulus,
-    };
+    // Add Blackboard
+    BlackboardComponent_->SetValueAsObject("Target", Actor);
   }
 }
