@@ -1,6 +1,7 @@
 // Copyright Epic Games, Inc. All Rights Reserved.
 
 #include "MaKCharacter.h"
+#include "Math/Vector2D.h"
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Engine/LocalPlayer.h"
@@ -142,4 +143,29 @@ void AMaKCharacter::Look(const FInputActionValue &Value) {
     AddControllerYawInput(LookAxisVector.X);
     AddControllerPitchInput(LookAxisVector.Y);
   }
+}
+
+FVector2D AMaKCharacter::GetMoveInputValue() {
+  FVector2D MoveInputValue = FVector2D::ZeroVector;
+  if (UEnhancedInputComponent *EnhancedInputComponent =
+          Cast<UEnhancedInputComponent>(GetController()->InputComponent)) {
+    // Get Vector from Input
+    FInputActionValue Value =
+        EnhancedInputComponent->GetBoundActionValue(MoveAction);
+    MoveInputValue = Value.Get<FVector2D>();
+  }
+  return MoveInputValue;
+}
+
+FVector2D AMaKCharacter::GetCameraForwardVector() {
+  FVector2D CameraForwardVector = FVector2D::ZeroVector;
+  if (Controller != nullptr) {
+    // Get Camera Forward Vector
+    const FRotator Rotation = Controller->GetControlRotation();
+    const FRotator YawRotation(0, Rotation.Yaw, 0);
+    const FVector ForwardDirection =
+        FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
+    CameraForwardVector = FVector2D(ForwardDirection.X, ForwardDirection.Y);
+  }
+  return CameraForwardVector;
 }
