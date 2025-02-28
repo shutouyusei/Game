@@ -1,6 +1,5 @@
 #include "InputAbility.h"
 #include "Math/UnrealMathUtility.h"
-#include "Math/Vector2D.h"
 #include "MyCharacter.h"
 
 void UInputAbility::BeginPlay() {
@@ -20,24 +19,46 @@ void UInputAbility::DoAbility() {
   AMyCharacter *character = Cast<AMyCharacter>(owner_->GetOwner());
   if (character == nullptr)
     return;
-  // Get the move input value
+  // Set the angle
   FVector2D input = character->GetMoveInputValue();
   if (input.Size() > 0.1f) {
-    input = {-input.X, input.Y};
-    // Get the forward vector of the character
-    FVector actorForward = character->GetActorForwardVector();
-    // Get the camera forward vector
-    FVector2D cameraForward = character->GetCameraForwardVector();
-
-    // calculate
-    FVector2D moveDirection = input.GetRotated(-FMath::RadiansToDegrees(
-        FMath::Atan2(cameraForward.X, cameraForward.Y)));
-    // Set the angle
-    character->SetActorRotation(FRotator(
-        0.0f,
-        FMath::RadiansToDegrees(FMath::Atan2(moveDirection.Y, moveDirection.X)),
-        0.0f));
+    float angle = CalcuateMoveRadians(character, input);
+    character->SetActorRotation(FRotator(0.0f, angle, 0.0f));
   }
+
   // DoAbility
   Ability_->DoAbility();
+}
+
+// NOTE:より効率よいプログラムがあれば考える
+float UInputAbility::CalcuateMoveRadians(AMyCharacter *character,
+                                         FVector2D input) {
+  // Calculate the move direction
+  // Get the forward vector of the character
+  FVector actorForward = character->GetActorForwardVector();
+  input = {-input.X, input.Y};
+  // Get the camera forward vector
+  FVector2D cameraForward = character->GetCameraForwardVector();
+  // calculate
+  FVector2D moveDirection = input.GetRotated(
+      -FMath::RadiansToDegrees(FMath::Atan2(cameraForward.X, cameraForward.Y)));
+  // Check actor forward and move direction
+  float AngleRadians = FMath::Atan2(
+      actorForward.X * moveDirection.Y - actorForward.Y * moveDirection.X,
+      actorForward.X * moveDirection.X + actorForward.Y * moveDirection.Y);
+
+  if (AngleRadians > FMath::DegreesToRadians(15.0f) ||
+      AngleRadians < FMath::DegreesToRadians(-180.0f)) {
+    float actorAngle =
+        FMath::RadiansToDegrees(FMath::Atan2(actorForward.Y, actorForward.X));
+    return 15.0f + actorAngle;
+  } else if (AngleRadians < FMath::DegreesToRadians(-15.0f) ||
+             AngleRadians > FMath::DegreesToRadians(180.0f)) {
+    float actorAngle =
+        FMath::RadiansToDegrees(FMath::Atan2(actorForward.Y, actorForward.X));
+    return -15.0f + actorAngle;
+  } else {
+    return FMath::RadiansToDegrees(
+        FMath::Atan2(moveDirection.Y, moveDirection.X));
+  }
 }
