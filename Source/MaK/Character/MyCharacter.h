@@ -1,11 +1,11 @@
 #pragma once
+#include "AbilityManager.h"
 #include "MaKCharacter.h"
-#include "MyCharacter.generated.h"
+#include "StatusComponent.h"
 
+#include "MyCharacter.generated.h"
 class Ability;
 class UAnimMontage;
-class UShapeComponent;
-class AbilityManager;
 class UInputComponent;
 
 UCLASS()
@@ -14,9 +14,6 @@ class AMyCharacter : public AMaKCharacter {
 public:
   AMyCharacter();
   ~AMyCharacter();
-
-  UFUNCTION(BlueprintCallable, Category = "Ability")
-  void SetNormalAttack(AAttackCollision *weapon);
 
 private:
   // Ability Function
@@ -29,6 +26,13 @@ protected:
   virtual void BeginPlay() override;
   virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 
+public:
+  UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Ability")
+  UAbilityManager *abilityManager_;
+
+  UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Status")
+  UStatusComponent *statusComponent_;
+
 private:
   UPROPERTY(EditAnywhere, Category = Input,
             meta = (AllowPrivateAccess = "true"))
@@ -36,6 +40,4 @@ private:
 
   UPROPERTY(EditAnywhere, Category = Input, meta = (AllowPrivat = "true"))
   UInputAction *skill1Action_;
-
-  AbilityManager *abilityManager_;
 };

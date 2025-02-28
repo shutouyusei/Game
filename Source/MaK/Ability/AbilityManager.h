@@ -1,19 +1,58 @@
 #pragma once
+#include "Ability.h"
+#include "Attack/AttackCollision.h"
+#include "Components/ActorComponent.h"
 #include "CoreMinimal.h"
 
-class Ability;
+#include "AbilityManager.generated.h"
 
 // NOTE: プレイヤー専用のアビリティマネージャー
 // アビリティの入力制御
-class AbilityManager {
+UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
+class UAbilityManager : public UActorComponent {
+  GENERATED_BODY()
 public:
-  AbilityManager();
-  ~AbilityManager();
-  void AddAbility(Ability *ability);
-  void SetAbility(int index, Ability *ability);
-  void ExecuteAbility(int index);
+  UAbilityManager();
+  ~UAbilityManager();
+
+  UFUNCTION(BlueprintCallable, Category = "Ability")
+  void SetAbility(int index, UAbility *abilityClass);
+
+  UFUNCTION(BlueprintCallable, Category = "Ability")
+  void Execute(int index);
+
+  UFUNCTION(BlueprintCallable, Category = "Ability")
+  void SetupAbilityManager(AAttackCollision *attackCollision);
+
+  // アビリティからの通知
+  void CanInput();
+  void CanNextAbility();
+
+  void End();
 
 private:
-  TArray<Ability*> abilities_;
+  virtual void BeginPlay() override;
+  void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
+  void ExecuteNext();
+
+public:
+  UPROPERTY(EditAnywhere, Category = "Ability")
+  TArray<TSubclassOf<UAbility>> abilities_;
+
+  UPROPERTY()
+  AAttackCollision *attackCollision_;
+
+protected:
+  UPROPERTY()
+  TArray<UAbility *> abilityInstances_;
+
+private:
+  UPROPERTY()
+  bool canInput_ = true;
+  UPROPERTY()
+  bool canNextAbility_ = true;
+  UPROPERTY()
   int currentAbilityIndex_ = -1;
+  UPROPERTY()
+  int nextAbilityIndex_ = -1;
 };

@@ -1,19 +1,29 @@
 #pragma once
 #include "CoreMinimal.h"
-#include "GameFramework/Actor.h"
+#include "UObject/NoExportTypes.h"
 
-class Ability {
+#include "Ability.generated.h"
+
+class UAbilityManager;
+
+UCLASS(Blueprintable)
+class UAbility : public UObject {
+  GENERATED_BODY()
 public:
-  Ability(AActor *owner) : owner_(owner) {}
-  virtual ~Ability() = default;
+  UAbility();
+  virtual ~UAbility() = default;
 
-  virtual void DoAbility() = 0;
-  virtual void EndAbility() = 0;
-  virtual bool IsExecuting() { return isExecuting_; }
+  // NOTE: call by Ability Manager when set ability
+  void SetOwner(UAbilityManager *owner);
+  virtual void BeginPlay();
+  virtual void EndPlay(const EEndPlayReason::Type EndPlayReason);
+
+  // NOTE :Don't call directly
+  // Call by Ability Manager
+  virtual void DoAbility();
+  virtual void EndAbility();
 
 protected:
-  bool isExecuting_ = false;
-
-protected:
-  AActor *owner_;
+  UPROPERTY()
+  UAbilityManager *owner_;
 };

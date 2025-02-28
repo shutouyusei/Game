@@ -1,43 +1,31 @@
 #include "AttackAbility.h"
+#include "AbilityManager.h"
 #include "Damage.h"
-#include "StatsComponent.h"
+#include "DrawDebugHelpers.h"
+#include "Kismet/GameplayStatics.h"
+#include "StatusComponent.h"
 
-AttackAbility::AttackAbility(AActor *owner, UAnimInstance *animInstance,
-                             AAttackCollision *collision)
-    : AbilityWithMontage(owner, animInstance), collision_(collision) {}
+UAttackAbility::UAttackAbility() : UAnimAbility() {}
 
-void AttackAbility::DoAbility() {
+void UAttackAbility::DoAbility() {
   // Play the attack animation
-  isExecuting_ = true;
   PlayMontage();
+  owner_->attackCollision_->SetAbility([this](AActor *otherActor) {
+    // actor is not me and is not null
+    if (otherActor == nullptr || otherActor == owner_->GetOwner())
+      return;
+    // Get the stats component of the enemy
+    UStatusComponent *applyier =
+        owner_->GetOwner()->FindComponentByClass<UStatusComponent>();
+    UStatusComponent *target =
+        otherActor->FindComponentByClass<UStatusComponent>();
+    // Apply the damage
+    if (applyier != nullptr && target != nullptr)
+      UDamage::ApplyDamage(applyier, target, damage_);
+  });
 }
 
-void AttackAbility::EndAbility() {
-  // Stop the attack animation
-  isExecuting_ = false;
-}
-
-void AttackAbility::SetUpAttackAbility(UAnimMontage *animMontage,
-                                       FDamageStruct damage) {
-  // Set up the attack ability
-  animMontage_ = animMontage;
-  damage_ = damage;
-  SetUpAbilityWithMontage();
-  auto damageToEnemy = [this]() -> void {
-    collision_->SetAbility([this](AActor *otherActor) {
-      if (otherActor->ActorHasTag("Game")) {
-        StatsComponent statsComponent;
-        StatsManager *statsManager = statsComponent.GetStatsManager();
-
-        StatsBase *ownerStats = statsManager->GetStats(owner_);
-        StatsBase *otherStats = statsManager->GetStats(otherActor);
-
-        Damage::ApplyDamage(ownerStats, otherStats, damage_);
-      }
-    });
-  };
-
-  auto endDelegate = [this]() -> void { collision_->DeleteAbility(); };
-
-  SetAnimNotifyDelegate(TEXT("Attack"), damageToEnemy, endDelegate);
+void UAttackAbility::EndAbility() {
+  owner_->attackCollision_->DeleteAbility();
+  UAnimAbility::EndAbility();
 }

@@ -1,15 +1,15 @@
 // Copyright Epic Games, Inc. All Rights Reserved.
 
 #include "MaKCharacter.h"
+#include "EnhancedInputSubsystems.h"
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Engine/LocalPlayer.h"
-#include "EnhancedInputComponent.h"
-#include "EnhancedInputSubsystems.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/Controller.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "InputActionValue.h"
+#include "Math/Vector2D.h"
 
 DEFINE_LOG_CATEGORY(LogTemplateCharacter);
 
@@ -83,8 +83,8 @@ void AMaKCharacter::NotifyControllerChanged() {
 void AMaKCharacter::SetupPlayerInputComponent(
     UInputComponent *PlayerInputComponent) {
   // Set up action bindings
-  if (UEnhancedInputComponent *EnhancedInputComponent =
-          Cast<UEnhancedInputComponent>(PlayerInputComponent)) {
+  EnhancedInputComponent = Cast<UEnhancedInputComponent>(PlayerInputComponent);
+  if (EnhancedInputComponent != nullptr) {
 
     // Jumping
     EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Started, this,
@@ -95,6 +95,7 @@ void AMaKCharacter::SetupPlayerInputComponent(
     // Moving
     EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered,
                                        this, &AMaKCharacter::Move);
+
 
     // Looking
     EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered,
@@ -142,4 +143,23 @@ void AMaKCharacter::Look(const FInputActionValue &Value) {
     AddControllerYawInput(LookAxisVector.X);
     AddControllerPitchInput(LookAxisVector.Y);
   }
+}
+
+FVector2D AMaKCharacter::GetMoveInputValue() {
+  FEnhancedInputActionValueBinding  *MoveBinding = &EnhancedInputComponent->BindActionValue(MoveAction);
+  const FVector2D MoveInputValue = MoveBinding->GetValue().Get<FVector2D>();
+  return MoveInputValue;
+}
+
+FVector2D AMaKCharacter::GetCameraForwardVector() {
+  FVector2D CameraForwardVector = FVector2D::ZeroVector;
+  if (Controller != nullptr) {
+    // Get Camera Forward Vector
+    const FRotator Rotation = Controller->GetControlRotation();
+    const FRotator YawRotation(0, Rotation.Yaw, 0);
+    const FVector ForwardDirection =
+        FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
+    CameraForwardVector = FVector2D(ForwardDirection.X, ForwardDirection.Y);
+  }
+  return CameraForwardVector;
 }

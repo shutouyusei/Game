@@ -1,36 +1,32 @@
 #include "MyCharacter.h"
-#include "AbilityManager.h"
+#include "Attack/AttackCollision.h"
+#include "Components/ChildActorComponent.h"
 #include "EnhancedInputComponent.h"
-#include "Sword/Base/SwordAttackCombo.h"
-#include "Sword/Skill/DodgeAttack1.h"
 
-AMyCharacter::AMyCharacter() {}
+AMyCharacter::AMyCharacter() {
+  abilityManager_ = CreateDefaultSubobject<UAbilityManager>("AbilityManager");
+  statusComponent_ =
+      CreateDefaultSubobject<UStatusComponent>("StatusComponent");
+  // 味方ポーンのタグはally
+  this->Tags.Add("ally");
+}
 
 AMyCharacter::~AMyCharacter() {}
 
-void AMyCharacter::SetNormalAttack(AAttackCollision *weapon) {
-  abilityManager_ = new AbilityManager();
-  Ability *ability =
-      new SwordAttackCombo(this, GetMesh()->GetAnimInstance(), weapon);
-  abilityManager_->AddAbility(ability);
-  Ability *dodgeAbility =
-      new DodgeAttack1(this, GetMesh()->GetAnimInstance(), weapon);
-  abilityManager_->AddAbility(dodgeAbility);
+void AMyCharacter::BeginPlay() {
+  Super::BeginPlay();
+  // attach component
 }
-void AMyCharacter::BeginPlay() { Super::BeginPlay(); }
 
 void AMyCharacter::EndPlay(const EEndPlayReason::Type EndPlayReason) {
   Super::EndPlay(EndPlayReason);
-  delete abilityManager_;
-  abilityManager_ = nullptr;
 }
 
 void AMyCharacter::SetupPlayerInputComponent(
     UInputComponent *PlayerInputComponent) {
   Super::SetupPlayerInputComponent(PlayerInputComponent);
 
-  if (UEnhancedInputComponent *EnhancedInputComponent =
-          Cast<UEnhancedInputComponent>(PlayerInputComponent)) {
+  if (EnhancedInputComponent != nullptr) {
     // Normal Attack
     EnhancedInputComponent->BindAction(normalAttackAction_,
                                        ETriggerEvent::Started, this,
@@ -47,6 +43,6 @@ void AMyCharacter::SetupPlayerInputComponent(
   }
 }
 
-void AMyCharacter::Attack() { abilityManager_->ExecuteAbility(0); }
+void AMyCharacter::Attack() { abilityManager_->Execute(0); }
 
-void AMyCharacter::Skill1() { abilityManager_->ExecuteAbility(1); }
+void AMyCharacter::Skill1() { abilityManager_->Execute(1); }
