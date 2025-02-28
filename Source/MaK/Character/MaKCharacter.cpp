@@ -1,16 +1,15 @@
 // Copyright Epic Games, Inc. All Rights Reserved.
 
 #include "MaKCharacter.h"
-#include "Math/Vector2D.h"
+#include "EnhancedInputSubsystems.h"
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Engine/LocalPlayer.h"
-#include "EnhancedInputComponent.h"
-#include "EnhancedInputSubsystems.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/Controller.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "InputActionValue.h"
+#include "Math/Vector2D.h"
 
 DEFINE_LOG_CATEGORY(LogTemplateCharacter);
 
@@ -84,8 +83,8 @@ void AMaKCharacter::NotifyControllerChanged() {
 void AMaKCharacter::SetupPlayerInputComponent(
     UInputComponent *PlayerInputComponent) {
   // Set up action bindings
-  if (UEnhancedInputComponent *EnhancedInputComponent =
-          Cast<UEnhancedInputComponent>(PlayerInputComponent)) {
+  EnhancedInputComponent = Cast<UEnhancedInputComponent>(PlayerInputComponent);
+  if (EnhancedInputComponent != nullptr) {
 
     // Jumping
     EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Started, this,
@@ -96,6 +95,7 @@ void AMaKCharacter::SetupPlayerInputComponent(
     // Moving
     EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered,
                                        this, &AMaKCharacter::Move);
+
 
     // Looking
     EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered,
@@ -146,14 +146,8 @@ void AMaKCharacter::Look(const FInputActionValue &Value) {
 }
 
 FVector2D AMaKCharacter::GetMoveInputValue() {
-  FVector2D MoveInputValue = FVector2D::ZeroVector;
-  if (UEnhancedInputComponent *EnhancedInputComponent =
-          Cast<UEnhancedInputComponent>(GetController()->InputComponent)) {
-    // Get Vector from Input
-    FInputActionValue Value =
-        EnhancedInputComponent->GetBoundActionValue(MoveAction);
-    MoveInputValue = Value.Get<FVector2D>();
-  }
+  FEnhancedInputActionValueBinding  *MoveBinding = &EnhancedInputComponent->BindActionValue(MoveAction);
+  const FVector2D MoveInputValue = MoveBinding->GetValue().Get<FVector2D>();
   return MoveInputValue;
 }
 

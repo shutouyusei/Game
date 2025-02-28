@@ -26,8 +26,7 @@ void AMyCharacter::SetupPlayerInputComponent(
     UInputComponent *PlayerInputComponent) {
   Super::SetupPlayerInputComponent(PlayerInputComponent);
 
-  if (UEnhancedInputComponent *EnhancedInputComponent =
-          Cast<UEnhancedInputComponent>(PlayerInputComponent)) {
+  if (EnhancedInputComponent != nullptr) {
     // Normal Attack
     EnhancedInputComponent->BindAction(normalAttackAction_,
                                        ETriggerEvent::Started, this,

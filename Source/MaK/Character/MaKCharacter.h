@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "EnhancedInputComponent.h"
 #include "GameFramework/Character.h"
 #include "Logging/LogMacros.h"
 #include "MaKCharacter.generated.h"
@@ -22,6 +23,9 @@ public:
   FVector2D GetMoveInputValue();
   FVector2D GetCameraForwardVector();
 
+protected:
+  UPROPERTY()
+  UEnhancedInputComponent *EnhancedInputComponent;
 private:
   /** Camera boom positioning the camera behind the character */
   UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera,
