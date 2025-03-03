@@ -34,9 +34,13 @@ float UStatusComponent::GetHP() {
 }
 
 void UStatusComponent::Damage(float damage) {
+  if(currentHP_ == 0) return;
   currentHP_ -= damage;
-  if (currentHP_ < 0) {
+  if (currentHP_ <= 0) {
+    OnDeath.Broadcast();
     currentHP_ = 0;
+  }else{
+    OnDamage.Broadcast(damage);
   }
 }
 

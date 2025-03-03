@@ -6,6 +6,12 @@
 
 #include "StatusComponent.generated.h"
 
+
+//Death call back
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FDeathDelegate);
+//Damage call back
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FDamageDelegate, float, damage);
+
 UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
 class UStatusComponent : public UActorComponent {
   GENERATED_BODY()
@@ -52,4 +58,10 @@ public:
   float currentHP_;
   UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Status")
   float currentMP_;
+
+  UPROPERTY(BlueprintAssignable, Category = "Event")
+  FDeathDelegate OnDeath;
+
+  UPROPERTY(BlueprintAssignable, Category = "Event")
+  FDamageDelegate OnDamage;
 };

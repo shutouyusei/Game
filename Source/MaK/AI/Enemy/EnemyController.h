@@ -20,6 +20,9 @@ public:
   UFUNCTION(BlueprintCallable)
   void SwitchBehaiviorState(EEnemyBehaiviorState NewState);
 
+  UFUNCTION(BlueprintCallable)
+  void Death();
+
   EEnemyBehaiviorState GetState();
 
 protected:
