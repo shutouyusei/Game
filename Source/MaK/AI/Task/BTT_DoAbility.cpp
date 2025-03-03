@@ -11,7 +11,6 @@ UBTT_DoAbility::UBTT_DoAbility() {
 EBTNodeResult::Type
 UBTT_DoAbility::ExecuteTask(UBehaviorTreeComponent &OwnerComp,
                             uint8 *NodeMemory) {
-  // TODO:EnemyAIの作成
   //  Get the AI controller
   AAIController *AIController = OwnerComp.GetAIOwner();
   if (AIController == nullptr) {

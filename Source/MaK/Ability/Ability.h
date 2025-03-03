@@ -5,6 +5,7 @@
 #include "Ability.generated.h"
 
 class UAbilityManager;
+// TODO:たくさんアビリティを作って，ゲームの雰囲気をつかむ
 
 UCLASS(Blueprintable)
 class UAbility : public UObject {
