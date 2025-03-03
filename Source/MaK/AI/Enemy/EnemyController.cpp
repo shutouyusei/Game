@@ -34,3 +34,12 @@ void AEnemyController::OnTargetPerceptionUpdated(AActor *Actor,
     BlackboardComponent_->SetValueAsObject("Target", Actor);
   }
 }
+
+void AEnemyController::Death() {
+  // 状態を死亡状態に遷移
+  SwitchBehaiviorState(EEnemyBehaiviorState::Death);
+  PerceptionComponent->OnTargetPerceptionUpdated.RemoveDynamic(
+      this, &AEnemyController::OnTargetPerceptionUpdated);
+  //Remove Collision
+  GetPawn()->SetActorEnableCollision(false);
+}
