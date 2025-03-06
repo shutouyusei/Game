@@ -18,7 +18,6 @@ void UAttackNotifyState::NotifyBegin(USkeletalMeshComponent *MeshComp,
   abilityManager->attackCollision_->SetActorEnableCollision(true);
 }
 
-
 void UAttackNotifyState::NotifyEnd(USkeletalMeshComponent *MeshComp,
                                    UAnimSequenceBase *Animation) {
   // Get the owner of the mesh
@@ -32,4 +31,4 @@ void UAttackNotifyState::NotifyEnd(USkeletalMeshComponent *MeshComp,
     return;
   // set attack collision to be unable to deal damage
   abilityManager->attackCollision_->SetActorEnableCollision(false);
-}\
+}

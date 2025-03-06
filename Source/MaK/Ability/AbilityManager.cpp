@@ -11,7 +11,12 @@ void UAbilityManager::BeginPlay() {
   Super::BeginPlay();
   // make abilities
   for (TSubclassOf<UAbility> &abilityClass : abilities_) {
-    UAbility *ability = NewObject<UAbility>(this, abilityClass);
+    UAbility *ability = nullptr;
+    if (abilityClass != nullptr) {
+      ability = NewObject<UAbility>(this, abilityClass);
+    } else {
+      ability = NewObject<UAbility>(this, UAbility::StaticClass());
+    }
     ability->SetOwner(this);
     ability->BeginPlay();
     abilityInstances_.Add(ability);
@@ -40,21 +45,23 @@ void UAbilityManager::SetAbility(int index, UAbility *ability) {
 void UAbilityManager::Execute(int index) {
   // Check can do ability
   if (!canInput_) {
+    UE_LOG(LogTemp, Warning, TEXT("cant input"));
     return;
   }
   // Check can next ability
   if (!canNextAbility_) {
+    UE_LOG(LogTemp, Warning, TEXT("can next ability"));
     nextAbilityIndex_ = index;
     return;
   }
   // Execute ability
-  // XXX :連続発動でcurrentAbilityIndex? =
-  // -1となる場合がありエラーとなっている そのため-1か暫定的にチェックする
   // NOTE:UPROPERTYが原因かも後で検証
   if (index < abilityInstances_.Num() && index >= 0) {
+    UE_LOG(LogTemp, Warning, TEXT("ability"));
     canInput_ = false;
     canNextAbility_ = false;
     currentAbilityIndex_ = index;
+    nextAbilityIndex_ = -1;
     abilityInstances_[currentAbilityIndex_]->DoAbility();
   } else {
     UE_LOG(LogTemp, Error,
@@ -69,21 +76,19 @@ void UAbilityManager::End() {
 }
 
 void UAbilityManager::ExecuteNext() {
-  // XXX:ここも同様
-  // FIXME:多分エラーログ的にここのインデックスがバグってる可能性がある
-  if (currentAbilityIndex_ >= 0 &&
-      currentAbilityIndex_ < abilityInstances_.Num()) {
-    abilityInstances_[currentAbilityIndex_]->EndAbility();
-  }
-  int index = nextAbilityIndex_;
-  nextAbilityIndex_ = -1;
-  Execute(index);
+  UE_LOG(LogTemp, Warning, TEXT("ExecuteNext"));
+  abilityInstances_[currentAbilityIndex_]->EndAbility();
+  Execute(nextAbilityIndex_);
 }
 
-void UAbilityManager::CanInput() { canInput_ = true; }
+void UAbilityManager::CanInput() { 
+  UE_LOG(LogTemp,Warning,TEXT("CanInput"))
+  canInput_ = true; 
+}
 
 void UAbilityManager::CanNextAbility() {
+  UE_LOG(LogTemp,Warning,TEXT("CanNextAbility"))
   canNextAbility_ = true;
-  if (nextAbilityIndex_ < abilityInstances_.Num() && nextAbilityIndex_ >= 0)
+  if (nextAbilityIndex_ != -1)
     ExecuteNext();
 }

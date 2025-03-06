@@ -2,15 +2,16 @@
 #include "../Ability.h"
 #include "Math/Vector2D.h"
 
-#include "InputAbility.generated.h"
+#include "InputRotateAbility.generated.h"
 
 class AMyCharacter;
 
 UCLASS(Blueprintable)
-class UInputAbility : public UAbility {
+class UInputRotateAbility : public UAbility {
   GENERATED_BODY()
 public:
   virtual void DoAbility() override;
+  virtual void EndAbility() override;
 
 protected:
   virtual void BeginPlay() override;

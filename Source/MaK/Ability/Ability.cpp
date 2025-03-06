@@ -14,6 +14,7 @@ void UAbility::SetOwner(UAbilityManager *owner) { owner_ = owner; }
 
 void UAbility::DoAbility() {
   UE_LOG(LogTemp, Warning, TEXT("DoAbility in Base"));
+  EndAbility();
 }
 
 void UAbility::EndAbility() {

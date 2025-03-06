@@ -34,7 +34,9 @@ void UAnimAbility::StopMontage() {
 }
 
 void UAnimAbility::OnMontageEnded(UAnimMontage *montage, bool interrupted) {
-  EndAbility();
+  if(!interrupted){
+    EndAbility();
+  }
 }
 
 UAnimInstance *UAnimAbility::GetAnimInstance() {

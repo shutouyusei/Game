@@ -1,20 +1,20 @@
-#include "InputAbility.h"
+#include "InputComboAbility.h"
 #include "Math/UnrealMathUtility.h"
 #include "MyCharacter.h"
 
-void UInputAbility::BeginPlay() {
+void UInputComboAbility::BeginPlay() {
   // Create the ability
   Ability_ = NewObject<UAbility>(this, InputAbility_);
   Ability_->SetOwner(owner_);
   Ability_->BeginPlay();
 }
 
-void UInputAbility::EndPlay(const EEndPlayReason::Type EndPlayReason) {
+void UInputComboAbility::EndPlay(const EEndPlayReason::Type EndPlayReason) {
   Ability_->EndPlay(EndPlayReason);
   Ability_->ConditionalBeginDestroy();
 }
 
-void UInputAbility::DoAbility() {
+void UInputComboAbility::DoAbility() {
   // Input情報から向きを決める
   AMyCharacter *character = Cast<AMyCharacter>(owner_->GetOwner());
   if (character == nullptr)
@@ -30,9 +30,11 @@ void UInputAbility::DoAbility() {
   Ability_->DoAbility();
 }
 
+void UInputComboAbility::EndAbility() { Ability_->EndAbility(); }
+
 // NOTE:より効率よいプログラムがあれば考える
-float UInputAbility::CalcuateMoveRadians(AMyCharacter *character,
-                                         FVector2D input) {
+float UInputComboAbility::CalcuateMoveRadians(AMyCharacter *character,
+                                              FVector2D input) {
   // Calculate the move direction
   // Get the forward vector of the character
   FVector actorForward = character->GetActorForwardVector();
