@@ -16,10 +16,16 @@ public:
   ~AMyCharacter();
 
 private:
-  // Ability Function
-  void Attack();
-  void Skill1();
 
+  void Skill1();
+  void Skill2();
+  void Skill3();
+  void Skill4();
+  void Skill5();
+  void Skill6();
+  void Skill7();
+  void Skill8();
+  void NormalAttack();
 protected:
   virtual void
   SetupPlayerInputComponent(UInputComponent *PlayerInputComponent) override;
@@ -39,5 +45,5 @@ private:
   UInputAction *normalAttackAction_;
 
   UPROPERTY(EditAnywhere, Category = Input, meta = (AllowPrivat = "true"))
-  UInputAction *skill1Action_;
+  TArray<UInputAction *> skillActions_;
 };
