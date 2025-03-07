@@ -23,6 +23,18 @@ void UAbilityManager::BeginPlay() {
   }
 }
 
+void UAbilityManager::TickComponent(
+    float DeltaTime, ELevelTick TickType,
+    FActorComponentTickFunction *ThisTickFunction) {
+  Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
+  if (currentAbilityIndex_ != -1) {
+    UAbility *ability = abilityInstances_[currentAbilityIndex_];
+    if (ability != nullptr) {
+      ability->Tick(DeltaTime, TickType, ThisTickFunction);
+    }
+  }
+}
+
 void UAbilityManager::EndPlay(const EEndPlayReason::Type EndPlayReason) {
   Super::EndPlay(EndPlayReason);
   // delete array of ability instances
@@ -42,6 +54,8 @@ void UAbilityManager::SetAbility(int index, UAbility *ability) {
   }
 }
 
+// WARN:原因不明だがフラグが治らなくなるバグがたまに発生している
+// OnMontageEndedのフラグの設定後にバグが発生するようになった
 void UAbilityManager::Execute(int index) {
   // Check can do ability
   if (!canInput_) {
@@ -81,13 +95,13 @@ void UAbilityManager::ExecuteNext() {
   Execute(nextAbilityIndex_);
 }
 
-void UAbilityManager::CanInput() { 
-  UE_LOG(LogTemp,Warning,TEXT("CanInput"))
-  canInput_ = true; 
+void UAbilityManager::CanInput() {
+  UE_LOG(LogTemp, Warning, TEXT("CanInput"))
+  canInput_ = true;
 }
 
 void UAbilityManager::CanNextAbility() {
-  UE_LOG(LogTemp,Warning,TEXT("CanNextAbility"))
+  UE_LOG(LogTemp, Warning, TEXT("CanNextAbility"))
   canNextAbility_ = true;
   if (nextAbilityIndex_ != -1)
     ExecuteNext();

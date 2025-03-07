@@ -6,6 +6,7 @@
 
 class UAbilityManager;
 // TODO:たくさんアビリティを作って，ゲームの雰囲気をつかむ
+// 空中アビリティを作成する
 
 UCLASS(Blueprintable)
 class UAbility : public UObject {
@@ -17,6 +18,7 @@ public:
   // NOTE: call by Ability Manager when set ability
   void SetOwner(UAbilityManager *owner);
   virtual void BeginPlay();
+  virtual void Tick(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction);
   virtual void EndPlay(const EEndPlayReason::Type EndPlayReason);
 
   // NOTE :Don't call directly

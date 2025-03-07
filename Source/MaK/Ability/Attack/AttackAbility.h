@@ -4,7 +4,6 @@
 
 #include "AttackAbility.generated.h"
 
-class AAttackCollision;
 struct FDamageStruct;
 
 UCLASS(Blueprintable)
@@ -22,7 +21,4 @@ private:
 public:
   UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ability|Attack")
   FDamageStruct damage_;
-
-  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ability|Attack")
-  FName collisionSocketName_;
 };

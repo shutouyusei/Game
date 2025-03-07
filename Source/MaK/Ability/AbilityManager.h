@@ -32,6 +32,9 @@ public:
 
 private:
   virtual void BeginPlay() override;
+  virtual void
+  TickComponent(float DeltaTime, ELevelTick TickType,
+                FActorComponentTickFunction *ThisTickFunction) override;
   void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
   void ExecuteNext();
 

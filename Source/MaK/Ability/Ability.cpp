@@ -5,6 +5,9 @@ UAbility::UAbility() : owner_(nullptr) {}
 
 void UAbility::BeginPlay() {}
 
+void UAbility::Tick(float DeltaTime, ELevelTick TickType,
+                    FActorComponentTickFunction *ThisTickFunction) {}
+
 void UAbility::EndPlay(const EEndPlayReason::Type EndPlayReason) {
   owner_ = nullptr;
 }

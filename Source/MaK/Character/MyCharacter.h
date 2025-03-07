@@ -16,7 +16,6 @@ public:
   ~AMyCharacter();
 
 private:
-
   void Skill1();
   void Skill2();
   void Skill3();
@@ -26,6 +25,7 @@ private:
   void Skill7();
   void Skill8();
   void NormalAttack();
+
 protected:
   virtual void
   SetupPlayerInputComponent(UInputComponent *PlayerInputComponent) override;
