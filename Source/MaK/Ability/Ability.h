@@ -18,7 +18,8 @@ public:
   // NOTE: call by Ability Manager when set ability
   void SetOwner(UAbilityManager *owner);
   virtual void BeginPlay();
-  virtual void Tick(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction);
+  virtual void Tick(float DeltaTime, ELevelTick TickType,
+                    FActorComponentTickFunction *ThisTickFunction);
   virtual void EndPlay(const EEndPlayReason::Type EndPlayReason);
 
   // NOTE :Don't call directly
