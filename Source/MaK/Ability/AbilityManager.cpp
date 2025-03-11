@@ -1,12 +1,16 @@
 #include "AbilityManager.h"
 
-UAbilityManager::UAbilityManager() {}
+UAbilityManager::UAbilityManager() {
+  PrimaryComponentTick.bCanEverTick = true;
+  SetComponentTickEnabled(true);
+}
 
 UAbilityManager::~UAbilityManager() {}
 
 void UAbilityManager::SetupAbilityManager(AAttackCollision *attackCollision) {
   attackCollision_ = attackCollision;
 }
+
 void UAbilityManager::BeginPlay() {
   Super::BeginPlay();
   // make abilities
@@ -23,15 +27,14 @@ void UAbilityManager::BeginPlay() {
   }
 }
 
-void UAbilityManager::TickComponent(
-    float DeltaTime, ELevelTick TickType,
-    FActorComponentTickFunction *ThisTickFunction) {
+void UAbilityManager::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction) {
   Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-  if (currentAbilityIndex_ != -1) {
-    UAbility *ability = abilityInstances_[currentAbilityIndex_];
-    if (ability != nullptr) {
-      ability->Tick(DeltaTime, TickType, ThisTickFunction);
-    }
+  //currentAbilityIndex_ の値
+  //FIXME:なぜかわからんが変数が変更されてない
+  volatile int current = currentAbilityIndex_;
+  UE_LOG(LogTemp, Warning, TEXT("currentAbilityIndex_ : %d"), current);
+  if(current != -1) {
+    abilityInstances_[current]->Tick(DeltaTime, TickType, ThisTickFunction);
   }
 }
 
@@ -69,7 +72,6 @@ void UAbilityManager::Execute(int index) {
     return;
   }
   // Execute ability
-  // NOTE:UPROPERTYが原因かも後で検証
   if (index < abilityInstances_.Num() && index >= 0) {
     UE_LOG(LogTemp, Warning, TEXT("ability"));
     canInput_ = false;
@@ -90,18 +92,15 @@ void UAbilityManager::End() {
 }
 
 void UAbilityManager::ExecuteNext() {
-  UE_LOG(LogTemp, Warning, TEXT("ExecuteNext"));
   abilityInstances_[currentAbilityIndex_]->EndAbility();
   Execute(nextAbilityIndex_);
 }
 
 void UAbilityManager::CanInput() {
-  UE_LOG(LogTemp, Warning, TEXT("CanInput"))
   canInput_ = true;
 }
 
 void UAbilityManager::CanNextAbility() {
-  UE_LOG(LogTemp, Warning, TEXT("CanNextAbility"))
   canNextAbility_ = true;
   if (nextAbilityIndex_ != -1)
     ExecuteNext();

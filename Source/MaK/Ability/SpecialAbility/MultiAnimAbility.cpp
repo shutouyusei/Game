@@ -14,10 +14,10 @@ UMultiAnimAbility::UMultiAnimAbility() : UAbility() {}
 UMultiAnimAbility::~UMultiAnimAbility() {}
 // TODO:攻撃アビリティに適応しないといけない
 
-void UMultiAnimAbility::Tick(float DeltaTime, ELevelTick TickType,
-                             FActorComponentTickFunction *ThisTickFunction) {
+void UMultiAnimAbility::Tick(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction) {
   // Endする条件を記述
-  if (PlayEndAbility() && !isEnd_) {
+  UE_LOG(LogTemp, Warning, TEXT("UMultiAnimAbility::Tick"))
+  if (!isEnd_) {
     isEnd_ = true;
     UAnimInstance *animInstance = GetAnimInstance();
     animInstance->Montage_Play(endMontage_);
@@ -36,20 +36,17 @@ void UMultiAnimAbility::DoAbility() {
   animInstance->Montage_SetEndDelegate(del, startMontage_);
 }
 
-void UMultiAnimAbility::OnStartMontageEnded(UAnimMontage *montage,
-                                            bool interrupted) {
+void UMultiAnimAbility::OnStartMontageEnded(UAnimMontage *montage, bool interrupted) {
   if (!interrupted) {
     UAnimInstance *animInstance = GetAnimInstance();
     animInstance->Montage_Play(loopMontage_);
   }
 }
 
-void UMultiAnimAbility::OnEndMontageEnded(UAnimMontage *montage,
-                                          bool interrupted) {
+void UMultiAnimAbility::OnEndMontageEnded(UAnimMontage *montage, bool interrupted) {
+  UE_LOG(LogTemp, Warning, TEXT("OnEndMontageEnded"))
   isEnd_ = false;
-  if (!interrupted) {
-    EndAbility();
-  }
+  EndAbility();
 }
 
 UAnimInstance *UMultiAnimAbility::GetAnimInstance() {

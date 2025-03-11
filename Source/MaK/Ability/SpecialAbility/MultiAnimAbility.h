@@ -6,7 +6,6 @@
 class UAnimInstance;
 class UAnimMontage;
 
-
 UCLASS()
 class UMultiAnimAbility : public UAbility {
   GENERATED_BODY()
@@ -17,9 +16,9 @@ public:
   //
   UFUNCTION(BlueprintImplementableEvent, Category = "Ability")
   bool PlayEndAbility();
+
 protected:
-  virtual void Tick(float DeltaTime, ELevelTick TickType,
-                    FActorComponentTickFunction *ThisTickFunction) override;
+  virtual void Tick(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction) override;
   void PlayMontage(UAnimMontage *montage);
 
 private:
@@ -34,8 +33,8 @@ public:
   UAnimMontage *endMontage_;
   UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ability")
   UAnimMontage *loopMontage_;
+
 private:
   UPROPERTY()
   bool isEnd_ = false;
-
 };
