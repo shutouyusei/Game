@@ -23,9 +23,8 @@ UserBelongings *FImportantBelongingsFactory::CreateBelongings() {
   return new ItemBelongings(belongings);
 };
 
-UserBelongings* MaterialBelongingsFactory::CreateBelongings() {
+UserBelongings *MaterialBelongingsFactory::CreateBelongings() {
   TArray<BelongingAmount> belongings = {BelongingAmount(1, 1),
                                         BelongingAmount(2, 2)};
   return new ItemBelongings(belongings);
 };
-

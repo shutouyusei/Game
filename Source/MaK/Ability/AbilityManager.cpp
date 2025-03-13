@@ -2,6 +2,7 @@
 
 UAbilityManager::UAbilityManager() {
   PrimaryComponentTick.bCanEverTick = true;
+  bAutoActivate = true;
   SetComponentTickEnabled(true);
 }
 
@@ -27,17 +28,6 @@ void UAbilityManager::BeginPlay() {
   }
 }
 
-void UAbilityManager::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction) {
-  Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-  //currentAbilityIndex_ の値
-  //FIXME:なぜかわからんが変数が変更されてない
-  volatile int current = currentAbilityIndex_;
-  UE_LOG(LogTemp, Warning, TEXT("currentAbilityIndex_ : %d"), current);
-  if(current != -1) {
-    abilityInstances_[current]->Tick(DeltaTime, TickType, ThisTickFunction);
-  }
-}
-
 void UAbilityManager::EndPlay(const EEndPlayReason::Type EndPlayReason) {
   Super::EndPlay(EndPlayReason);
   // delete array of ability instances
@@ -46,6 +36,14 @@ void UAbilityManager::EndPlay(const EEndPlayReason::Type EndPlayReason) {
     ability->EndPlay(EndPlayReason);
   }
   abilityInstances_.Empty();
+}
+
+void UAbilityManager::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction) {
+  Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
+  // currentAbilityIndex_ の値
+  if (currentAbilityIndex_ != -1) {
+    abilityInstances_[currentAbilityIndex_]->Tick(DeltaTime, TickType, ThisTickFunction);
+  }
 }
 
 void UAbilityManager::SetAbility(int index, UAbility *ability) {
