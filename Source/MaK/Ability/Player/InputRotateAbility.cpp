@@ -1,11 +1,12 @@
 #include "InputRotateAbility.h"
+#include "../AbilityManager.h"
 #include "Math/UnrealMathUtility.h"
 #include "MyCharacter.h"
 
 void UInputRotateAbility::BeginPlay() {
   // Create the ability
   Ability_ = NewObject<UAbility>(this, InputAbility_);
-  Ability_->SetOwner(owner_);
+  Ability_->SetOwner(manager_);
   Ability_->BeginPlay();
 }
 
@@ -16,7 +17,7 @@ void UInputRotateAbility::EndPlay(const EEndPlayReason::Type EndPlayReason) {
 
 void UInputRotateAbility::DoAbility() {
   // Input情報から向きを決める
-  AMyCharacter *character = Cast<AMyCharacter>(owner_->GetOwner());
+  AMyCharacter *character = Cast<AMyCharacter>(manager_->GetOwner());
   if (character == nullptr)
     return;
   // Set the angle

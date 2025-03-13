@@ -1,25 +1,22 @@
 #pragma once
-#include "Ability.h"
+#include "../Ability.h"
 
-#include "MultiAnimAbility.generated.h"
+#include "JumpAbility.generated.h"
 
 class UAnimInstance;
 class UAnimMontage;
+class ACharacter;
 
 UCLASS()
-class UMultiAnimAbility : public UAbility {
+class UJumpAbility : public UAbility {
   GENERATED_BODY()
 public:
-  UMultiAnimAbility();
-  virtual ~UMultiAnimAbility();
+  UJumpAbility();
+  virtual ~UJumpAbility();
   virtual void DoAbility() override;
-  //
-  UFUNCTION(BlueprintImplementableEvent, Category = "Ability")
-  bool PlayEndAbility();
 
-protected:
+  virtual void BeginPlay() override;
   virtual void Tick(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction) override;
-  void PlayMontage(UAnimMontage *montage);
 
 private:
   UAnimInstance *GetAnimInstance();
@@ -37,4 +34,6 @@ public:
 private:
   UPROPERTY()
   bool isEnd_ = false;
+  UPROPERTY()
+  TObjectPtr<ACharacter> character_;
 };

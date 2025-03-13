@@ -9,7 +9,6 @@ class AMyCharacter : public AMaKCharacter {
 public:
   AMyCharacter();
   ~AMyCharacter();
-
 protected:
   virtual void BeginPlay() override;
   virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;

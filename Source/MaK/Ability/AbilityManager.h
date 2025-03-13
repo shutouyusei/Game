@@ -1,5 +1,6 @@
 #pragma once
 #include "Ability.h"
+#include "GameFramework/CharacterMovementComponent.h"
 #include "Attack/AttackCollision.h"
 #include "Components/ActorComponent.h"
 #include "CoreMinimal.h"

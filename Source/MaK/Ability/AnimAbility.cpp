@@ -40,6 +40,6 @@ void UAnimAbility::OnMontageEnded(UAnimMontage *montage, bool interrupted) {
 }
 
 UAnimInstance *UAnimAbility::GetAnimInstance() {
-  ACharacter *character = Cast<ACharacter>(owner_->GetOwner());
+  ACharacter *character = Cast<ACharacter>(manager_->GetOwner());
   return character->GetMesh()->GetAnimInstance();
 }

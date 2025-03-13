@@ -1,19 +1,17 @@
 #include "Ability.h"
 #include "AbilityManager.h"
 
-UAbility::UAbility() : owner_(nullptr) {}
+UAbility::UAbility() : manager_(nullptr) {}
 
 void UAbility::BeginPlay() {}
 
-void UAbility::Tick(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction) {
-  UE_LOG(LogTemp, Warning, TEXT("Tick in Base"));
-}
+void UAbility::Tick(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction) {}
 
 void UAbility::EndPlay(const EEndPlayReason::Type EndPlayReason) {
-  owner_ = nullptr;
+  manager_ = nullptr;
 }
 
-void UAbility::SetOwner(UAbilityManager *owner) { owner_ = owner; }
+void UAbility::SetOwner(UAbilityManager *owner) { manager_ = owner; }
 
 void UAbility::DoAbility() {
   UE_LOG(LogTemp, Warning, TEXT("DoAbility in Base"));
@@ -21,7 +19,7 @@ void UAbility::DoAbility() {
 }
 
 void UAbility::EndAbility() {
-  if (owner_) {
-    owner_->End();
+  if (manager_) {
+    manager_->End();
   }
 }
