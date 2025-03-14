@@ -16,7 +16,7 @@ public:
   virtual ~UAbility() = default;
 
   // NOTE: call by Ability Manager when set ability
-  void SetOwner(UAbilityManager *owner);
+  void SetManager(UAbilityManager *owner);
 
 public:
   virtual void BeginPlay();

@@ -1,5 +1,6 @@
 #pragma once
 #include "../Ability.h"
+#include "../Attack/AttackAbility.h"
 
 #include "JumpAbility.generated.h"
 
@@ -16,6 +17,7 @@ public:
   virtual void DoAbility() override;
 
   virtual void BeginPlay() override;
+  virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
   virtual void Tick(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction) override;
 
 private:
@@ -25,13 +27,15 @@ private:
 
 public:
   UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ability")
-  UAnimMontage *startMontage_;
+  TObjectPtr<UAnimMontage> StartMontage_;
   UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ability")
-  UAnimMontage *endMontage_;
+  TObjectPtr<UAnimMontage> LoopMontage_;
   UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ability")
-  UAnimMontage *loopMontage_;
+  TSubclassOf<UAbility> AttackAbilityClass_;
 
 private:
+  UPROPERTY()
+  TWeakObjectPtr<UAbility> AttackAbility_;
   UPROPERTY()
   bool isEnd_ = false;
   UPROPERTY()

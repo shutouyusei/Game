@@ -3,7 +3,7 @@
 void UComboAbility::BeginPlay() {
   for (TSubclassOf<UAbility> &abilityClass : comboAbilities_) {
     UAbility *ability = NewObject<UAbility>(this, abilityClass);
-    ability->SetOwner(manager_);
+    ability->SetManager(manager_);
     ability->BeginPlay();
     abilityInstances_.Add(ability);
   }

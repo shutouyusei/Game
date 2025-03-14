@@ -6,7 +6,7 @@
 void UInputRotateAbility::BeginPlay() {
   // Create the ability
   Ability_ = NewObject<UAbility>(this, InputAbility_);
-  Ability_->SetOwner(manager_);
+  Ability_->SetManager(manager_);
   Ability_->BeginPlay();
 }
 

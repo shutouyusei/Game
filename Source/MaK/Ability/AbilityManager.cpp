@@ -22,7 +22,7 @@ void UAbilityManager::BeginPlay() {
     } else {
       ability = NewObject<UAbility>(this, UAbility::StaticClass());
     }
-    ability->SetOwner(this);
+    ability->SetManager(this);
     ability->BeginPlay();
     abilityInstances_.Add(ability);
   }

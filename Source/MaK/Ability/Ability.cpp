@@ -11,7 +11,7 @@ void UAbility::EndPlay(const EEndPlayReason::Type EndPlayReason) {
   manager_ = nullptr;
 }
 
-void UAbility::SetOwner(UAbilityManager *owner) { manager_ = owner; }
+void UAbility::SetManager(UAbilityManager *owner) { manager_ = owner; }
 
 void UAbility::DoAbility() {
   UE_LOG(LogTemp, Warning, TEXT("DoAbility in Base"));
