@@ -11,12 +11,11 @@ UCLASS()
 class UAnimAbility : public UAbility {
   GENERATED_BODY()
 public:
-  UAnimAbility();
-  virtual ~UAnimAbility();
+  UAnimAbility() = default;
+  virtual ~UAnimAbility() = default;
 
 protected:
   void PlayMontage();
-  void StopMontage();
 
 private:
   UAnimInstance *GetAnimInstance();
@@ -24,5 +23,5 @@ private:
 
 public:
   UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ability")
-  UAnimMontage *animMontage_;
+  UAnimMontage *anim_montage_;
 };

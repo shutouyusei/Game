@@ -2,33 +2,28 @@
 #include "../AbilityManager.h"
 #include "AttackCollision.h"
 
-void UAttackNotifyState::NotifyBegin(USkeletalMeshComponent *MeshComp,
-                                     UAnimSequenceBase *Animation,
-                                     float TotalDuration) {
+void UAttackNotifyState::NotifyBegin(USkeletalMeshComponent *MeshComp, UAnimSequenceBase *Animation, float TotalDuration) {
   // Get the owner of the mesh
   AActor *owner = MeshComp->GetOwner();
   if (owner == nullptr)
     return;
   // Get Ability Manager
-  UAbilityManager *abilityManager =
-      owner->FindComponentByClass<UAbilityManager>();
-  if (abilityManager == nullptr)
+  UAbilityManager *manager = owner->FindComponentByClass<UAbilityManager>();
+  if (manager == nullptr)
     return;
   // set attack collision to be able to deal damage
-  abilityManager->attackCollision_->SetActorEnableCollision(true);
+  manager->attack_collision_->SetActorEnableCollision(true);
 }
 
-void UAttackNotifyState::NotifyEnd(USkeletalMeshComponent *MeshComp,
-                                   UAnimSequenceBase *Animation) {
+void UAttackNotifyState::NotifyEnd(USkeletalMeshComponent *MeshComp, UAnimSequenceBase *Animation) {
   // Get the owner of the mesh
   AActor *owner = MeshComp->GetOwner();
   if (owner == nullptr)
     return;
   // Get Ability Manager
-  UAbilityManager *abilityManager =
-      owner->FindComponentByClass<UAbilityManager>();
-  if (abilityManager == nullptr)
+  UAbilityManager *manager = owner->FindComponentByClass<UAbilityManager>();
+  if (manager == nullptr)
     return;
   // set attack collision to be unable to deal damage
-  abilityManager->attackCollision_->SetActorEnableCollision(false);
+  manager->attack_collision_->SetActorEnableCollision(false);
 }

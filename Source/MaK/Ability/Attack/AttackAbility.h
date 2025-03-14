@@ -17,6 +17,7 @@ public:
 
 private:
   void AttachAttackCollision();
+  void OnAttack(AActor *otherActor);
 
 public:
   UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ability|Attack")

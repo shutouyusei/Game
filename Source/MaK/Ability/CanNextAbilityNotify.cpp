@@ -11,11 +11,11 @@ void UCanNextAbilityNotify::Notify(USkeletalMeshComponent *MeshComp,
     return;
   }
   // Get Ability Manager
-  UAbilityManager *abilityManager =
-      owner->FindComponentByClass<UAbilityManager>();
-  if (abilityManager == nullptr) {
+  UAbilityManager *manager = owner->FindComponentByClass<UAbilityManager>();
+  if (manager == nullptr) {
     return;
   }
   // Set the ability manager to be able to input
-  abilityManager->CanNextAbility();
+  manager->SetAbilityFlag(EAbilityFlag::CanNextAbility);
+  manager->ExecuteNext();
 }

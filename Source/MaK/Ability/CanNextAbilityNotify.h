@@ -7,6 +7,5 @@ UCLASS()
 class UCanNextAbilityNotify : public UAnimNotify {
   GENERATED_BODY()
 protected:
-  void Notify(USkeletalMeshComponent *MeshComp,
-              UAnimSequenceBase *Animation) override;
+  void Notify(USkeletalMeshComponent *MeshComp, UAnimSequenceBase *Animation) override;
 };

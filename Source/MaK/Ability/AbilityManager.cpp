@@ -1,54 +1,54 @@
 #include "AbilityManager.h"
+#include "Ability.h"
 
 UAbilityManager::UAbilityManager() {
+  // Tickのための設定
   PrimaryComponentTick.bCanEverTick = true;
   bAutoActivate = true;
   SetComponentTickEnabled(true);
 }
 
-UAbilityManager::~UAbilityManager() {}
-
-void UAbilityManager::SetupAbilityManager(AAttackCollision *attackCollision) {
-  attackCollision_ = attackCollision;
+void UAbilityManager::SetupAbilityManager(AAttackCollision *attack_collision) {
+  attack_collision_ = attack_collision;
 }
 
 void UAbilityManager::BeginPlay() {
   Super::BeginPlay();
   // make abilities
-  for (TSubclassOf<UAbility> &abilityClass : abilities_) {
+  for (TSubclassOf<UAbility> &ability_class : ability_classes_) {
     UAbility *ability = nullptr;
-    if (abilityClass != nullptr) {
-      ability = NewObject<UAbility>(this, abilityClass);
+    if (ability_class != nullptr) {
+      ability = NewObject<UAbility>(this, ability_class);
     } else {
       ability = NewObject<UAbility>(this, UAbility::StaticClass());
     }
     ability->SetManager(this);
     ability->BeginPlay();
-    abilityInstances_.Add(ability);
+    ability_instances_.Add(ability);
   }
 }
 
 void UAbilityManager::EndPlay(const EEndPlayReason::Type EndPlayReason) {
   Super::EndPlay(EndPlayReason);
   // delete array of ability instances
-  for (UAbility *ability : abilityInstances_) {
+  for (UAbility *ability : ability_instances_) {
     // delete ability ability instance
     ability->EndPlay(EndPlayReason);
   }
-  abilityInstances_.Empty();
+  ability_instances_.Empty();
 }
 
 void UAbilityManager::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction) {
   Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-  // currentAbilityIndex_ の値
-  if (currentAbilityIndex_ != -1) {
-    abilityInstances_[currentAbilityIndex_]->Tick(DeltaTime, TickType, ThisTickFunction);
+  // current_ability_index_ の値
+  if (current_ability_index_ != -1) {
+    ability_instances_[current_ability_index_]->Tick(DeltaTime, TickType, ThisTickFunction);
   }
 }
 
 void UAbilityManager::SetAbility(int index, UAbility *ability) {
-  if (index < abilityInstances_.Num()) {
-    abilityInstances_[index] = ability;
+  if (index < ability_instances_.Num()) {
+    ability_instances_[index] = ability;
   } else {
     UE_LOG(LogTemp, Error,
            TEXT("UAbilityManager::SetAbility: Index out of range"));
@@ -58,48 +58,52 @@ void UAbilityManager::SetAbility(int index, UAbility *ability) {
 // WARN:原因不明だがフラグが治らなくなるバグがたまに発生している
 // OnMontageEndedのフラグの設定後にバグが発生するようになった
 void UAbilityManager::Execute(int index) {
-  // Check can do ability
-  if (!canInput_) {
-    UE_LOG(LogTemp, Warning, TEXT("cant input"));
-    return;
-  }
-  // Check can next ability
-  if (!canNextAbility_) {
-    UE_LOG(LogTemp, Warning, TEXT("can next ability"));
-    nextAbilityIndex_ = index;
-    return;
-  }
-  // Execute ability
-  if (index < abilityInstances_.Num() && index >= 0) {
+  switch (ability_flag_) {
+  case EAbilityFlag::None: {
+    ability_flag_ = EAbilityFlag::Playing;
+    ExecuteAbility(index);
     UE_LOG(LogTemp, Warning, TEXT("ability"));
-    canInput_ = false;
-    canNextAbility_ = false;
-    currentAbilityIndex_ = index;
-    nextAbilityIndex_ = -1;
-    abilityInstances_[currentAbilityIndex_]->DoAbility();
+    break;
+  }
+  case EAbilityFlag::CanNextAbility: {
+    ability_flag_ = EAbilityFlag::Playing;
+    ExecuteAbility(index);
+    UE_LOG(LogTemp, Warning, TEXT("can next ability"));
+    break;
+  }
+  case EAbilityFlag::CanInput: {
+    next_ability_index_ = index;
+    UE_LOG(LogTemp, Warning, TEXT("can input"));
+    break;
+  }
+  case EAbilityFlag::Playing: {
+    break;
+  }
+  }
+}
+// Execute ability
+void UAbilityManager::ExecuteAbility(int index) {
+  if (0 <= index && index < ability_instances_.Num()) {
+    current_ability_index_ = index;
+    ability_instances_[current_ability_index_]->DoAbility();
   } else {
-    UE_LOG(LogTemp, Error,
-           TEXT("UAbilityManager::ExecuteAbility: Index out of range"));
+    UE_LOG(LogTemp, Error, TEXT("UAbilityManager::ExecuteAbility: Index out of range"));
   }
 }
 
-void UAbilityManager::End() {
-  canInput_ = true;
-  canNextAbility_ = true;
-  currentAbilityIndex_ = -1;
+void UAbilityManager::EndCurrentAbility() {
+  SetAbilityFlag(EAbilityFlag::None);
+  current_ability_index_ = -1;
 }
 
 void UAbilityManager::ExecuteNext() {
-  abilityInstances_[currentAbilityIndex_]->EndAbility();
-  Execute(nextAbilityIndex_);
+  if (next_ability_index_ != -1) {
+    ability_instances_[current_ability_index_]->EndAbility();
+    Execute(next_ability_index_);
+    next_ability_index_ = -1;
+  }
 }
 
-void UAbilityManager::CanInput() {
-  canInput_ = true;
-}
-
-void UAbilityManager::CanNextAbility() {
-  canNextAbility_ = true;
-  if (nextAbilityIndex_ != -1)
-    ExecuteNext();
+void UAbilityManager::SetAbilityFlag(EAbilityFlag flag) {
+  ability_flag_ = flag;
 }

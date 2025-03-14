@@ -5,6 +5,8 @@
 
 #include "AttackCollision.generated.h"
 
+DECLARE_DELEGATE_OneParam(FAbilityDelegate,AActor*);
+
 UCLASS()
 class AAttackCollision : public AActor {
   GENERATED_BODY()
@@ -12,18 +14,13 @@ public:
   AAttackCollision();
   ~AAttackCollision();
 
-  void SetAbility(std::function<void(AActor *)> AbilityDelegate);
   void DeleteAbility();
-
+public:
   UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Collision")
   UStaticMeshComponent *collisionMesh;
-
-protected:
-  virtual void NotifyActorBeginOverlap(AActor *otherActor) override;
+  //
+  FAbilityDelegate ability_delegate_;
 
 private:
-  // XXX:UPROPERTYに指定しないと勝手にGCに削除されるかも
-  // ただし使用期間が短いので対象にならない可能性もある
-  // TODO:UEのdelegateを使う
-  std::function<void(AActor *)> AbilityDelegate_;
+  void NotifyActorBeginOverlap(AActor *otherActor) override;
 };

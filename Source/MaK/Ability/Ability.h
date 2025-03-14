@@ -1,4 +1,5 @@
 #pragma once
+#include "AbilityManager.h"
 #include "CoreMinimal.h"
 #include "UObject/NoExportTypes.h"
 
@@ -12,23 +13,23 @@ UCLASS(Blueprintable)
 class UAbility : public UObject {
   GENERATED_BODY()
 public:
-  UAbility();
+  UAbility() = default;
   virtual ~UAbility() = default;
 
   // NOTE: call by Ability Manager when set ability
   void SetManager(UAbilityManager *owner);
 
 public:
-  virtual void BeginPlay();
-  virtual void Tick(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction);
+  virtual void BeginPlay() {};
+  virtual void Tick(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction) {};
   virtual void EndPlay(const EEndPlayReason::Type EndPlayReason);
 
-  // NOTE :Don't call directly
+  // Don't call directly
   // Call by Ability Manager
   virtual void DoAbility();
   virtual void EndAbility();
 
 protected:
   UPROPERTY()
-  UAbilityManager *manager_;
+  UAbilityManager *manager_ = nullptr;
 };

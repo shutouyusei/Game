@@ -1,61 +1,67 @@
 #pragma once
-#include "Ability.h"
-#include "GameFramework/CharacterMovementComponent.h"
 #include "Attack/AttackCollision.h"
 #include "Components/ActorComponent.h"
 #include "CoreMinimal.h"
+#include "GameFramework/CharacterMovementComponent.h"
 
 #include "AbilityManager.generated.h"
 
-// NOTE: プレイヤー専用のアビリティマネージャー
+UENUM(BlueprintType)
+enum class EAbilityFlag : uint8 {
+  None = 0,
+  CanNextAbility = 1,
+  CanInput = 2,
+  Playing = 3,
+};
+
+class UAbility;
+// プレイヤー専用のアビリティマネージャー
 // アビリティの入力制御
 UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
-class UAbilityManager : public UActorComponent {
+class UAbilityManager final : public UActorComponent {
   GENERATED_BODY()
 public:
   UAbilityManager();
-  ~UAbilityManager();
-
+  ~UAbilityManager() {};
+  // BP Begin Play
   UFUNCTION(BlueprintCallable, Category = "Ability")
-  void SetAbility(int index, UAbility *abilityClass);
+  void SetupAbilityManager(AAttackCollision *attack_collision);
 
+  // set and change ability
+  UFUNCTION(BlueprintCallable, Category = "Ability")
+  void SetAbility(int index, UAbility *ability);
+
+  // execute ability
   UFUNCTION(BlueprintCallable, Category = "Ability")
   void Execute(int index);
 
-  UFUNCTION(BlueprintCallable, Category = "Ability")
-  void SetupAbilityManager(AAttackCollision *attackCollision);
+  void EndCurrentAbility();
 
   // アビリティからの通知
-  void CanInput();
-  void CanNextAbility();
-
-  void End();
-
-protected:
-  virtual void BeginPlay() override;
-  virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction) override;
-  void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
+  void SetAbilityFlag(EAbilityFlag flag);
   void ExecuteNext();
 
 private:
+  void BeginPlay() override;
+  void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction) override;
+  void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
+  //
+  void ExecuteAbility(int index);
+
 public:
   UPROPERTY(EditAnywhere, Category = "Ability")
-  TArray<TSubclassOf<UAbility>> abilities_;
-
+  TArray<TSubclassOf<UAbility>> ability_classes_;
   UPROPERTY()
-  AAttackCollision *attackCollision_;
-
-protected:
-  UPROPERTY()
-  TArray<UAbility *> abilityInstances_;
+  AAttackCollision *attack_collision_;
 
 private:
   UPROPERTY()
-  bool canInput_ = true;
+  TArray<UAbility *> ability_instances_;
   UPROPERTY()
-  bool canNextAbility_ = true;
+  EAbilityFlag ability_flag_ = EAbilityFlag::None;
+  // - 1  = Null Ability
   UPROPERTY()
-  int8 currentAbilityIndex_ = -1;
+  int current_ability_index_ = -1;
   UPROPERTY()
-  int8 nextAbilityIndex_ = -1;
+  int next_ability_index_ = -1;
 };

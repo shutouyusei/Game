@@ -2,8 +2,7 @@
 #include "AbilityManager.h"
 #include "GameFramework/Actor.h"
 
-void UCanInputNotify::Notify(USkeletalMeshComponent *MeshComp,
-                             UAnimSequenceBase *Animation) {
+void UCanInputNotify::Notify(USkeletalMeshComponent *MeshComp, UAnimSequenceBase *Animation) {
   // Check if the notify is called
   // Get the owner of the mesh
   AActor *owner = MeshComp->GetOwner();
@@ -11,11 +10,10 @@ void UCanInputNotify::Notify(USkeletalMeshComponent *MeshComp,
     return;
   }
   // Get Ability Manager
-  UAbilityManager *abilityManager =
-      owner->FindComponentByClass<UAbilityManager>();
-  if (abilityManager == nullptr) {
+  UAbilityManager *manager = owner->FindComponentByClass<UAbilityManager>();
+  if (manager == nullptr) {
     return;
   }
   // Set the ability manager to be able to input
-  abilityManager->CanInput();
+  manager->SetAbilityFlag(EAbilityFlag::CanInput);
 }
