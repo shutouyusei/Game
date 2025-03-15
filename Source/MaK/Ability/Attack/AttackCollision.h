@@ -5,7 +5,7 @@
 
 #include "AttackCollision.generated.h"
 
-DECLARE_DELEGATE_OneParam(FAbilityDelegate,AActor*);
+DECLARE_DELEGATE_OneParam(FAbilityDelegate, AActor *);
 
 UCLASS()
 class AAttackCollision : public AActor {
@@ -15,12 +15,14 @@ public:
   ~AAttackCollision();
 
   void DeleteAbility();
-public:
-  UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Collision")
-  UStaticMeshComponent *collisionMesh;
-  //
-  FAbilityDelegate ability_delegate_;
 
 private:
   void NotifyActorBeginOverlap(AActor *otherActor) override;
+
+public:
+  FAbilityDelegate ability_delegate_;
+
+private:
+  UPROPERTY(VisibleAnywhere, Category = "Collision")
+  TObjectPtr<UStaticMeshComponent> collisionMesh;
 };

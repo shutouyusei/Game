@@ -1,5 +1,6 @@
 #include "AbilityManager.h"
 #include "Ability.h"
+#include "MyCharacter.h"
 
 UAbilityManager::UAbilityManager() {
   // Tickのための設定
@@ -22,8 +23,7 @@ void UAbilityManager::BeginPlay() {
     } else {
       ability = NewObject<UAbility>(this, UAbility::StaticClass());
     }
-    ability->SetManager(this);
-    ability->BeginPlay();
+    ability->BeginPlay(this);
     ability_instances_.Add(ability);
   }
 }
@@ -60,13 +60,13 @@ void UAbilityManager::SetAbility(int index, UAbility *ability) {
 void UAbilityManager::Execute(int index) {
   switch (ability_flag_) {
   case EAbilityFlag::None: {
-    ability_flag_ = EAbilityFlag::Playing;
+    SetAbilityFlag(EAbilityFlag::Playing);
     ExecuteAbility(index);
     UE_LOG(LogTemp, Warning, TEXT("ability"));
     break;
   }
   case EAbilityFlag::CanNextAbility: {
-    ability_flag_ = EAbilityFlag::Playing;
+    SetAbilityFlag(EAbilityFlag::Playing);
     ExecuteAbility(index);
     UE_LOG(LogTemp, Warning, TEXT("can next ability"));
     break;
@@ -106,4 +106,21 @@ void UAbilityManager::ExecuteNext() {
 
 void UAbilityManager::SetAbilityFlag(EAbilityFlag flag) {
   ability_flag_ = flag;
+  switch (ability_flag_) {
+  case EAbilityFlag::Playing: {
+    AMyCharacter *character = Cast<AMyCharacter>(GetOwner());
+    if (character != nullptr) {
+      character->SetCanJump(false);
+    }
+    break;
+  }
+  case EAbilityFlag::None: {
+    AMyCharacter *character = Cast<AMyCharacter>(GetOwner());
+    if (character != nullptr) {
+      character->SetCanJump(true);
+    }
+    break;
+  }
+  }
 }
+

@@ -4,13 +4,10 @@
 #include "Kismet/GameplayStatics.h"
 #include "StatusComponent.h"
 
-UAttackAbility::UAttackAbility() {
-}
-
 void UAttackAbility::DoAbility() {
   // Play the attack animation
   PlayMontage();
-  manager_->attack_collision_->ability_delegate_.BindUObject(this,&UAttackAbility::OnAttack);
+  manager_->attack_collision_->ability_delegate_.BindUObject(this, &UAttackAbility::OnAttack);
 }
 
 void UAttackAbility::EndAbility() {

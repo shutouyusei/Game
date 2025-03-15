@@ -1,51 +1,48 @@
 #include "JumpAbility.h"
-#include "AbilityManager.h"
 #include "Animation/AnimInstance.h"
 #include "Animation/AnimMontage.h"
-#include "CoreMinimal.h"
 #include "Gameframework/Character.h"
+#include "Gameframework/CharacterMovementComponent.h"
 
-UJumpAbility::UJumpAbility() : UAbility() {}
-
-UJumpAbility::~UJumpAbility() {}
-// TODO:攻撃アビリティに適応しないといけない
-
-void UJumpAbility::BeginPlay() {
+void UJumpAbility::BeginPlay(TObjectPtr<UAbilityManager> manager) {
+  Super::BeginPlay(manager);
   character_ = Cast<ACharacter>(manager_->GetOwner());
-  AttackAbility_ = NewObject<UAbility>(this, AttackAbilityClass_);
-  AttackAbility_->SetManager(manager_);
-  AttackAbility_->BeginPlay();
+  if (attack_ability_class == nullptr) {
+    UE_LOG(LogTemp, Error, TEXT("UJumpAbility::BeginPlay: attack_ability_class is nullptr"));
+    return;
+  }
+  attack_ability_ = NewObject<UAbility>(this, attack_ability_class);
+  attack_ability_->BeginPlay(manager);
 }
 
 void UJumpAbility::EndPlay(const EEndPlayReason::Type EndPlayReason) {
-  AttackAbility_->EndPlay(EndPlayReason);
-  AttackAbility_->ConditionalBeginDestroy();
+  attack_ability_->EndPlay(EndPlayReason);
+  attack_ability_->ConditionalBeginDestroy();
 }
 
 void UJumpAbility::Tick(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction) {
   // Endする条件を記述
-  bool isFalling = character_->GetCharacterMovement()->IsFalling();
-  if (!isFalling && !isEnd_) {
-    isEnd_ = true;
-    AttackAbility_->DoAbility();
+  bool is_falling = character_->GetCharacterMovement()->IsFalling();
+  if (!is_falling && !is_end_) {
+    is_end_ = true;
+    attack_ability_->DoAbility();
   }
 }
 
 void UJumpAbility::DoAbility() {
-  isEnd_ = false;
+  is_end_ = false;
   UAnimInstance *animInstance = GetAnimInstance();
   // モンタージュを再生
-  animInstance->Montage_Play(StartMontage_);
+  animInstance->Montage_Play(start_montage_);
   FOnMontageEnded del;
   del.BindUObject(this, &UJumpAbility::OnStartMontageEnded);
-  animInstance->Montage_SetEndDelegate(del, StartMontage_);
+  animInstance->Montage_SetEndDelegate(del, start_montage_);
 }
 
 void UJumpAbility::OnStartMontageEnded(UAnimMontage *montage, bool interrupted) {
   if (!interrupted) {
-    UE_LOG(LogTemp, Warning, TEXT("OnStartMontageEnded"))
     UAnimInstance *animInstance = GetAnimInstance();
-    animInstance->Montage_Play(LoopMontage_);
+    animInstance->Montage_Play(loop_montage_);
   }
 }
 

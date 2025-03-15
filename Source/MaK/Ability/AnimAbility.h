@@ -1,19 +1,13 @@
 #pragma once
 #include "Ability.h"
+#include "Animation/AnimInstance.h"
+#include "Animation/AnimMontage.h"
 
 #include "AnimAbility.generated.h"
-
-class UAnimInstance;
-class UAnimMontage;
-// NOTE: アビリティとモンタージュは1:1の関係になる
 
 UCLASS()
 class UAnimAbility : public UAbility {
   GENERATED_BODY()
-public:
-  UAnimAbility() = default;
-  virtual ~UAnimAbility() = default;
-
 protected:
   void PlayMontage();
 
@@ -23,5 +17,5 @@ private:
 
 public:
   UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ability")
-  UAnimMontage *anim_montage_;
+  TObjectPtr<UAnimMontage> anim_montage_;
 };

@@ -1,5 +1,4 @@
 #pragma once
-
 #include "../Ability.h"
 
 #include "ComboAbility.generated.h"
@@ -9,15 +8,14 @@ class UComboAbility : public UAbility {
   GENERATED_BODY()
 
 public:
-  UPROPERTY(EditAnywhere, Category = "Ability")
-  TArray<TSubclassOf<UAbility>> comboAbilities_;
-  virtual void DoAbility() override;
-  virtual void BeginPlay() override;
-  virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
+  void BeginPlay(TObjectPtr<UAbilityManager> manager) override;
+  void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
+  void DoAbility() override;
 
-protected:
 private:
+  UPROPERTY(EditAnywhere, Category = "Ability")
+  TArray<TSubclassOf<UAbility>> combo_abilities_;
   UPROPERTY()
-  TArray<UAbility *> abilityInstances_;
-  int currentAbilityIndex_ = 0;
+  TArray<TObjectPtr<UAbility>> ability_instances_;
+  int combo_index_ = 0;
 };

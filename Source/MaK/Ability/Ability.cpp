@@ -1,10 +1,12 @@
 #include "Ability.h"
 
+void UAbility::BeginPlay(TObjectPtr<UAbilityManager> manager) {
+  manager_ = manager;
+}
+
 void UAbility::EndPlay(const EEndPlayReason::Type EndPlayReason) {
   manager_ = nullptr;
 }
-
-void UAbility::SetManager(UAbilityManager *owner) { manager_ = owner; }
 
 void UAbility::DoAbility() {
   EndAbility();

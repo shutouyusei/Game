@@ -26,6 +26,7 @@ public:
 protected:
   UPROPERTY()
   UEnhancedInputComponent *EnhancedInputComponent;
+
 private:
   /** Camera boom positioning the camera behind the character */
   UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera,
@@ -60,11 +61,13 @@ private:
 public:
   AMaKCharacter();
   ~AMaKCharacter();
+  void SetCanJump(bool enable);
 
 protected:
   virtual void BeginPlay() override;
   /** Called for movement input */
   void Move(const FInputActionValue &Value);
+  void MyJump();
 
   /** Called for looking input */
   void Look(const FInputActionValue &Value);
@@ -84,4 +87,8 @@ public:
   FORCEINLINE class UCameraComponent *GetFollowCamera() const {
     return FollowCamera;
   }
+
+private:
+  UPROPERTY()
+  bool can_jump_ = true;
 };

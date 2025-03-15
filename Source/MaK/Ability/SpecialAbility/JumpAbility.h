@@ -1,6 +1,5 @@
 #pragma once
 #include "../Ability.h"
-#include "../Attack/AttackAbility.h"
 
 #include "JumpAbility.generated.h"
 
@@ -12,32 +11,28 @@ UCLASS()
 class UJumpAbility : public UAbility {
   GENERATED_BODY()
 public:
-  UJumpAbility();
-  virtual ~UJumpAbility();
-  virtual void DoAbility() override;
-
-  virtual void BeginPlay() override;
-  virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
-  virtual void Tick(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction) override;
+  void BeginPlay(TObjectPtr<UAbilityManager> manager) override;
+  void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
+  void Tick(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction) override;
+  //
+  void DoAbility() override;
 
 private:
-  UAnimInstance *GetAnimInstance();
+  inline UAnimInstance *GetAnimInstance();
   void OnStartMontageEnded(UAnimMontage *montage, bool interrupted);
-  void OnEndMontageEnded(UAnimMontage *montage, bool interrupted);
-
-public:
-  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ability")
-  TObjectPtr<UAnimMontage> StartMontage_;
-  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ability")
-  TObjectPtr<UAnimMontage> LoopMontage_;
-  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ability")
-  TSubclassOf<UAbility> AttackAbilityClass_;
 
 private:
+  UPROPERTY(EditAnywhere, Category = "Ability")
+  TObjectPtr<UAnimMontage> start_montage_;
+  UPROPERTY(EditAnywhere, Category = "Ability")
+  TObjectPtr<UAnimMontage> loop_montage_;
+  UPROPERTY(EditAnywhere, Category = "Ability")
+  TSubclassOf<UAbility> attack_ability_class;
+  //
   UPROPERTY()
-  TWeakObjectPtr<UAbility> AttackAbility_;
+  TObjectPtr<UAbility> attack_ability_;
   UPROPERTY()
-  bool isEnd_ = false;
+  bool is_end_ = false;
   UPROPERTY()
   TObjectPtr<ACharacter> character_;
 };

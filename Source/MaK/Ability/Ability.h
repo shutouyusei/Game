@@ -13,14 +13,7 @@ UCLASS(Blueprintable)
 class UAbility : public UObject {
   GENERATED_BODY()
 public:
-  UAbility() = default;
-  virtual ~UAbility() = default;
-
-  // NOTE: call by Ability Manager when set ability
-  void SetManager(UAbilityManager *owner);
-
-public:
-  virtual void BeginPlay() {};
+  virtual void BeginPlay(TObjectPtr<UAbilityManager> owner);
   virtual void Tick(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction) {};
   virtual void EndPlay(const EEndPlayReason::Type EndPlayReason);
 
@@ -31,5 +24,5 @@ public:
 
 protected:
   UPROPERTY()
-  UAbilityManager *manager_ = nullptr;
+  TObjectPtr<UAbilityManager> manager_ = nullptr;
 };

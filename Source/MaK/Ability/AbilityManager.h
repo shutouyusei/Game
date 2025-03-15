@@ -2,7 +2,6 @@
 #include "Attack/AttackCollision.h"
 #include "Components/ActorComponent.h"
 #include "CoreMinimal.h"
-#include "GameFramework/CharacterMovementComponent.h"
 
 #include "AbilityManager.generated.h"
 
@@ -15,6 +14,7 @@ enum class EAbilityFlag : uint8 {
 };
 
 class UAbility;
+class AAttackCollision;
 // プレイヤー専用のアビリティマネージャー
 // アビリティの入力制御
 UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
@@ -52,11 +52,11 @@ public:
   UPROPERTY(EditAnywhere, Category = "Ability")
   TArray<TSubclassOf<UAbility>> ability_classes_;
   UPROPERTY()
-  AAttackCollision *attack_collision_;
+  TObjectPtr<AAttackCollision> attack_collision_;
 
 private:
   UPROPERTY()
-  TArray<UAbility *> ability_instances_;
+  TArray<TObjectPtr<UAbility>> ability_instances_;
   UPROPERTY()
   EAbilityFlag ability_flag_ = EAbilityFlag::None;
   // - 1  = Null Ability

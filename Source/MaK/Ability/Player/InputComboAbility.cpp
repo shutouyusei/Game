@@ -1,18 +1,22 @@
 #include "InputComboAbility.h"
-#include "../AbilityManager.h"
 #include "Math/UnrealMathUtility.h"
+#include "Math/Vector2D.h"
 #include "MyCharacter.h"
 
-void UInputComboAbility::BeginPlay() {
+void UInputComboAbility::BeginPlay(TObjectPtr<UAbilityManager> manager) {
+  Super::BeginPlay(manager);
   // Create the ability
-  Ability_ = NewObject<UAbility>(this, InputAbility_);
-  Ability_->SetManager(manager_);
-  Ability_->BeginPlay();
+  if (input_ability_ == nullptr) {
+    UE_LOG(LogTemp, Error, TEXT("UInputComboAbility::BeginPlay: input_ability_ is nullptr"));
+    return;
+  }
+  ability_ = NewObject<UAbility>(this, input_ability_);
+  ability_->BeginPlay(manager);
 }
 
 void UInputComboAbility::EndPlay(const EEndPlayReason::Type EndPlayReason) {
-  Ability_->EndPlay(EndPlayReason);
-  Ability_->ConditionalBeginDestroy();
+  ability_->EndPlay(EndPlayReason);
+  ability_->ConditionalBeginDestroy();
 }
 
 void UInputComboAbility::DoAbility() {
@@ -28,40 +32,36 @@ void UInputComboAbility::DoAbility() {
   }
 
   // DoAbility
-  Ability_->DoAbility();
+  ability_->DoAbility();
 }
 
-void UInputComboAbility::EndAbility() { Ability_->EndAbility(); }
+void UInputComboAbility::EndAbility() { ability_->EndAbility(); }
 
-// NOTE:より効率よいプログラムがあれば考える
-float UInputComboAbility::CalcuateMoveRadians(AMyCharacter *character,
-                                              FVector2D input) {
+// XXX:より効率よいプログラムがあれば考える
+float UInputComboAbility::CalcuateMoveRadians(AMyCharacter *character, FVector2D input) {
   // Calculate the move direction
   // Get the forward vector of the character
-  FVector actorForward = character->GetActorForwardVector();
+  FVector actor_forward = character->GetActorForwardVector();
   input = {-input.X, input.Y};
   // Get the camera forward vector
-  FVector2D cameraForward = character->GetCameraForwardVector();
+  FVector2D camera_forward = character->GetCameraForwardVector();
   // calculate
-  FVector2D moveDirection = input.GetRotated(
-      -FMath::RadiansToDegrees(FMath::Atan2(cameraForward.X, cameraForward.Y)));
+  FVector2D move_direction = input.GetRotated(-FMath::RadiansToDegrees(FMath::Atan2(camera_forward.X, camera_forward.Y)));
   // Check actor forward and move direction
-  float AngleRadians = FMath::Atan2(
-      actorForward.X * moveDirection.Y - actorForward.Y * moveDirection.X,
-      actorForward.X * moveDirection.X + actorForward.Y * moveDirection.Y);
+  float angle_radians = FMath::Atan2(
+      actor_forward.X * move_direction.Y - actor_forward.Y * move_direction.X,
+      actor_forward.X * move_direction.X + actor_forward.Y * move_direction.Y);
 
-  if (AngleRadians > FMath::DegreesToRadians(15.0f) ||
-      AngleRadians < FMath::DegreesToRadians(-180.0f)) {
-    float actorAngle =
-        FMath::RadiansToDegrees(FMath::Atan2(actorForward.Y, actorForward.X));
+  if (angle_radians > FMath::DegreesToRadians(15.0f) || angle_radians < FMath::DegreesToRadians(-180.0f)) {
+    float actorAngle = FMath::RadiansToDegrees(FMath::Atan2(actor_forward.Y, actor_forward.X));
     return 15.0f + actorAngle;
-  } else if (AngleRadians < FMath::DegreesToRadians(-15.0f) ||
-             AngleRadians > FMath::DegreesToRadians(180.0f)) {
-    float actorAngle =
-        FMath::RadiansToDegrees(FMath::Atan2(actorForward.Y, actorForward.X));
+    //
+  } else if (angle_radians < FMath::DegreesToRadians(-15.0f) || angle_radians > FMath::DegreesToRadians(180.0f)) {
+    float actorAngle = FMath::RadiansToDegrees(FMath::Atan2(actor_forward.Y, actor_forward.X));
     return -15.0f + actorAngle;
+    //
   } else {
-    return FMath::RadiansToDegrees(
-        FMath::Atan2(moveDirection.Y, moveDirection.X));
+    return FMath::RadiansToDegrees(FMath::Atan2(move_direction.Y, move_direction.X));
+    //
   }
 }

@@ -1,6 +1,5 @@
 #pragma once
 #include "../Ability.h"
-#include "Math/Vector2D.h"
 
 #include "InputRotateAbility.generated.h"
 
@@ -10,21 +9,20 @@ UCLASS(Blueprintable)
 class UInputRotateAbility : public UAbility {
   GENERATED_BODY()
 public:
-  virtual void DoAbility() override;
-  virtual void EndAbility() override;
-
-protected:
-  virtual void BeginPlay() override;
-  virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
+  void DoAbility() override;
+  void EndAbility() override;
+  //
+  void BeginPlay(TObjectPtr<UAbilityManager> manager) override;
+  void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 
 private:
   float CalcuateMoveRadians(AMyCharacter *character, FVector2D input);
 
 protected:
   UPROPERTY(EditAnywhere, Category = "Ability")
-  TSubclassOf<UAbility> InputAbility_;
+  TSubclassOf<UAbility> input_ability_;
 
 private:
   UPROPERTY()
-  UAbility *Ability_;
+  TObjectPtr<UAbility> ability_;
 };

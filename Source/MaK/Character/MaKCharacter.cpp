@@ -79,7 +79,7 @@ void AMaKCharacter::SetupPlayerInputComponent(
 
     // Jumping
     EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Started, this,
-                                       &ACharacter::Jump);
+                                       &AMaKCharacter::MyJump);
     EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Completed,
                                        this, &ACharacter::StopJumping);
 
@@ -121,6 +121,15 @@ void AMaKCharacter::Move(const FInputActionValue &Value) {
     // add movement
     AddMovementInput(ForwardDirection, MovementVector.Y);
     AddMovementInput(RightDirection, MovementVector.X);
+  }
+}
+
+void AMaKCharacter::SetCanJump(bool enable) {
+  can_jump_ = enable;
+}
+void AMaKCharacter::MyJump() {
+  if (can_jump_) {
+    ACharacter::Jump();
   }
 }
 

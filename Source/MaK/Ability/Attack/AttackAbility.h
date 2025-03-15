@@ -10,13 +10,10 @@ UCLASS(Blueprintable)
 class UAttackAbility : public UAnimAbility {
   GENERATED_BODY()
 public:
-  UAttackAbility();
-  ~UAttackAbility() = default;
-  virtual void DoAbility() override;
-  virtual void EndAbility() override;
+  void DoAbility() override;
+  void EndAbility() override;
 
 private:
-  void AttachAttackCollision();
   void OnAttack(AActor *otherActor);
 
 public:

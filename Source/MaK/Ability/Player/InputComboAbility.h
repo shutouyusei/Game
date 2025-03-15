@@ -1,6 +1,5 @@
 #pragma once
 #include "../Ability.h"
-#include "Math/Vector2D.h"
 
 #include "InputComboAbility.generated.h"
 
@@ -10,21 +9,19 @@ UCLASS(Blueprintable)
 class UInputComboAbility : public UAbility {
   GENERATED_BODY()
 public:
-  virtual void DoAbility() override;
-  virtual void EndAbility() override;
+  void DoAbility() override;
+  void EndAbility() override;
 
-protected:
-  virtual void BeginPlay() override;
-  virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
+  void BeginPlay(TObjectPtr<UAbilityManager> manager) override;
+  void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 
 private:
   float CalcuateMoveRadians(AMyCharacter *character, FVector2D input);
 
-protected:
-  UPROPERTY(EditAnywhere, Category = "Ability")
-  TSubclassOf<UAbility> InputAbility_;
-
 private:
+  UPROPERTY(EditAnywhere, Category = "Ability")
+  TSubclassOf<UAbility> input_ability_;
+
   UPROPERTY()
-  UAbility *Ability_;
+  TObjectPtr<UAbility> ability_;
 };

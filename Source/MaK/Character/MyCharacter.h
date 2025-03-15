@@ -6,10 +6,7 @@
 UCLASS()
 class AMyCharacter : public AMaKCharacter {
   GENERATED_BODY()
-public:
-  AMyCharacter();
-  ~AMyCharacter();
 protected:
-  virtual void BeginPlay() override;
-  virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
+  void BeginPlay() override;
+  void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 };
