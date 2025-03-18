@@ -1,20 +1,9 @@
 #pragma once
 
 #include "Animation/AnimInstance.h"
-#include "CoreMinimal.h"
-#include "UObject/NoExportTypes.h"
+#include "Animation/AnimMontage.h"
 
-#include "MontagePlayer.generated.h"
-
-class UAnimMontage;
-
-UCLASS()
-class UMontagePlayer : public UObject {
-  GENERATED_BODY()
+class MontagePlayer {
 public:
-  void PlayMontage(UAnimInstance *anim_instance,FOnMontageEnded delegate);
-
-private:
-  UPROPERTY(EditAnywhere, Category = "Default")
-  UAnimMontage *montage_;
+  static void PlayMontage(UAnimInstance *anim_instance, UAnimMontage *montage, FOnMontageEnded delegate);
 };

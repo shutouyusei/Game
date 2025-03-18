@@ -1,6 +1,6 @@
 #include "CanNextAbilityNotify.h"
 #include "GameFramework/Actor.h"
-#include "Module/AbilityManager.h"
+#include "Manager/AbilityManager.h"
 
 void UCanNextAbilityNotify::Notify(USkeletalMeshComponent *MeshComp,
                                    UAnimSequenceBase *Animation) {

@@ -8,9 +8,7 @@ void UAbility::EndPlay(const EEndPlayReason::Type EndPlayReason) {
   manager_ = nullptr;
 }
 
-void UAbility::DoAbility() {
-  EndAbility();
-}
+void UAbility::DoAbility() {}
 
 void UAbility::EndAbility() {
   if (manager_) {
