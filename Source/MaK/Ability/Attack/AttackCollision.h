@@ -1,11 +1,10 @@
 #pragma once
 #include "Components/StaticMeshComponent.h"
 #include "CoreMinimal.h"
+#include "DamageStruct.h"
 #include "GameFramework/Actor.h"
 
 #include "AttackCollision.generated.h"
-
-DECLARE_DELEGATE_OneParam(FAbilityDelegate, AActor *);
 
 UCLASS()
 class AAttackCollision : public AActor {
@@ -14,15 +13,14 @@ public:
   AAttackCollision();
   ~AAttackCollision();
 
-  void DeleteAbility();
+  void StartAttack(AActor *applyier, FDamageStruct damage);
+  void EndAttack();
 
 private:
   void NotifyActorBeginOverlap(AActor *otherActor) override;
 
-public:
-  FAbilityDelegate ability_delegate_;
-
 private:
+  std::function<void(AActor *)> ability_delegate_;
   UPROPERTY(VisibleAnywhere, Category = "Collision")
   TObjectPtr<UStaticMeshComponent> collisionMesh;
 };

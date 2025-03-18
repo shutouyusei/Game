@@ -1,6 +1,7 @@
 #include "AttackCollision.h"
-
-#include "AttackAbility.h"
+#include "Damage.h"
+#include "StatusComponent.h"
+#include <functional>
 
 AAttackCollision::AAttackCollision() {
   // default can't overlap
@@ -14,14 +15,30 @@ AAttackCollision::AAttackCollision() {
 }
 
 AAttackCollision::~AAttackCollision() {
-  ability_delegate_.Unbind();
+  ability_delegate_ = nullptr;
+}
+
+void AAttackCollision::StartAttack(AActor *applyier, FDamageStruct damage) {
+  ability_delegate_ = [applyier, damage](AActor *otherActor) {
+    // Deal damage to the enemy
+    if (otherActor == nullptr || otherActor == applyier)
+      return;
+    // Get the stats component of the enemy
+    UStatusComponent *applyier_status = applyier->FindComponentByClass<UStatusComponent>();
+    UStatusComponent *target_status = otherActor->FindComponentByClass<UStatusComponent>();
+    // Apply the damage
+    if (applyier_status != nullptr && target_status != nullptr)
+      UDamage::ApplyDamage(applyier_status, target_status, damage);
+  };
+}
+
+void AAttackCollision::EndAttack() {
+  ability_delegate_ = nullptr;
 }
 
 void AAttackCollision::NotifyActorBeginOverlap(AActor *otherActor) {
   // Deal damage to the enemy
-  ability_delegate_.ExecuteIfBound(otherActor);
-}
-
-void AAttackCollision::DeleteAbility() { 
-  ability_delegate_.Unbind(); 
+  if (ability_delegate_ != nullptr) {
+    ability_delegate_(otherActor);
+  }
 }

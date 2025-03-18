@@ -13,9 +13,6 @@ public:
   void DoAbility() override;
   void EndAbility() override;
 
-private:
-  void OnAttack(AActor *otherActor);
-
 public:
   UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ability|Attack")
   FDamageStruct damage_;
