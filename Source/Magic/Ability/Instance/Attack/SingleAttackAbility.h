@@ -13,6 +13,6 @@ public:
 
 private:
   void OnMontageEnded(UAnimMontage *montage, bool interrupted);
-  UPROPERTY(EditAnywhere, Category = "Default")
+  UPROPERTY(Instanced, EditAnywhere, Category = "Default")
   TObjectPtr<UAttackWithMontage> attack_ability;
 };

@@ -23,11 +23,11 @@ private:
   void OnAttackEnded(UAnimMontage *montage, bool interrupted);
 
 private:
-  UPROPERTY(EditAnywhere, Category = "Ability")
+  UPROPERTY(EditAnywhere, Category = "Default")
   TObjectPtr<UAnimMontage> start_montage_;
-  UPROPERTY(EditAnywhere, Category = "Ability")
+  UPROPERTY(EditAnywhere, Category = "Default")
   TObjectPtr<UAnimMontage> loop_montage_;
-  UPROPERTY(EditAnywhere, Category = "Ability")
+  UPROPERTY(Instanced, EditAnywhere, Category = "Default")
   TObjectPtr<UAttackWithMontage> attack_ability_;
 
   //

@@ -13,7 +13,7 @@ public:
 
 private:
   void OnMontageEnded(UAnimMontage *montage, bool interrupted);
-  UPROPERTY(EditAnywhere, Category = "Default")
+  UPROPERTY(Instanced, EditAnywhere, Category = "Default")
   TArray<TObjectPtr<UAttackWithMontage>> attack_abilities_;
   UPROPERTY()
   int8 combo_index_ = 0;

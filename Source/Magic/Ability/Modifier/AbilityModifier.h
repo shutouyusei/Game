@@ -5,12 +5,9 @@
 
 #include "AbilityModifier.generated.h"
 
-// TODO:たくさんアビリティを作って，ゲームの雰囲気をつかむ
-// 空中アビリティを作成する
-
-UCLASS(Blueprintable)
+UCLASS(BlueprintType, DefaultToInstanced)
 class UAbilityModifier : public UObject {
   GENERATED_BODY()
 public:
-  virtual void AbiltiyMod(UAbilityManager *manager);
+  virtual void AbilityMod(UAbilityManager *manager);
 };

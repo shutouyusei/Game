@@ -10,5 +10,7 @@ void USingleAttackAbility::DoAbility() {
 }
 
 void USingleAttackAbility::OnMontageEnded(UAnimMontage *montage, bool interrupted) {
-  UAbility::EndAbility();
+  if (!interrupted) {
+    UAbility::EndAbility();
+  }
 }

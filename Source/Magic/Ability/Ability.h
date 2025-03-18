@@ -28,5 +28,7 @@ protected:
 
 private:
   UPROPERTY(EditAnywhere, Category = "Default")
-  TArray<TObjectPtr<UAbilityModifier>> modifiers_;
+  TArray<TSubclassOf<UAbilityModifier>> modifiers_;
+  UPROPERTY()
+  TArray<TObjectPtr<UAbilityModifier>> modifiers_instance_;
 };

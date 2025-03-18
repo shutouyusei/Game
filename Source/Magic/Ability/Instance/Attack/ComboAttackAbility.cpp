@@ -14,4 +14,8 @@ void UComboAttackAbility::DoAbility() {
   combo_index_ = (combo_index_ + 1) % attack_abilities_.Num();
 }
 
-void UComboAttackAbility::OnMontageEnded(UAnimMontage *montage, bool interrupted) {}
+void UComboAttackAbility::OnMontageEnded(UAnimMontage *montage, bool interrupted) {
+  if (!interrupted) {
+    UAbility::EndAbility();
+  }
+}

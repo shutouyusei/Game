@@ -7,7 +7,7 @@
 class UAnimMontage;
 class AAttackCollision;
 
-UCLASS()
+UCLASS(EditInlineNew, BlueprintType)
 class UAttackWithMontage : public UObject {
   GENERATED_BODY()
 public:

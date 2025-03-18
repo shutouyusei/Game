@@ -4,11 +4,12 @@
 #include "RestrictedInputAbilityModifier.generated.h"
 class AMyCharacter;
 
-UCLASS()
-class URestrictedInputAbilityModifier  final : public UAbilityModifier {
+UCLASS(Blueprintable, BlueprintType)
+class URestrictedInputAbilityModifier final : public UAbilityModifier {
   GENERATED_BODY()
 public:
-  void AbilityMod(UAbilityManager *manager);
+  void AbilityMod(UAbilityManager *manager) override;
+
 private:
   float CalcuateMoveRadians(AMyCharacter *character, FVector2D input);
 };

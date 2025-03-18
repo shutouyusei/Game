@@ -1,4 +1,3 @@
 #include "AbilityModifier.h"
 
-void UAbilityModifier::AbiltiyMod(UAbilityManager *manager) {
-}
+void UAbilityModifier::AbilityMod(UAbilityManager *manager) {}
