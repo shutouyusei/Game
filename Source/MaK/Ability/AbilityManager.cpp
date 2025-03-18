@@ -50,8 +50,7 @@ void UAbilityManager::SetAbility(int index, UAbility *ability) {
   if (index < ability_instances_.Num()) {
     ability_instances_[index] = ability;
   } else {
-    UE_LOG(LogTemp, Error,
-           TEXT("UAbilityManager::SetAbility: Index out of range"));
+    UE_LOG(LogTemp, Error, TEXT("UAbilityManager::SetAbility: Index out of range"));
   }
 }
 
@@ -62,18 +61,15 @@ void UAbilityManager::Execute(int index) {
   case EAbilityFlag::None: {
     SetAbilityFlag(EAbilityFlag::Playing);
     ExecuteAbility(index);
-    UE_LOG(LogTemp, Warning, TEXT("ability"));
     break;
   }
   case EAbilityFlag::CanNextAbility: {
     SetAbilityFlag(EAbilityFlag::Playing);
     ExecuteAbility(index);
-    UE_LOG(LogTemp, Warning, TEXT("can next ability"));
     break;
   }
   case EAbilityFlag::CanInput: {
     next_ability_index_ = index;
-    UE_LOG(LogTemp, Warning, TEXT("can input"));
     break;
   }
   case EAbilityFlag::Playing: {
@@ -123,4 +119,3 @@ void UAbilityManager::SetAbilityFlag(EAbilityFlag flag) {
   }
   }
 }
-

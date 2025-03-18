@@ -78,18 +78,14 @@ void AMaKCharacter::SetupPlayerInputComponent(
   if (EnhancedInputComponent != nullptr) {
 
     // Jumping
-    EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Started, this,
-                                       &AMaKCharacter::MyJump);
-    EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Completed,
-                                       this, &ACharacter::StopJumping);
+    EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Started, this, &AMaKCharacter::MyJump);
+    EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Completed, this, &ACharacter::StopJumping);
 
     // Moving
-    EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered,
-                                       this, &AMaKCharacter::Move);
+    EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &AMaKCharacter::Move);
 
     // Looking
-    EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered,
-                                       this, &AMaKCharacter::Look);
+    EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &AMaKCharacter::Look);
   } else {
     UE_LOG(
         LogTemplateCharacter, Error,

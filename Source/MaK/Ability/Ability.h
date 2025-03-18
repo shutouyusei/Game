@@ -5,7 +5,6 @@
 
 #include "Ability.generated.h"
 
-class UAbilityManager;
 // TODO:たくさんアビリティを作って，ゲームの雰囲気をつかむ
 // 空中アビリティを作成する
 
