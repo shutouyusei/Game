@@ -1,7 +1,7 @@
 #include "BTT_DoAbility.h"
 #include "AIController.h"
-#include "AbilityManager.h"
 #include "GameFramework/Pawn.h"
+#include "Manager/AbilityManager.h"
 
 UBTT_DoAbility::UBTT_DoAbility() {
   NodeName = TEXT("Do Ability");

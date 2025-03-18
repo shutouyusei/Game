@@ -1,6 +1,6 @@
 #pragma once
-#include "AbilityManager.h"
 #include "CoreMinimal.h"
+#include "Manager/AbilityManager.h"
 #include "UObject/NoExportTypes.h"
 
 #include "Ability.generated.h"

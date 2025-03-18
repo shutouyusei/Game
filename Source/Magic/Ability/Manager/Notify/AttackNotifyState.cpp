@@ -1,6 +1,5 @@
 #include "AttackNotifyState.h"
-#include "../AbilityManager.h"
-#include "AttackCollision.h"
+#include "Module/AbilityManager.h"
 
 void UAttackNotifyState::NotifyBegin(USkeletalMeshComponent *MeshComp, UAnimSequenceBase *Animation, float TotalDuration) {
   // Get the owner of the mesh

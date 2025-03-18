@@ -1,5 +1,5 @@
 #pragma once
-#include "Attack/AttackCollision.h"
+#include "AttackCollision.h"
 #include "CoreMinimal.h"
 #include "DamageStruct.h"
 #include "UObject/NoExportTypes.h"
