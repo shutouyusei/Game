@@ -1,6 +1,7 @@
 #pragma once
 #include "CoreMinimal.h"
 #include "Manager/AbilityManager.h"
+#include "Modifier/AbilityModifier.h"
 #include "UObject/NoExportTypes.h"
 
 #include "Ability.generated.h"
@@ -24,4 +25,8 @@ public:
 protected:
   UPROPERTY()
   TObjectPtr<UAbilityManager> manager_ = nullptr;
+
+private:
+  UPROPERTY(EditAnywhere, Category = "Default")
+  TArray<TObjectPtr<UAbilityModifier>> modifiers_;
 };
