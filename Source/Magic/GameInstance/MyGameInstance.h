@@ -7,7 +7,7 @@
 #include "MyGameInstance.generated.h"
 
 UCLASS()
-class MAK_API UMyGameInstance : public UGameInstance {
+class UMyGameInstance : public UGameInstance {
   GENERATED_BODY()
 public:
   void Init() override;

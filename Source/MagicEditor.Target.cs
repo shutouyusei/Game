@@ -3,13 +3,13 @@
 using UnrealBuildTool;
 using System.Collections.Generic;
 
-public class MaKTarget : TargetRules
+public class MagicEditorTarget : TargetRules
 {
-	public MaKTarget(TargetInfo Target) : base(Target)
+	public MagicEditorTarget(TargetInfo Target) : base(Target)
 	{
-		Type = TargetType.Game;
+		Type = TargetType.Editor;
 		DefaultBuildSettings = BuildSettingsVersion.V5;
 		IncludeOrderVersion = EngineIncludeOrderVersion.Unreal5_5;
-		ExtraModuleNames.Add("MaK");
+		ExtraModuleNames.Add("Magic");
 	}
 }

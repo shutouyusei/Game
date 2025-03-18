@@ -3,9 +3,9 @@
 using UnrealBuildTool;
 using System.IO;
 
-public class MaK : ModuleRules
+public class Magic: ModuleRules
 {
-	public MaK(ReadOnlyTargetRules Target) : base(Target)
+	public Magic(ReadOnlyTargetRules Target) : base(Target)
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 
