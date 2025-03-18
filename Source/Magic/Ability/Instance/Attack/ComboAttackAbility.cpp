@@ -1,6 +1,7 @@
 #include "ComboAttackAbility.h"
 
 void UComboAttackAbility::DoAbility() {
+  UAbility::DoAbility();
   if (attack_abilities_.Num() == 0) {
     return;
   }

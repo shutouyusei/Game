@@ -13,7 +13,7 @@ UCLASS(Blueprintable)
 class UAbility : public UObject {
   GENERATED_BODY()
 public:
-  virtual void BeginPlay(TObjectPtr<UAbilityManager> owner);
+  virtual void BeginPlay(TObjectPtr<UAbilityManager> manager);
   virtual void Tick(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction) {};
   virtual void EndPlay(const EEndPlayReason::Type EndPlayReason);
 
