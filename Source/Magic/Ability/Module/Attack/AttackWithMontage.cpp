@@ -2,6 +2,7 @@
 #include "GameFramework/Character.h"
 #include "Module/Attack/Attack.h"
 #include "Module/Montage/MontagePlayer.h"
+// TODO:MontagePlayerいらなくね
 
 void UAttackWithMontage::AttackWithMontage(FOnMontageEnded delegate, AAttackCollision *attack_collision, AActor *applyier) {
   ACharacter *character = Cast<ACharacter>(applyier);

@@ -1,6 +1,7 @@
 #pragma once
 #include "AttackCollision.h"
 #include "DamageStruct.h"
+// TODO:namespaceにする
 
 class AttackPlayer {
 public:
