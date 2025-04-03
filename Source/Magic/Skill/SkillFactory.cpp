@@ -1,8 +1,9 @@
 #include "SkillFactory.h"
+#include "SkillManager/SkillManager.h"
 
-USkill *USkillFactory::Create() {
+USkill *USkillFactory::Create(USkillManager *manager) {
   // USkill *skill = NewObject<USkill>();
-  // skill->Construct();
+  // skill->manager_ = manager;
   // return skill;
   return nullptr;
 }

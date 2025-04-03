@@ -9,5 +9,5 @@ UCLASS(Blueprintable)
 class USkillFactory : public UObject {
   GENERATED_BODY()
 public:
-  virtual USkill *Create();
+  virtual USkill *Create(USkillManager *manager);
 };

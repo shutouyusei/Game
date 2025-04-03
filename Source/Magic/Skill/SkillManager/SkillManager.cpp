@@ -8,8 +8,7 @@ USkillManager::USkillManager() {
 
 void USkillManager::BeginPlay() {
   for (auto &skill_factory : skill_factories_) {
-    USkill *skill = skill_factory->Create();
-    skill->manager_ = this;
+    USkill *skill = skill_factory->Create(this);
     skill->BeginPlay();
     // スキル配列に追加
   }

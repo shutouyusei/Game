@@ -9,6 +9,7 @@ UCLASS(Blueprintable)
 class USkill : public UObject {
   GENERATED_BODY()
 public:
+  virtual ~USkill();
   // スキルの実行
   virtual void Activate() {};
   void Deactivate();
