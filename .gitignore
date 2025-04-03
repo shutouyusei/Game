@@ -11,4 +11,5 @@
 *.vsconfig
 *.sln
 *.uproject
+*.pdb
 *.json
