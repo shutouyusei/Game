@@ -20,10 +20,12 @@ private:
 public:
   UPROPERTY()
   TObjectPtr<UAnimatedAttack> attack_module_;
+  UPROPERTY()
+  TObjectPtr<AActor> owner_;
 
 private:
   UPROPERTY(EditAnywhere)
-  float reach_ = 1000.0f;
+  float reach_ = 100.0f;
   UPROPERTY(EditAnywhere)
   float radius_ = 10.0f;
   UPROPERTY(EditAnywhere)

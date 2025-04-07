@@ -23,7 +23,7 @@ public:
   // アビリティからの通知
   void SetSkillFlag(ESkillFlag flag);
 
-  USkill *get_current_skill(){return current_skill_;};
+  USkill *get_current_skill() { return current_skill_; };
   // TObjectPtr<UStatus> status;
 private:
   inline void ActivateSkill(USkill *skill);

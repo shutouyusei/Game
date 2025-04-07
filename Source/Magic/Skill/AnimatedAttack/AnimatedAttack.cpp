@@ -11,6 +11,7 @@ void UAnimatedAttack::OnAttackEnd(UAnimMontage *montage, bool interrupted) {
 }
 
 void UAnimatedAttack::OnAttack(ACharacter *target) {
-  UE_LOG(LogTemp, Warning, TEXT("Attack"));
   // damage
+  // call back
+  on_attack_.ExecuteIfBound(target);
 }

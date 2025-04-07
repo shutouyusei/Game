@@ -6,6 +6,7 @@
 class UAnimatedAttack;
 class UAnimMontage;
 class UAnimatedSingleAttackSkill;
+class ACharacter;
 
 UCLASS(Blueprintable)
 class UAnimatedSingleAttackSkillFactory : public USkillFactory {
@@ -15,11 +16,11 @@ public:
 
 private:
   UAnimatedAttack *CreateAnimatedAttack(USkillManager *manager);
-  void SetNSAnimatedAttack(UAnimatedAttack *attack_module);
+  void SetNSAnimatedAttack(UAnimatedAttack *attack_module, AActor *character);
 
 private:
   UPROPERTY(EditAnywhere)
-  TSubclassOf<UAnimMontage> montage_class_;
+  TObjectPtr<UAnimMontage> montage_class_;
   UPROPERTY(EditAnywhere)
   TSubclassOf<UAnimatedSingleAttackSkill> skill_class_;
   UPROPERTY(EditAnywhere)

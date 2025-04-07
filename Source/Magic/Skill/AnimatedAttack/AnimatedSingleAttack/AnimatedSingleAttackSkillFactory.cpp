@@ -11,7 +11,8 @@ USkill *UAnimatedSingleAttackSkillFactory::Create(USkillManager *manager) {
   // Create
   UAnimatedAttack *attack_module = CreateAnimatedAttack(manager);
   skill->attack_module_ = attack_module;
-  SetNSAnimatedAttack(attack_module);
+  SetNSAnimatedAttack(attack_module, manager->GetOwner());
+  attack_module->on_attack_.BindUObject(skill, &UAnimatedSingleAttackSkill::OnAttack);
   return skill;
 }
 
@@ -20,7 +21,7 @@ UAnimatedAttack *UAnimatedSingleAttackSkillFactory::CreateAnimatedAttack(USkillM
   ACharacter *character = Cast<ACharacter>(manager->GetOwner());
   USkeletalMeshComponent *mesh = character->GetMesh();
   UAnimInstance *anim_instance = mesh->GetAnimInstance();
-  UAnimMontage *montage = NewObject<UAnimMontage>(manager, montage_class_);
+  UAnimMontage *montage = DuplicateObject<UAnimMontage>(montage_class_, manager);
   // create attack module
   UAnimatedAttack *attack_module = NewObject<UAnimatedAttack>(manager);
   // set
@@ -29,12 +30,13 @@ UAnimatedAttack *UAnimatedSingleAttackSkillFactory::CreateAnimatedAttack(USkillM
   return attack_module;
 }
 
-void UAnimatedSingleAttackSkillFactory::SetNSAnimatedAttack(UAnimatedAttack *attack_module) {
+void UAnimatedSingleAttackSkillFactory::SetNSAnimatedAttack(UAnimatedAttack *attack_module,AActor *character) {
   for (const FAnimNotifyEvent &notify_event : attack_module->montage_->Notifies) {
     if (notify_event.NotifyStateClass) {
       UNSAnimatedAttack *attack_notify = Cast<UNSAnimatedAttack>(notify_event.NotifyStateClass);
       if (attack_notify) {
         attack_notify->attack_module_ = attack_module;
+        attack_notify->owner_ = character;
         break;
       }
     }

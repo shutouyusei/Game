@@ -1,18 +1,20 @@
 #pragma once
 #include "Components/ActorComponent.h"
 #include "CoreMinimal.h"
+#include "SkillExecutionManager.h"
 
 #include "SkillManager.generated.h"
 
 class USkillFactory;
 class USkill;
-class USkillExecutionManager;
 
 UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
 class USkillManager final : public UActorComponent {
   GENERATED_BODY()
 public:
   USkillManager();
+  UFUNCTION(BlueprintCallable)
+  void ExecuteSkill(int index);
 
 private:
   void BeginPlay() override;
@@ -24,8 +26,8 @@ public:
   TObjectPtr<USkillExecutionManager> execution_manager_;
 
 private:
-  UPROPERTY()
-  TArray<USkillFactory *> skill_factories_;
+  UPROPERTY(EditAnywhere)
+  TArray<TSubclassOf<USkillFactory>> skill_factories_;
   UPROPERTY()
   TArray<USkill *> skills_;
 };

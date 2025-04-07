@@ -1,6 +1,6 @@
 #include "CanInputNotify.h"
+#include "../SkillManager.h"
 #include "GameFramework/Actor.h"
-#include "Manager/AbilityManager.h"
 
 void UCanInputNotify::Notify(USkeletalMeshComponent *MeshComp, UAnimSequenceBase *Animation) {
   // Check if the notify is called
@@ -10,10 +10,10 @@ void UCanInputNotify::Notify(USkeletalMeshComponent *MeshComp, UAnimSequenceBase
     return;
   }
   // Get Ability Manager
-  UAbilityManager *manager = owner->FindComponentByClass<UAbilityManager>();
+  USkillManager *manager = owner->FindComponentByClass<USkillManager>();
   if (manager == nullptr) {
     return;
   }
   // Set the ability manager to be able to input
-  manager->SetAbilityFlag(EAbilityFlag::CanInput);
+  manager->execution_manager_->SetSkillFlag(ESkillFlag::CanInput);
 }

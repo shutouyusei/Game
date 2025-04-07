@@ -9,6 +9,8 @@
 class ACharacter;
 class USkeletalMeshComponent;
 
+DECLARE_DELEGATE_OneParam(FOnAttack, ACharacter *);
+
 UCLASS(Blueprintable)
 class UAnimatedAttack : public UObject {
   GENERATED_BODY()
@@ -24,4 +26,5 @@ public:
   TObjectPtr<UAnimMontage> montage_;
   UPROPERTY()
   TObjectPtr<UAnimInstance> anim_instance_;
+  FOnAttack on_attack_;
 };
