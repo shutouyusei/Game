@@ -4,11 +4,19 @@
 
 #include "DashAttack.generated.h"
 
+class ACharacter;
+
 UCLASS()
 class UDashAttack final : public UAnimatedSingleAttackSkill {
   GENERATED_BODY()
 public:
-  ~UDashAttack();
+  void SetSkillData(FSkillData data) override;
   void Activate() override;
-  void OnAttack(ACharacter *target) override;
+
+private:
+  void OnMotageEnded(UAnimMontage *montage, bool interrupted);
+
+private:
+  UPROPERTY()
+  TObjectPtr<ACharacter> owner_ = nullptr;
 };

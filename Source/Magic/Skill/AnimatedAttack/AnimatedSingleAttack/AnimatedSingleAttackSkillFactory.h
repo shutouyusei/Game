@@ -19,10 +19,9 @@ private:
   void SetNSAnimatedAttack(UAnimatedAttack *attack_module, AActor *character);
 
 private:
+  // TODO:ダメージの追加処理
   UPROPERTY(EditAnywhere)
   TObjectPtr<UAnimMontage> montage_class_;
   UPROPERTY(EditAnywhere)
   TSubclassOf<UAnimatedSingleAttackSkill> skill_class_;
-  UPROPERTY(EditAnywhere)
-  FName socket_name_;
 };

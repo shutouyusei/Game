@@ -10,6 +10,7 @@ class ACharacter;
 class USkeletalMeshComponent;
 
 DECLARE_DELEGATE_OneParam(FOnAttack, ACharacter *);
+DECLARE_DELEGATE_TwoParams(FOnAttackEnd, UAnimMontage *, bool);
 
 UCLASS(Blueprintable)
 class UAnimatedAttack : public UObject {
@@ -27,4 +28,5 @@ public:
   UPROPERTY()
   TObjectPtr<UAnimInstance> anim_instance_;
   FOnAttack on_attack_;
+  FOnAttackEnd on_attack_end_;
 };

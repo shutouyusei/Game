@@ -1,5 +1,6 @@
 #pragma once
 #include "CoreMinimal.h"
+#include "SkillData.h"
 #include "SkillManager/SkillManager.h"
 #include "UObject/NoExportTypes.h"
 
@@ -12,17 +13,16 @@ public:
   virtual ~USkill();
   // スキルの実行
   virtual void Activate() {};
-  void Deactivate();
-  // BeginPlay
-  virtual void BeginPlay() {};
+  // Load Skill data
+  virtual void SetSkillData(FSkillData data);
   // Tick
   virtual void Tick(float DeltaTime) {};
-  // End
-  virtual void EndPlay() {};
   // アビリティ発動条件の記述
   virtual bool can_activate();
 
 public:
   UPROPERTY()
   TObjectPtr<USkillManager> manager_;
+  UPROPERTY()
+  FSkillData skill_data_;
 };

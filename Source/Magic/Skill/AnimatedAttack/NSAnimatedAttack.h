@@ -24,6 +24,7 @@ public:
   TObjectPtr<AActor> owner_;
 
 private:
+  // TODO:ダメージの追加
   UPROPERTY(EditAnywhere)
   float reach_ = 100.0f;
   UPROPERTY(EditAnywhere)

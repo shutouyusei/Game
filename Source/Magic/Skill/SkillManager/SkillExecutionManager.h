@@ -19,7 +19,6 @@ class USkillExecutionManager : public UObject {
   GENERATED_BODY()
 public:
   void ExecuteSkill(USkill *skill);
-  void FinishSkill();
   // アビリティからの通知
   void SetSkillFlag(ESkillFlag flag);
 

@@ -5,8 +5,8 @@ USkill::~USkill() {
   manager_ = nullptr;
 }
 
-void USkill::Deactivate() {
-  manager_->execution_manager_->FinishSkill();
+void USkill::SetSkillData(FSkillData data) {
+  skill_data_ = data;
 }
 
 bool USkill::can_activate() {

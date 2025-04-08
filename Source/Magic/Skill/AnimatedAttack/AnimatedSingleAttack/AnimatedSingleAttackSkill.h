@@ -15,5 +15,4 @@ public:
 public:
   UPROPERTY()
   TObjectPtr<UAnimatedAttack> attack_module_;
-  virtual void OnAttack(ACharacter *target);
 };

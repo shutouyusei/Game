@@ -20,10 +20,10 @@ void USkillManager::ExecuteSkill(int index) {
 }
 
 void USkillManager::BeginPlay() {
+  Super::BeginPlay();
   for (auto &skill_factory_class : skill_factories_) {
     USkillFactory *skill_factory = NewObject<USkillFactory>(this, skill_factory_class);
     USkill *skill = skill_factory->Create(this);
-    skill->BeginPlay();
     // スキル配列に追加
     UE_LOG(LogTemp, Warning, TEXT("Skill %s"), *skill->GetName());
     skills_.Add(skill);
@@ -39,9 +39,5 @@ void USkillManager::TickComponent(float DeltaTime, ELevelTick TickType, FActorCo
 }
 
 void USkillManager::EndPlay(const EEndPlayReason::Type EndPlayReason) {
-  for (auto &skill : skills_) {
-    skill->EndPlay();
-    skill = nullptr;
-  }
   skills_.Empty();
 }

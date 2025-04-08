@@ -20,7 +20,7 @@ void UNSAnimatedAttack::PerformTrace(USkeletalMeshComponent *mesh) {
 
   bool bHit = GetWorld()->SweepSingleByChannel(
       hit_result, start, end, FQuat::Identity, ECollisionChannel::ECC_Pawn,
-      FCollisionShape::MakeSphere(radius_), FCollisionQueryParams(FName(), false,owner_));
+      FCollisionShape::MakeSphere(radius_), FCollisionQueryParams(FName(), false, owner_));
 
   FColor DrawColor = bHit ? FColor::Red : FColor::Green;
   DrawDebugSphere(GetWorld(), start, radius_, 12, DrawColor, false, 0.5f);
@@ -28,7 +28,7 @@ void UNSAnimatedAttack::PerformTrace(USkeletalMeshComponent *mesh) {
   if (bHit) {
     ACharacter *target = Cast<ACharacter>(hit_result.GetActor());
     if (target) {
-      if(target == owner_){
+      if (target == owner_) {
         return;
       }
       if (!targets_.Contains(target)) {
@@ -40,8 +40,9 @@ void UNSAnimatedAttack::PerformTrace(USkeletalMeshComponent *mesh) {
 }
 
 void UNSAnimatedAttack::OnAttack(ACharacter *target) {
-  //TODO:複数人が呼び出しても独立しているか確認
+  // TODO:複数人が呼び出しても独立しているか確認
   if (attack_module_) {
+    UE_LOG(LogTemp, Warning, TEXT("Attack %s"), *target->GetName());
     attack_module_->OnAttack(target);
   }
 }

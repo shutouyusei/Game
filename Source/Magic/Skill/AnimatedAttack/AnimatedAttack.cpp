@@ -8,6 +8,7 @@ void UAnimatedAttack::Attack() {
 }
 
 void UAnimatedAttack::OnAttackEnd(UAnimMontage *montage, bool interrupted) {
+  on_attack_end_.ExecuteIfBound(montage, interrupted);
 }
 
 void UAnimatedAttack::OnAttack(ACharacter *target) {

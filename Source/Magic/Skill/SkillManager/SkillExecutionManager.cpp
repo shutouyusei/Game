@@ -21,12 +21,8 @@ void USkillExecutionManager::ExecuteSkill(USkill *skill) {
   }
 }
 
-void USkillExecutionManager::FinishSkill() {
-  current_skill_ = nullptr;
-  SetSkillFlag(ESkillFlag::None);
-}
-
 void USkillExecutionManager::ActivateSkill(USkill *skill) {
+  SetSkillFlag(ESkillFlag::Playing);
   next_skill_ = nullptr;
   current_skill_ = skill;
   skill->Activate();
@@ -36,6 +32,7 @@ void USkillExecutionManager::SetSkillFlag(ESkillFlag flag) {
   ability_flag_ = flag;
   switch (ability_flag_) {
   case ESkillFlag::None: {
+    current_skill_ = nullptr;
     can_jump_ = true;
     break;
   }
