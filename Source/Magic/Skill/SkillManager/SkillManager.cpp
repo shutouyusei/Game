@@ -39,5 +39,6 @@ void USkillManager::TickComponent(float DeltaTime, ELevelTick TickType, FActorCo
 }
 
 void USkillManager::EndPlay(const EEndPlayReason::Type EndPlayReason) {
+  Super::EndPlay(EndPlayReason);
   skills_.Empty();
 }
