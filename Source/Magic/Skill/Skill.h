@@ -13,8 +13,6 @@ public:
   virtual ~USkill();
   // スキルの実行
   virtual void Activate() {};
-  // Load Skill data
-  virtual void SetSkillData(FSkillData data);
   // Tick
   virtual void Tick(float DeltaTime) {};
   // アビリティ発動条件の記述

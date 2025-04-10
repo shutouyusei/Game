@@ -1,25 +1,7 @@
 #include "DashAttack.h"
-#include "../../../../Notify/Status/NSInvincible.h"
 #include "Components/CapsuleComponent.h"
 #include "GameFramework/Character.h"
-
-void UDashAttack::SetSkillData(FSkillData data) {
-  // スキルデータの設定
-  UAnimatedSingleAttackSkill::SetSkillData(data);
-  attack_module_->on_attack_end_.BindUObject(this, &UDashAttack::OnMotageEnded);
-  if (skill_data_.level < 3) {
-    for (const FAnimNotifyEvent &notify_event : attack_module_->montage_->Notifies) {
-      if (notify_event.NotifyStateClass) {
-        UNSInvincible *invincible_notify = Cast<UNSInvincible>(notify_event.NotifyStateClass);
-        if (invincible_notify) {
-          invincible_notify->bCanActive = false;
-        }
-        break;
-      }
-    }
-  }
-  owner_ = Cast<ACharacter>(manager_->GetOwner());
-}
+#include "../../AnimatedAttack.h"
 
 void UDashAttack::Activate() {
   // 敵を貫通するようにコリジョンを設定

@@ -1,22 +1,21 @@
 #pragma once
-
-#include "../../AnimatedSingleAttackSkill.h"
+#include "../../../Skill.h"
 
 #include "DashAttack.generated.h"
 
 class ACharacter;
+class UAnimatedAttack;
 
 UCLASS()
-class UDashAttack final : public UAnimatedSingleAttackSkill {
+class UDashAttack final : public USkill {
   GENERATED_BODY()
 public:
-  void SetSkillData(FSkillData data) override;
   void Activate() override;
-
-private:
   void OnMotageEnded(UAnimMontage *montage, bool interrupted);
 
-private:
+public:
+  UPROPERTY()
+  TObjectPtr<UAnimatedAttack> attack_module_ = nullptr;
   UPROPERTY()
   TObjectPtr<ACharacter> owner_ = nullptr;
 };
