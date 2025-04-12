@@ -22,5 +22,7 @@ public:
   UPROPERTY()
   TObjectPtr<USkillManager> manager_;
   UPROPERTY()
+  int32 level_;
+  UPROPERTY()
   FSkillData skill_data_;
 };

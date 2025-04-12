@@ -43,7 +43,8 @@ void USkillManager::EndPlay(const EEndPlayReason::Type EndPlayReason) {
 }
 
 USkill *USkillManager::CreateSkill(FSkillFactoryData skill_factory_data) {
-  USkillFactory *skill_factory = NewObject<USkillFactory>(nullptr, skill_factory_data.factory_class);
+  USkillFactory *skill_factory = NewObject<USkillFactory>(this, skill_factory_data.factory_class);
   USkill *skill = skill_factory->Create(skill_factory_data.level, this);
+  skill_factory = nullptr;
   return skill;
 }

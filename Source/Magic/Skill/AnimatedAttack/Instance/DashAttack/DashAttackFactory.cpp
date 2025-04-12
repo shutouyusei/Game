@@ -17,6 +17,7 @@ USkill *UDashAttackFactory::Create(int32 level, USkillManager *manager) {
   // set data
   skill->manager_ = manager;
   skill->attack_module_ = attack_module;
+  skill->level_ = level;
   skill->skill_data_ = skill_data;
   skill->owner_ = Cast<ACharacter>(manager->GetOwner());
   // set function

@@ -4,7 +4,7 @@
 void UNormalSwordAttack::Activate() {
   //  スキルの実行
   AttackonGround(combo_);
-  combo_ = (combo_ + 1) % (skill_data_.level + 1);
+  combo_ = (combo_ + 1) % (level_ + 1);
 }
 
 void UNormalSwordAttack::AttackonGround(int32 combo) {
