@@ -9,7 +9,7 @@ UCLASS()
 class UDashAttackFactory : public USkillFactory {
   GENERATED_BODY()
 public:
-  USkill *Create(USkillManager *manager) override;
+  USkill *Create(int32 level, USkillManager *manager) override;
 
 private:
   void DisableInvincibleNotify(TArray<FAnimNotifyEvent> Notifies);

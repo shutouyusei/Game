@@ -7,6 +7,7 @@
 
 class USkillFactory;
 class USkill;
+struct FSkillFactoryData;
 
 UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
 class USkillManager final : public UActorComponent {
@@ -21,13 +22,16 @@ protected:
   void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction) override;
   void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 
+private:
+  USkill *CreateSkill(FSkillFactoryData skill_factory_data);
+
 public:
   UPROPERTY()
   TObjectPtr<USkillExecutionManager> execution_manager_;
 
 private:
   UPROPERTY(EditAnywhere)
-  TArray<TSubclassOf<USkillFactory>> skill_factories_;
+  TArray<FSkillFactoryData> skill_factories_data_;
   UPROPERTY()
   TArray<USkill *> skills_;
 };

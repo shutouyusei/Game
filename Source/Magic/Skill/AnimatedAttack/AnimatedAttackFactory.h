@@ -1,4 +1,5 @@
 #pragma once
+#include "../DamageInfo.h"
 #include "AnimatedAttack.h"
 #include "CoreMinimal.h"
 #include "UObject/NoExportTypes.h"
@@ -11,7 +12,8 @@ UCLASS(Blueprintable)
 class UAnimatedAttackFactory : public UObject {
   GENERATED_BODY()
 public:
-  UAnimatedAttack *Create(USkillManager *manager, UAnimMontage *montage);
+  UAnimatedAttack *Create(USkillManager *manager, UAnimMontage *montage, FDamageInfo damage_info);
+
 private:
   void SetNSAnimatedAttack(UAnimatedAttack *attack_module, AActor *character);
 };

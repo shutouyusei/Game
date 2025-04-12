@@ -5,8 +5,8 @@
 #include "GameFramework/Character.h"
 #include "NSAnimatedAttack.h"
 
-UAnimatedAttack *UAnimatedAttackFactory::Create(USkillManager *manager, UAnimMontage *montage) {
-  // create anim
+UAnimatedAttack *UAnimatedAttackFactory::Create(USkillManager *manager, UAnimMontage *montage, FDamageInfo damage_info) {
+  // create animation
   ACharacter *character = Cast<ACharacter>(manager->GetOwner());
   USkeletalMeshComponent *mesh = character->GetMesh();
   UAnimInstance *anim_instance = mesh->GetAnimInstance();
@@ -17,6 +17,7 @@ UAnimatedAttack *UAnimatedAttackFactory::Create(USkillManager *manager, UAnimMon
   // construct
   attack_module->montage_ = d_montage;
   attack_module->anim_instance_ = anim_instance;
+  attack_module->damage_info_ = damage_info;
   // Notify State
   AActor *owner = Cast<AActor>(character);
   SetNSAnimatedAttack(attack_module, owner);
@@ -30,7 +31,6 @@ void UAnimatedAttackFactory::SetNSAnimatedAttack(UAnimatedAttack *attack_module,
       if (attack_notify) {
         attack_notify->attack_module_ = attack_module;
         attack_notify->owner_ = character;
-        break;
       }
     }
   }

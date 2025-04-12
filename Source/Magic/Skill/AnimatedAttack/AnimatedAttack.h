@@ -1,6 +1,5 @@
 #pragma once
-#include "Animation/AnimInstance.h"
-#include "Animation/AnimMontage.h"
+#include "../DamageInfo.h"
 #include "CoreMinimal.h"
 #include "UObject/NoExportTypes.h"
 
@@ -8,6 +7,8 @@
 
 class ACharacter;
 class USkeletalMeshComponent;
+class UAnimMontage;
+class UAnimInstance;
 
 DECLARE_DELEGATE_OneParam(FOnAttack, ACharacter *);
 DECLARE_DELEGATE_TwoParams(FOnAttackEnd, UAnimMontage *, bool);
@@ -27,6 +28,8 @@ public:
   TObjectPtr<UAnimMontage> montage_;
   UPROPERTY()
   TObjectPtr<UAnimInstance> anim_instance_;
+  UPROPERTY()
+  FDamageInfo damage_info_;
   FOnAttack on_attack_;
   FOnAttackEnd on_attack_end_;
 };

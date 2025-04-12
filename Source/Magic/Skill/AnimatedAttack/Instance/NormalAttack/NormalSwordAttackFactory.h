@@ -7,9 +7,5 @@ UCLASS()
 class UNormalSwordAttackFactory : public USkillFactory {
   GENERATED_BODY()
 public:
-  USkill *Create(USkillManager *manager) override;
-
-private:
-  UPROPERTY(EditAnywhere)
-  TObjectPtr<UAnimMontage> montage_;
+  USkill *Create(int32 level, USkillManager *manager) override;
 };

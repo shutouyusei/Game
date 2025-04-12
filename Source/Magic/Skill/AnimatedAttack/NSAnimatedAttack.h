@@ -1,5 +1,6 @@
 #pragma once
 #include "AnimatedAttack.h"
+
 #include "Animation/AnimNotifies/AnimNotifyState.h"
 
 #include "NSAnimatedAttack.generated.h"
@@ -24,7 +25,6 @@ public:
   TObjectPtr<AActor> owner_;
 
 private:
-  // TODO:ダメージの追加
   UPROPERTY(EditAnywhere)
   float reach_ = 100.0f;
   UPROPERTY(EditAnywhere)

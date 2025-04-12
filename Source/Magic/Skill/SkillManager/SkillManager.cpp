@@ -1,5 +1,6 @@
 #include "SkillManager.h"
 #include "../SkillFactory.h"
+#include "SkillFactoryData.h"
 
 USkillManager::USkillManager() {
   PrimaryComponentTick.bCanEverTick = true;
@@ -21,11 +22,9 @@ void USkillManager::ExecuteSkill(int index) {
 
 void USkillManager::BeginPlay() {
   Super::BeginPlay();
-  for (auto &skill_factory_class : skill_factories_) {
-    USkillFactory *skill_factory = NewObject<USkillFactory>(this, skill_factory_class);
-    USkill *skill = skill_factory->Create(this);
+  for (auto &skill_factory_data : skill_factories_data_) {
+    USkill *skill = CreateSkill(skill_factory_data);
     // スキル配列に追加
-    UE_LOG(LogTemp, Warning, TEXT("Skill %s"), *skill->GetName());
     skills_.Add(skill);
   }
   // execution_manager_
@@ -41,4 +40,10 @@ void USkillManager::TickComponent(float DeltaTime, ELevelTick TickType, FActorCo
 void USkillManager::EndPlay(const EEndPlayReason::Type EndPlayReason) {
   Super::EndPlay(EndPlayReason);
   skills_.Empty();
+}
+
+USkill *USkillManager::CreateSkill(FSkillFactoryData skill_factory_data) {
+  USkillFactory *skill_factory = NewObject<USkillFactory>(nullptr, skill_factory_data.factory_class);
+  USkill *skill = skill_factory->Create(skill_factory_data.level, this);
+  return skill;
 }
