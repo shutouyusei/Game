@@ -25,7 +25,9 @@ void USkillExecutionManager::ActivateSkill(USkill *skill) {
   SetSkillFlag(ESkillFlag::Playing);
   next_skill_ = nullptr;
   current_skill_ = skill;
-  skill->Activate();
+  if (skill->can_activate()) {
+    skill->Activate();
+  }
 }
 
 void USkillExecutionManager::SetSkillFlag(ESkillFlag flag) {

@@ -9,8 +9,11 @@ UCLASS(Blueprintable)
 class USkillFactory : public UObject {
   GENERATED_BODY()
 public:
-  virtual USkill *Create(int32 level, USkillManager *manager);
+  USkill *Create(int32 level, USkillManager *manager);
   FSkillData get_skill_data(int32 level);
+
+protected:
+  virtual USkill *CreateSkill(int32 level, USkillManager *manager);
 
 private:
   UPROPERTY(EditAnywhere)

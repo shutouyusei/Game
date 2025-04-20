@@ -15,7 +15,7 @@ public:
 
 public:
   UPROPERTY()
-  TObjectPtr<UAnimatedAttack> attack_module_ = nullptr;
+  UAnimatedAttack *attack_module_ = nullptr;
   UPROPERTY()
-  TObjectPtr<ACharacter> owner_ = nullptr;
+  ACharacter *owner_ = nullptr;
 };

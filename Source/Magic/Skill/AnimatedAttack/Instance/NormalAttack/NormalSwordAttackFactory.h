@@ -3,18 +3,18 @@
 
 #include "NormalSwordAttackFactory.generated.h"
 
-class UAnimatedAttackFactory;
 class UAnimatedAttack;
 struct FDamageInfo;
+class USkillNotify;
 
 UCLASS()
 class UNormalSwordAttackFactory : public USkillFactory {
   GENERATED_BODY()
-public:
-  USkill *Create(int32 level, USkillManager *manager) override;
-
 private:
-  UAnimatedAttack *CreateAttackModules(int32 level, USkillManager *manager, UAnimatedAttackFactory *attack_factory, UAnimMontage *montage);
+  USkill *CreateSkill(int32 level, USkillManager *manager) override;
+  UAnimatedAttack *CreateAttackModule(USkillManager *manager, UAnimMontage *montage, FDamageInfo damage_info);
+  USkillNotify *get_skill_notify(UAnimatedAttack *attack_module);
+  FDamageInfo CreateDamageInfo(int32 level);
 
 private:
   UPROPERTY(EditAnywhere)

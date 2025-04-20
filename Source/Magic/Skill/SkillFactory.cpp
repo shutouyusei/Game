@@ -1,10 +1,14 @@
 #include "SkillFactory.h"
 
 USkill *USkillFactory::Create(int32 level, USkillManager *manager) {
-  // USkill *skill = NewObject<USkill>();
-  // skill->manager_ = manager;
-  // return skill;
-  return nullptr;
+  USkill *skill = CreateSkill(level, manager);
+  if (skill != nullptr) {
+    return nullptr;
+  }
+  skill->manager_ = manager;
+  skill->level_ = level;
+  skill->skill_data_ = get_skill_data(level);
+  return skill;
 }
 
 FSkillData USkillFactory::get_skill_data(int32 level) {
@@ -18,4 +22,8 @@ FSkillData USkillFactory::get_skill_data(int32 level) {
   default:
     return FSkillData();
   }
+}
+
+USkill *USkillFactory::CreateSkill(int32 level, USkillManager *manger) {
+  return nullptr;
 }

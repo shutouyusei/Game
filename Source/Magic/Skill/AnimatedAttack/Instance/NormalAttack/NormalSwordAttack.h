@@ -11,10 +11,12 @@ class UNormalSwordAttack final : public USkill {
   GENERATED_BODY()
 public:
   void Activate() override;
+  void EndCombo();
 
 private:
   void AttackinAir(int32 combo);
   void AttackonGround(int32 combo);
+  bool get_in_air() const;
 
 public:
   UPROPERTY()

@@ -3,10 +3,17 @@
 
 void UNormalSwordAttack::Activate() {
   //  スキルの実行
-  // TODO:if in air
-  // if can combo
-  AttackonGround(combo_);
+  if (get_in_air()) {
+    AttackinAir(combo_);
+  } else {
+    AttackonGround(combo_);
+  }
   combo_ = (combo_ + 1) % (level_ + 1);
+}
+
+void UNormalSwordAttack::EndCombo() {
+  // Reset the combo counter
+  combo_ = 0;
 }
 
 void UNormalSwordAttack::AttackonGround(int32 combo) {
@@ -20,4 +27,9 @@ void UNormalSwordAttack::AttackonGround(int32 combo) {
 
 void UNormalSwordAttack::AttackinAir(int32 combo) {
   attack_in_air_modules_[combo]->Attack();
+}
+
+bool UNormalSwordAttack::get_in_air() const {
+  // judge is in air
+  return false;
 }
