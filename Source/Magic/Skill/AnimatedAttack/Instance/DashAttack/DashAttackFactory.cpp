@@ -19,13 +19,6 @@ USkill *UDashAttackFactory::CreateSkill(int32 level, USkillManager *manager) {
   return skill;
 }
 
-UAnimatedAttack *UDashAttackFactory::CreateAttackModule(USkillManager *manager, UAnimMontage *montage, FDamageInfo damage_info) {
-  TObjectPtr<UAnimatedAttackFactory> factory = NewObject<UAnimatedAttackFactory>();
-  UAnimatedAttack *attack_module = factory->Create(manager, montage, damage_info);
-  factory = nullptr;
-  return attack_module;
-}
-
 void UDashAttackFactory::DisableInvincibleNotify(TArray<FAnimNotifyEvent> Notifies) {
   for (const FAnimNotifyEvent &notify_event : Notifies) {
     if (notify_event.NotifyStateClass) {
@@ -36,10 +29,4 @@ void UDashAttackFactory::DisableInvincibleNotify(TArray<FAnimNotifyEvent> Notifi
       break;
     }
   }
-}
-
-FDamageInfo UDashAttackFactory::CreateDamageInfo(int32 level){
-  FSkillData skill_data = get_skill_data(level);
-  FDamageInfo damage_info = {skill_data.potency};
-  return damage_info;
 }

@@ -1,20 +1,16 @@
 #pragma once
-#include "../../../SkillFactory.h"
+#include "../AnimatedAttackSkillFactory.h"
 
 #include "NormalSwordAttackFactory.generated.h"
 
-class UAnimatedAttack;
-struct FDamageInfo;
 class USkillNotify;
 
 UCLASS()
-class UNormalSwordAttackFactory : public USkillFactory {
+class UNormalSwordAttackFactory : public UAnimatedAttackSkillFactory {
   GENERATED_BODY()
-private:
+protected:
   USkill *CreateSkill(int32 level, USkillManager *manager) override;
-  UAnimatedAttack *CreateAttackModule(USkillManager *manager, UAnimMontage *montage, FDamageInfo damage_info);
   USkillNotify *get_skill_notify(UAnimatedAttack *attack_module);
-  FDamageInfo CreateDamageInfo(int32 level);
 
 private:
   UPROPERTY(EditAnywhere)

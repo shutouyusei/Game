@@ -25,15 +25,6 @@ USkill *UNormalSwordAttackFactory::CreateSkill(int32 level, USkillManager *manag
   return skill;
 }
 
-UAnimatedAttack *UNormalSwordAttackFactory::CreateAttackModule(USkillManager *manager, UAnimMontage *montage, FDamageInfo damage_info) {
-  // create attack modules
-  UAnimatedAttackFactory *attack_factory = NewObject<UAnimatedAttackFactory>();
-  // create attack_module
-  UAnimatedAttack *attack_module = attack_factory->Create(manager, montage, damage_info);
-  attack_factory = nullptr;
-  return attack_module;
-}
-
 USkillNotify *UNormalSwordAttackFactory::get_skill_notify(UAnimatedAttack *attack_module) {
   for (const FAnimNotifyEvent &notify_event : attack_module->montage_->Notifies) {
     if (notify_event.Notify) {
@@ -44,11 +35,4 @@ USkillNotify *UNormalSwordAttackFactory::get_skill_notify(UAnimatedAttack *attac
     }
   }
   return nullptr;
-}
-
-FDamageInfo UNormalSwordAttackFactory::CreateDamageInfo(int32 level) {
-  // create damage information
-  FSkillData skill_data = get_skill_data(level);
-  FDamageInfo damage_info = {skill_data.potency * (1.0f + level * 0.1f)}; // return damage information
-  return damage_info;
 }
