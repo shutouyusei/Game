@@ -12,6 +12,7 @@ class UDashAttack final : public USkill {
 public:
   void Activate() override;
   void OnMotageEnded(UAnimMontage *montage, bool interrupted);
+  void Invincible();
 
 public:
   UPROPERTY()

@@ -11,7 +11,6 @@ class UDashAttackFactory : public UAnimatedAttackSkillFactory {
   GENERATED_BODY()
 private:
   USkill *CreateSkill(int32 level, USkillManager *manager) override;
-  void DisableInvincibleNotify(TArray<FAnimNotifyEvent> Notifies);
 
 private:
   UPROPERTY(EditAnywhere)

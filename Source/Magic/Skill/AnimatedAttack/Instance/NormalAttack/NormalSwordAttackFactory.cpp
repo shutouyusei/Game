@@ -1,6 +1,5 @@
 #include "NormalSwordAttackFactory.h"
 #include "../../../DamageInfo.h"
-#include "../../../Notify/SkillNotify.h"
 #include "../../AnimatedAttackFactory.h"
 #include "GameFramework/Character.h"
 #include "NormalSwordAttack.h"
@@ -23,16 +22,4 @@ USkill *UNormalSwordAttackFactory::CreateSkill(int32 level, USkillManager *manag
     }
   }
   return skill;
-}
-
-USkillNotify *UNormalSwordAttackFactory::get_skill_notify(UAnimatedAttack *attack_module) {
-  for (const FAnimNotifyEvent &notify_event : attack_module->montage_->Notifies) {
-    if (notify_event.Notify) {
-      USkillNotify *skill_notify = Cast<USkillNotify>(notify_event.Notify);
-      if (skill_notify) {
-        return skill_notify;
-      }
-    }
-  }
-  return nullptr;
 }

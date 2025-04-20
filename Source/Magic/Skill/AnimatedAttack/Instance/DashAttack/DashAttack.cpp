@@ -18,3 +18,6 @@ void UDashAttack::OnMotageEnded(UAnimMontage *montage, bool interrupted) {
     owner_->GetCapsuleComponent()->SetCollisionResponseToChannel(ECollisionChannel::ECC_GameTraceChannel1, ECollisionResponse::ECR_Block);
   }
 }
+
+void UDashAttack::Invincible() {
+}

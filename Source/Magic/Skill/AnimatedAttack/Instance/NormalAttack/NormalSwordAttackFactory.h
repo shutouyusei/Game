@@ -10,7 +10,6 @@ class UNormalSwordAttackFactory : public UAnimatedAttackSkillFactory {
   GENERATED_BODY()
 protected:
   USkill *CreateSkill(int32 level, USkillManager *manager) override;
-  USkillNotify *get_skill_notify(UAnimatedAttack *attack_module);
 
 private:
   UPROPERTY(EditAnywhere)
