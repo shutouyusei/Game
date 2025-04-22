@@ -2,7 +2,7 @@
 
 USkill *USkillFactory::Create(int32 level, USkillManager *manager) {
   USkill *skill = CreateSkill(level, manager);
-  if (skill != nullptr) {
+  if (skill == nullptr) {
     return nullptr;
   }
   skill->manager_ = manager;

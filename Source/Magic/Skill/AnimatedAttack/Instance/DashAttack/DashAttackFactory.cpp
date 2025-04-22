@@ -11,8 +11,7 @@ USkill *UDashAttackFactory::CreateSkill(int32 level, USkillManager *manager) {
   skill->attack_module_ = CreateAttackModule(manager, montage_, CreateDamageInfo(level));
   skill->owner_ = Cast<ACharacter>(manager->GetOwner());
   // set function
-  USkillNotify *skill_notify = get_skill_notify(skill->attack_module_);
-  skill_notify->skill_effect_.BindUObject(skill, &UDashAttack::Invincible);
+  SetSkillEffect(skill->attack_module_, skill, &UDashAttack::Invincible);
   // TODO:skill notify or notify state ?
   // I need to deceide which is good
   if (level < 3) {
